@@ -1,0 +1,6 @@
+@NetSpace.User.PublicApi_HostAddress = http://localhost:5278
+
+GET {{NetSpace.User.PublicApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

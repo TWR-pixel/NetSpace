@@ -1,0 +1,6 @@
+@NetSpace.SmsSender.MessageBroker_HostAddress = http://localhost:5215
+
+GET {{NetSpace.SmsSender.MessageBroker_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

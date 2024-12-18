@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D6EDE0C0-5A39-454F-8D06-082DF22D3C7A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{CD796766-BE09-410E-AA3B-C4AA5B7592FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{93C3C72E-C020-4DE3-BB34-8D99926F8058}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{618B39FD-FAB2-4A47-A507-A333961F315D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{20CD6DD9-C10D-4753-9D9D-A30847CE2CD1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Community", "Community", "{6EDF22BB-0F3D-4DB0-A898-AD6DDF06D9DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmailSender", "EmailSender", "{093D2A6B-B19B-4FE7-A14A-8E6A2C547F45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmsSender", "SmsSender", "{012DCDFF-6287-4739-9841-0D583FC2DEEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.SmsSender.Infrastructure", "src\Backend\Microservices\SmsSender\NetSpace.SmsSender.Infrastructure\NetSpace.SmsSender.Infrastructure.csproj", "{6D17CA8F-C18E-49DA-BAAD-45D459F5AD41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.SmsSender.Application", "src\Backend\Microservices\SmsSender\NetSpace.SmsSender.Application\NetSpace.SmsSender.Application.csproj", "{DE2934AD-26D7-47ED-8D29-4FA7B143494E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.SmsSender.PublicApi", "src\Backend\Microservices\SmsSender\NetSpace.SmsSender.MessageBroker\NetSpace.SmsSender.PublicApi.csproj", "{B1BADD0C-0EBC-4284-9D40-42ADB3B8A059}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.User.PublicApi", "src\Backend\Microservices\User\NetSpace.User.PublicApi\NetSpace.User.PublicApi.csproj", "{AA4CB9B2-C12B-402C-A54F-8D8E556B51E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6D17CA8F-C18E-49DA-BAAD-45D459F5AD41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D17CA8F-C18E-49DA-BAAD-45D459F5AD41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D17CA8F-C18E-49DA-BAAD-45D459F5AD41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D17CA8F-C18E-49DA-BAAD-45D459F5AD41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE2934AD-26D7-47ED-8D29-4FA7B143494E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE2934AD-26D7-47ED-8D29-4FA7B143494E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE2934AD-26D7-47ED-8D29-4FA7B143494E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE2934AD-26D7-47ED-8D29-4FA7B143494E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1BADD0C-0EBC-4284-9D40-42ADB3B8A059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1BADD0C-0EBC-4284-9D40-42ADB3B8A059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1BADD0C-0EBC-4284-9D40-42ADB3B8A059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1BADD0C-0EBC-4284-9D40-42ADB3B8A059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA4CB9B2-C12B-402C-A54F-8D8E556B51E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA4CB9B2-C12B-402C-A54F-8D8E556B51E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA4CB9B2-C12B-402C-A54F-8D8E556B51E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA4CB9B2-C12B-402C-A54F-8D8E556B51E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CD796766-BE09-410E-AA3B-C4AA5B7592FD} = {D6EDE0C0-5A39-454F-8D06-082DF22D3C7A}
+		{93C3C72E-C020-4DE3-BB34-8D99926F8058} = {D6EDE0C0-5A39-454F-8D06-082DF22D3C7A}
+		{618B39FD-FAB2-4A47-A507-A333961F315D} = {CD796766-BE09-410E-AA3B-C4AA5B7592FD}
+		{20CD6DD9-C10D-4753-9D9D-A30847CE2CD1} = {618B39FD-FAB2-4A47-A507-A333961F315D}
+		{6EDF22BB-0F3D-4DB0-A898-AD6DDF06D9DC} = {618B39FD-FAB2-4A47-A507-A333961F315D}
+		{093D2A6B-B19B-4FE7-A14A-8E6A2C547F45} = {618B39FD-FAB2-4A47-A507-A333961F315D}
+		{012DCDFF-6287-4739-9841-0D583FC2DEEE} = {618B39FD-FAB2-4A47-A507-A333961F315D}
+		{6D17CA8F-C18E-49DA-BAAD-45D459F5AD41} = {012DCDFF-6287-4739-9841-0D583FC2DEEE}
+		{DE2934AD-26D7-47ED-8D29-4FA7B143494E} = {012DCDFF-6287-4739-9841-0D583FC2DEEE}
+		{B1BADD0C-0EBC-4284-9D40-42ADB3B8A059} = {012DCDFF-6287-4739-9841-0D583FC2DEEE}
+		{AA4CB9B2-C12B-402C-A54F-8D8E556B51E8} = {20CD6DD9-C10D-4753-9D9D-A30847CE2CD1}
+	EndGlobalSection
+EndGlobal
