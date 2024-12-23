@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\NetSpace.Common.Messages\NetSpace.Common.Messages.csproj" />
+    <ProjectReference Include="..\NetSpace.User.Application\NetSpace.User.Application.csproj" />
+    <ProjectReference Include="..\NetSpace.User.Infrastructure\NetSpace.User.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

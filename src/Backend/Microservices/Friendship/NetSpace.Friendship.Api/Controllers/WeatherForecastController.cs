@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.Friendship.Infrastructure;
+using NetSpace.Friendship.UseCases;
 
 namespace NetSpace.Friendship.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController(NetSpaceDbContext dbContext) : ControllerBase
+    public class WeatherForecastController(IUserRepository userRepo) : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
@@ -17,12 +18,9 @@ namespace NetSpace.Friendship.Api.Controllers
         public ActionResult Get()
         {
             var follower = new Domain.UserEntity(Guid.NewGuid(), "iejof", "oiwjefiowje", null, Domain.Gender.NotSet);
-            dbContext.Users.Add(follower);
 
-            follower.Followers.Add(new Domain.UserEntity(Guid.NewGuid(), "eijf", "iejo", null, Domain.Gender.Female));
+            userRepo.AddAsync(follower);
 
-            dbContext.SaveChangesAsync();
-              
             return Ok();
         }
     }

@@ -1,18 +1,13 @@
-﻿using Neo4jClient;
-using NetSpace.Friendship.Domain;
-using NetSpace.Friendship.UseCases;
+﻿using NetSpace.User.Domain;
+using NetSpace.User.UseCases;
 
-namespace NetSpace.Friendship.Infrastructure.User;
+namespace NetSpace.User.Infrastructure.User;
 
-public sealed class UserRepository(IGraphClient client) : IUserRepository
+public sealed class UserRepository : IUserRepository
 {
-    public async Task<UserEntity> AddAsync(UserEntity entity, CancellationToken cancellationToken = default)
+    public Task<UserEntity> AddAsync(UserEntity entity, CancellationToken cancellationToken = default)
     {
-        await client.Cypher.Create("(u:UserEntity $entity)")
-            .WithParam("entity", entity)
-            .ExecuteWithoutResultsAsync();
-
-        return entity;
+        throw new NotImplementedException();
     }
 
     public Task<IEnumerable<UserEntity>> AddRangeAsync(IEnumerable<UserEntity> entities, CancellationToken cancellationToken = default)
@@ -40,7 +35,7 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
         throw new NotImplementedException();
     }
 
-    public Task<UserEntity?> FindByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task<UserEntity?> FindByIdAsync(string id, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

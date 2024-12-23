@@ -1,18 +1,20 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Neo4j.Berries.OGM;
+using Neo4jClient;
+using NetSpace.Friendship.Infrastructure.User;
+using NetSpace.Friendship.UseCases;
 
 namespace NetSpace.Friendship.Infrastructure;
 
 public static class InfrastructureServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationSection configSection)
     {
-        services.AddNeo4j<NetSpaceDbContext>(configuration, options =>
-        {
-            options.ConfigureFromAssemblies(typeof(NetSpaceDbContext).Assembly);
-            options.EnableTimestamps();
-        });
+        var client = new BoltGraphClient(new Uri("bolt://localhost:7687"), "neo4j", "P@ssword");
+        client.ConnectAsync();
+        services.AddSingleton<IGraphClient>(client);
+
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

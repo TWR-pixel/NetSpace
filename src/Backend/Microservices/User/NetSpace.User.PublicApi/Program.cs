@@ -1,5 +1,5 @@
-using MassTransit;
-using NetSpace.Common.Messages;
+using NetSpace.User.Application;
+using NetSpace.User.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,13 +7,8 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMassTransit(x =>
-{
-    x.UsingRabbitMq((context, cfg) =>
-    {
-        cfg.Publish<OrderCreatedRecord>();
-    });
-});
+builder.Services.AddApplicationLayer();
+builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
