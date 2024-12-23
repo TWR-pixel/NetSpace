@@ -1,4 +1,4 @@
-namespace NetSpace.User.PublicApi
+namespace NetSpace.Friendship.Api
 {
     public class WeatherForecast
     {

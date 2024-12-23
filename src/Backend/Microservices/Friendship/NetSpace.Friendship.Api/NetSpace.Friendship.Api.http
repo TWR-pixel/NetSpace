@@ -1,0 +1,6 @@
+@NetSpace.Friendship.Api_HostAddress = http://localhost:5253
+
+GET {{NetSpace.Friendship.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

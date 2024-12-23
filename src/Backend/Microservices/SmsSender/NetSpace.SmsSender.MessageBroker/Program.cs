@@ -1,4 +1,5 @@
-using RabbitMQ.Client;
+using MassTransit;
+using NetSpace.SmsSender.PublicApi.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,11 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IConnectionFactory>(implementation => new ConnectionFactory
+builder.Services.AddMassTransit(x =>
 {
-    Endpoint = new AmqpTcpEndpoint(),
+    x.AddConsumers(typeof(Program).Assembly);
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.ReceiveEndpoint(e =>
+        {
+            e.ConfigureConsumer<OrderCreatedConsumer>(context); 
+        });
+    });
 });
-builder.Services.AddHostedService<EmailNotifierListener>();
 
 WebApplication app = builder.Build();
 

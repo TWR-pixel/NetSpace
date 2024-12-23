@@ -1,4 +1,4 @@
-namespace NetSpace.SmsSender.PublicApi
+namespace NetSpace.EmailSender.Api
 {
     public class WeatherForecast
     {

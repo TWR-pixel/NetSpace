@@ -1,0 +1,6 @@
+@NetSpace.EmailSender.Api_HostAddress = http://localhost:5031
+
+GET {{NetSpace.EmailSender.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

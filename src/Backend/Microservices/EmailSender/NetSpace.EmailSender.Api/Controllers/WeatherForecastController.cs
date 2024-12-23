@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace NetSpace.User.PublicApi.Controllers
+namespace NetSpace.EmailSender.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
