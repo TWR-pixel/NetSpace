@@ -4,13 +4,24 @@ using NetSpace.User.Application.User.Requests;
 
 namespace NetSpace.User.PublicApi.Controllers;
 
+[ApiController]
+[Route("/api/auth")]
 public sealed class AuthenticationController(IMediator mediator) : ApiControllerBase(mediator)
 {
-    [HttpPost]
+    [HttpPost("register")]
     public async Task<ActionResult> Register(RegisterUserRequest request, CancellationToken cancellationToken)
     {
-        var response = await Mediator.Send(request, cancellationToken);
+        Console.WriteLine("LOG REGISTER IJO");
+        //var response = await Mediator.Send(request, cancellationToken);
 
-        return Ok(response); 
+        return CreatedAtAction(nameof(Register), "sijf");
+    }
+
+    [HttpPost("login")]
+    public async Task<ActionResult> Login(LoginUserRequest request, CancellationToken cancellationToken)
+    {
+
+
+        return Ok();
     }
 }

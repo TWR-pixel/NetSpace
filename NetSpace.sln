@@ -76,6 +76,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Common.Infrastructure.Relational", "src\Backend\Microservices\Common\NetSpace.Common.Infrastructure.Relational\NetSpace.Common.Infrastructure.Relational.csproj", "{041891A6-6B41-421B-B5CE-0E9E899D2157}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -182,6 +184,10 @@ Global
 		{337D9864-D7D6-48A7-9D29-C53479735165}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{337D9864-D7D6-48A7-9D29-C53479735165}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{337D9864-D7D6-48A7-9D29-C53479735165}.Release|Any CPU.Build.0 = Release|Any CPU
+		{041891A6-6B41-421B-B5CE-0E9E899D2157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{041891A6-6B41-421B-B5CE-0E9E899D2157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{041891A6-6B41-421B-B5CE-0E9E899D2157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{041891A6-6B41-421B-B5CE-0E9E899D2157}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,5 +226,6 @@ Global
 		{EED72166-4239-44F9-B1C6-D2AAF7738F69} = {6EDF22BB-0F3D-4DB0-A898-AD6DDF06D9DC}
 		{996180C5-0C12-46E7-B751-7A19E864E089} = {6EDF22BB-0F3D-4DB0-A898-AD6DDF06D9DC}
 		{337D9864-D7D6-48A7-9D29-C53479735165} = {618B39FD-FAB2-4A47-A507-A333961F315D}
+		{041891A6-6B41-421B-B5CE-0E9E899D2157} = {8CBEDA0E-0DAB-4B22-BA0C-0FE3E9A8735F}
 	EndGlobalSection
 EndGlobal

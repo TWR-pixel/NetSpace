@@ -4,7 +4,7 @@ using NetSpace.User.Domain;
 
 namespace NetSpace.User.Infrastructure.Common;
 
-public sealed class NetSpaceDbContext : IdentityDbContext<UserEntity>
+public sealed class NetSpaceDbContext(DbContextOptions<NetSpaceDbContext> options) : IdentityDbContext<UserEntity>(options)
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
