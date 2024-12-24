@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NetSpace.User.Application.Requests;
+using NetSpace.User.Application.User.Requests;
 
 namespace NetSpace.User.PublicApi.Controllers;
 
@@ -11,7 +11,6 @@ public sealed class AuthenticationController(IMediator mediator) : ApiController
     {
         var response = await Mediator.Send(request, cancellationToken);
 
-        return Ok(response);
+        return Ok(response); 
     }
-
 }

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NetSpace.EmailSender.UseCases\NetSpace.EmailSender.UseCases.csproj" />
+  </ItemGroup>
+
 </Project>

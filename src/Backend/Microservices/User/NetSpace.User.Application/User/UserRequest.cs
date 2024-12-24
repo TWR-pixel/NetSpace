@@ -1,6 +1,6 @@
 ﻿using NetSpace.Common.Application;
 
-namespace NetSpace.User.Application;
+namespace NetSpace.User.Application.User;
 
 public sealed record UserRequest<TResponse> : RequestBase<TResponse>
 {

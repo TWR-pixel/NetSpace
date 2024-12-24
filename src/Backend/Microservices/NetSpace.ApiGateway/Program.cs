@@ -1,25 +1,20 @@
-using NetSpace.User.Application.Common.Extensions;
-using NetSpace.User.Infrastructure.Common.Extensions;
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
-builder.Services.AddSwaggerGen();
+// Add services to the container.
 
-builder.Services.AddApplicationLayer();
-builder.Services.AddInfrastructure();
+builder.Services.AddControllers();
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+builder.Services.AddAuthentication();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.MapSwagger();
 }
-
+app.UseHsts();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NetSpace.User.Application.Requests;
+using NetSpace.User.Application.User.Requests;
 
 namespace NetSpace.User.PublicApi.Controllers;
 

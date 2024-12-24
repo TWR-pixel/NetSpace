@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using NetSpace.User.Application.Common.MessageBroker;
 
-namespace NetSpace.User.Infrastructure;
+namespace NetSpace.User.Infrastructure.Common;
 
 public sealed class RabbitMQPublisher(IPublishEndpoint publishEndpoint) : IPublisher
 {

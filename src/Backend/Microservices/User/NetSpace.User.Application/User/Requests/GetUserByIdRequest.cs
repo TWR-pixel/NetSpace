@@ -1,6 +1,6 @@
 ﻿using NetSpace.Common.Application;
 
-namespace NetSpace.User.Application.Requests;
+namespace NetSpace.User.Application.User.Requests;
 
 public sealed record GetUserByIdRequest : RequestBase<GetUserByIdResponse>
 {

@@ -1,7 +1,7 @@
 ﻿using NetSpace.User.Domain;
 using NetSpace.User.UseCases;
 
-namespace NetSpace.User.Infrastructure.User;
+namespace NetSpace.User.Infrastructure;
 
 public sealed class UserRepository : IUserRepository
 {

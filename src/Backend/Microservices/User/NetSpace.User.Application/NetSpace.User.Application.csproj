@@ -11,4 +11,9 @@
     <ProjectReference Include="..\NetSpace.User.UseCases\NetSpace.User.UseCases.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UserPostUserComment\" />
+    <Folder Include="UserPost\" />
+  </ItemGroup>
+
 </Project>
