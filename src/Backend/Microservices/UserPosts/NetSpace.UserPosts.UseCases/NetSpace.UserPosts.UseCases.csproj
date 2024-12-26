@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\NetSpace.Common.UseCases\NetSpace.Common.UseCases.csproj" />
+    <ProjectReference Include="..\NetSpace.UserPosts.Domain\NetSpace.UserPosts.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

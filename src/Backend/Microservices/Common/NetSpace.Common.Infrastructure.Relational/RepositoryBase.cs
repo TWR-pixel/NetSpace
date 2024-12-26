@@ -2,7 +2,7 @@
 using NetSpace.Common.Domain;
 using NetSpace.Common.UseCases;
 
-namespace NetSpace.Common.Infrastructure.Relational;
+namespace NetSpace.Common.Infrastructure.EntityFrameworkCore;
 
 public abstract class RepositoryBase<TEntity, TId, TDbContext>(TDbContext dbContext) : IRepository<TEntity, TId>
     where TEntity : class, IEntity<TId>

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NetSpace.User.Application.User.Requests;
+using NetSpace.User.Application.User;
 
 namespace NetSpace.User.PublicApi.Controllers;
 
@@ -12,7 +12,7 @@ public sealed class UserController(IMediator mediator) : ApiControllerBase(media
     [HttpPost]
     [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult> Create(CreateUserRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult> Create(UserRequest request, CancellationToken cancellationToken)
         => CreatedAtAction(nameof(Create), await Mediator.Send(request, cancellationToken));
 
 }

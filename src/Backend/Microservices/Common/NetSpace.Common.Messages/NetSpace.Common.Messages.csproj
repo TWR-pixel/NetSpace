@@ -6,4 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="CommunityPostUserComment\" />
+    <Folder Include="CommunityPost\" />
+    <Folder Include="UserPostUserComment\" />
+    <Folder Include="UserPost\" />
+  </ItemGroup>
+
 </Project>

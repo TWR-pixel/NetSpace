@@ -1,5 +1,5 @@
 ﻿using NetSpace.Common.UseCases;
-using NetSpace.User.Domain;
+using NetSpace.UserPosts.Domain;
 
 namespace NetSpace.User.UseCases;
 

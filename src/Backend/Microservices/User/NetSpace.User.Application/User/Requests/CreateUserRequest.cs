@@ -1,17 +1,29 @@
-﻿using NetSpace.Common.Application;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Identity;
+using NetSpace.Common.Application;
+using NetSpace.Common.Messages.User;
+using NetSpace.User.Application.User.Extensions;
+using NetSpace.User.Domain;
 
 namespace NetSpace.User.Application.User.Requests;
 
-public sealed record CreateUserRequest : RequestBase<CreateUserResponse>
+public sealed class CreateUserRequestHandler(IPublishEndpoint publisher, UserManager<UserEntity> userManager) : RequestHandlerBase<UserRequest, UserResponse>
 {
-}
-
-public sealed record CreateUserResponse : ResponseBase;
-
-public sealed class CreateUserRequestHandler : RequestHandlerBase<CreateUserRequest, CreateUserResponse>
-{
-    public async override Task<CreateUserResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+    public override async Task<UserResponse> Handle(UserRequest request, CancellationToken cancellationToken)
     {
-        return new CreateUserResponse();
+        var userEntity = request.ToEntity();
+        await userManager.CreateAsync(userEntity, request.Password);
+
+        var userCreatedMessage = new UserCreatedMessage(userEntity.Id,
+                                                        userEntity.Nickname,
+                                                        userEntity.Name,
+                                                        userEntity.Surname,
+                                                        userEntity.LastName,
+                                                        userEntity.About,
+                                                        userEntity.AvatarUrl);
+
+        await publisher.Publish(userCreatedMessage, cancellationToken);
+
+        return userEntity.ToResponse();
     }
 }

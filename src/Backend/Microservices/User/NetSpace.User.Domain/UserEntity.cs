@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using NetSpace.Common.Domain;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NetSpace.User.Domain;
 
+[method: SetsRequiredMembers]
 public sealed class UserEntity(string nickname,
                                string name,
                                string surname,
@@ -23,7 +25,4 @@ public sealed class UserEntity(string nickname,
     public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
 
     public Gender Gender { get; set; } = gender;
-
-    public IList<UserPostEntity> Posts { get; set; } = [];
-    public IList<UserPostUserCommentEntity> PostComments { get; set; } = [];
 }

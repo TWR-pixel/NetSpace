@@ -1,7 +1,7 @@
 ﻿using NetSpace.Common.Domain;
 using System.Diagnostics.CodeAnalysis;
 
-namespace NetSpace.User.Domain;
+namespace NetSpace.UserPosts.Domain;
 
 [method: SetsRequiredMembers]
 public sealed class UserPostEntity(string title, string body, UserEntity user) : IEntity<int>

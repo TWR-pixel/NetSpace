@@ -2,17 +2,29 @@
 
 namespace NetSpace.Common.Messages.User;
 
-[method: SetsRequiredMembers]
-public sealed class UserCreatedMessage(Guid id, string name, string surname, DateTime? birthDate)
+
+public sealed class UserCreatedMessage
 {
-    public Guid Id { get; set; } = id;
-    public required string Nickname { get; set; } = "";
-    public required string Name { get; set; } = name;
-    public required string Surname { get; set; } = surname;
-    public string LastName { get; set; } = string.Empty;
-    public string About { get; set; } = string.Empty;
-    public string AvatarUrl { get; set; } = string.Empty;
-    public DateTime? BirthDate { get; set; } = birthDate;
+    [SetsRequiredMembers]
+    public UserCreatedMessage(string id, string nickname, string name, string surname, string lastName, string about, string avatarUrl)
+    {
+        Id = id;
+        Nickname = nickname;
+        Name = name;
+        Surname = surname;
+        LastName = lastName;
+        About = about;
+        AvatarUrl = avatarUrl;
+    }
+
+    public string Id { get; set; }
+    public required string Nickname { get; set; }
+    public required string Name { get; set; }
+    public required string Surname { get; set; }
+    public string LastName { get; set; } 
+    public string About { get; set; }
+    public string AvatarUrl { get; set; }
+    public DateTime? BirthDate { get; set; }
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
 }

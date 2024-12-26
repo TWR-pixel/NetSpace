@@ -1,7 +1,7 @@
 ﻿using NetSpace.Common.Application;
 using NetSpace.Friendship.UseCases;
 
-namespace NetSpace.Friendship.Application.Friendship.Requests;
+namespace NetSpace.Friendship.Application.User.Requests;
 
 public sealed record CreateFriendshipRequest : RequestBase<CreateFriendshipResponse>
 {

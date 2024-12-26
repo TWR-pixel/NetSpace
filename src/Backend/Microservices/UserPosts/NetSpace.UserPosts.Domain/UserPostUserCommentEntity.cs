@@ -1,6 +1,6 @@
 ﻿using NetSpace.Common.Domain;
 
-namespace NetSpace.User.Domain;
+namespace NetSpace.UserPosts.Domain;
 
 public sealed class UserPostUserCommentEntity(string body, UserEntity owner, UserPostEntity userPost) : IEntity<int>
 {

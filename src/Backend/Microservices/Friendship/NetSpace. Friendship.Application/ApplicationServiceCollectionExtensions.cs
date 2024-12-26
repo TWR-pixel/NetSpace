@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using NetSpace.Friendship.Application.Friendship.Consumers;
+using NetSpace.Friendship.Application.User.Consumers;
 
 namespace NetSpace.Friendship.Application;
 

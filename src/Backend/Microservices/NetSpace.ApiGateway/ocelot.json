@@ -10,7 +10,7 @@
         }
       ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
+        "AuthenticationProviderKey": "Bearer OpenIdConnect",
         "AllowedScopes": []
       },
       "UpstreamPathTemplate": "/users",

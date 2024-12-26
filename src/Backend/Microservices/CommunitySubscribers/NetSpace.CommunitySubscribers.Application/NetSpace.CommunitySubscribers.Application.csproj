@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Community\Consumers\" />
+    <Folder Include="Community\Requests\" />
+    <Folder Include="User\Consumers\" />
+    <Folder Include="User\Requests\" />
+  </ItemGroup>
+
+</Project>

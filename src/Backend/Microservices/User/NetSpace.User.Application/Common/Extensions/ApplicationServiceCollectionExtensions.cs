@@ -9,7 +9,7 @@ public static class ApplicationServiceCollectionExtensions
     {
         services.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssembly(typeof(UserRequest<>).Assembly);
+            config.RegisterServicesFromAssembly(typeof(UserRequest).Assembly);
         });
 
         return services;

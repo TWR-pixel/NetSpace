@@ -3,7 +3,7 @@ using NetSpace.Common.Messages.User;
 using NetSpace.Friendship.Domain;
 using NetSpace.Friendship.UseCases;
 
-namespace NetSpace.Friendship.Application.Friendship.Consumers;
+namespace NetSpace.Friendship.Application.User.Consumers;
 
 public class UserDeletedConsumer(IUserRepository userRepository) : IConsumer<UserDeletedMessage>
 {
