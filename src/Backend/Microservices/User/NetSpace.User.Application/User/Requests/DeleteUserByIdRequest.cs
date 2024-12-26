@@ -1,4 +1,8 @@
-﻿using NetSpace.Common.Application;
+﻿using Microsoft.AspNetCore.Identity;
+using NetSpace.Common.Application;
+using NetSpace.User.Application.User.Exceptions;
+using NetSpace.User.Domain;
+using NetSpace.User.UseCases;
 
 namespace NetSpace.User.Application.User.Requests;
 
@@ -9,10 +13,15 @@ public sealed record DeleteUserByIdRequest : RequestBase<DeleteUserByIdResponse>
 
 public sealed record DeleteUserByIdResponse : ResponseBase;
 
-public sealed class DeleteUserByIdRequestHandler : RequestHandlerBase<DeleteUserByIdRequest, DeleteUserByIdResponse>
+public sealed class DeleteUserByIdRequestHandler(UserManager<UserEntity> userManager) : RequestHandlerBase<DeleteUserByIdRequest, DeleteUserByIdResponse>
 {
-    public override Task<DeleteUserByIdResponse> Handle(DeleteUserByIdRequest request, CancellationToken cancellationToken)
+    public override async Task<DeleteUserByIdResponse> Handle(DeleteUserByIdRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var userFromDb = await userManager.FindByIdAsync(request.Id.ToString())
+            ?? throw new UserNotFoundException(request.Id);
+
+        await userManager.DeleteAsync(userFromDb);
+
+        return new DeleteUserByIdResponse();
     }
 }

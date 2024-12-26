@@ -18,9 +18,11 @@ public sealed class CreateUserRequestHandler(IPublishEndpoint publisher, UserMan
                                                         userEntity.Nickname,
                                                         userEntity.Name,
                                                         userEntity.Surname,
+                                                        userEntity.Email,
                                                         userEntity.LastName,
                                                         userEntity.About,
-                                                        userEntity.AvatarUrl);
+                                                        userEntity.AvatarUrl,
+                                                        (NetSpace.Common.Messages.User.Gender)userEntity.Gender);
 
         await publisher.Publish(userCreatedMessage, cancellationToken);
 

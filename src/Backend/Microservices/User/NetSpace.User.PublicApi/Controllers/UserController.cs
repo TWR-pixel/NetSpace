@@ -15,4 +15,5 @@ public sealed class UserController(IMediator mediator) : ApiControllerBase(media
     public async Task<ActionResult> Create(UserRequest request, CancellationToken cancellationToken)
         => CreatedAtAction(nameof(Create), await Mediator.Send(request, cancellationToken));
 
+
 }

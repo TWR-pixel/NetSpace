@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using NetSpace.Common.Application;
+using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.Domain;
 
@@ -38,7 +40,9 @@ public sealed class RegisterUserRequestValidator : AbstractValidator<RegisterUse
     }
 }
 
-public sealed class RegisterUserRequestHandler(UserManager<UserEntity> userManager, IValidator<RegisterUserRequest> validator) : RequestHandlerBase<RegisterUserRequest, RegisterUserResponse>
+public sealed class RegisterUserRequestHandler(UserManager<UserEntity> userManager,
+                                               IValidator<RegisterUserRequest> validator,
+                                               IPublishEndpoint publisher) : RequestHandlerBase<RegisterUserRequest, RegisterUserResponse>
 {
     public override async Task<RegisterUserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {
@@ -50,6 +54,16 @@ public sealed class RegisterUserRequestHandler(UserManager<UserEntity> userManag
             throw new UserAlreadyExistsException(request.Email);
 
         await userManager.CreateAsync(userEntity, request.Password);
+
+        await publisher.Publish(new UserCreatedMessage(userEntity.Id,
+                                                       userEntity.Nickname,
+                                                       userEntity.Name,
+                                                       userEntity.Surname,
+                                                       userEntity.Email,
+                                                       userEntity.LastName,
+                                                       userEntity.About,
+                                                       userEntity.AvatarUrl,
+                                                       (NetSpace.Common.Messages.User.Gender)userEntity.Gender), cancellationToken);
 
         return new RegisterUserResponse();
     }

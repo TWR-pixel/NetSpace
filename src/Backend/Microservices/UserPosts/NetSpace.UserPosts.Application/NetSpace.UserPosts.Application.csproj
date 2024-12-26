@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\NetSpace.Common.Messages\NetSpace.Common.Messages.csproj" />
+    <ProjectReference Include="..\NetSpace.UserPosts.UseCases\NetSpace.UserPosts.UseCases.csproj" />
   </ItemGroup>
 
 </Project>

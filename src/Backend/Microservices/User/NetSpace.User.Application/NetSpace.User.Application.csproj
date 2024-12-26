@@ -13,11 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UserPostUserComment\" />
-    <Folder Include="UserPost\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="MassTransit" Version="8.3.4" />
   </ItemGroup>
