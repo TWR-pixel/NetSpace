@@ -1,10 +1,11 @@
-﻿using FluentValidation;
-using MassTransit;
+﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Distributed;
 using NetSpace.Common.Application;
 using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.Domain;
+using System.Text.Json;
 
 namespace NetSpace.User.Application.User.Requests;
 
@@ -23,26 +24,9 @@ public sealed record RegisterUserResponse : ResponseBase
 
 }
 
-public sealed class RegisterUserRequestValidator : AbstractValidator<RegisterUserRequest>
-{
-    public RegisterUserRequestValidator()
-    {
-        RuleFor(x => x.Email)
-            .NotEmpty()
-            .NotNull()
-            .EmailAddress()
-            .Matches(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
-
-        RuleFor(x => x.Password)
-            .NotEmpty()
-            .NotNull()
-            .MinimumLength(6);
-    }
-}
-
 public sealed class RegisterUserRequestHandler(UserManager<UserEntity> userManager,
-                                               IValidator<RegisterUserRequest> validator,
-                                               IPublishEndpoint publisher) : RequestHandlerBase<RegisterUserRequest, RegisterUserResponse>
+                                               IPublishEndpoint publisher,
+                                               IDistributedCache cache) : RequestHandlerBase<RegisterUserRequest, RegisterUserResponse>
 {
     public override async Task<RegisterUserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {
@@ -54,7 +38,6 @@ public sealed class RegisterUserRequestHandler(UserManager<UserEntity> userManag
             throw new UserAlreadyExistsException(request.Email);
 
         await userManager.CreateAsync(userEntity, request.Password);
-
         await publisher.Publish(new UserCreatedMessage(userEntity.Id,
                                                        userEntity.Nickname,
                                                        userEntity.Name,
@@ -64,6 +47,8 @@ public sealed class RegisterUserRequestHandler(UserManager<UserEntity> userManag
                                                        userEntity.About,
                                                        userEntity.AvatarUrl,
                                                        (NetSpace.Common.Messages.User.Gender)userEntity.Gender), cancellationToken);
+
+        await cache.SetStringAsync(request.Email, JsonSerializer.Serialize(userFromDb), cancellationToken);
 
         return new RegisterUserResponse();
     }

@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Common.Messages.User;
 using NetSpace.User.Domain;
@@ -10,7 +11,7 @@ namespace NetSpace.User.Infrastructure.Common.Extensions;
 
 public static class InfrastructureServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string? connectionString)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string? connectionString, IConfiguration config)
     {
         services.AddMassTransit(configure =>
         {
@@ -25,8 +26,17 @@ public static class InfrastructureServiceCollectionExtensions
 
         //services.AddScoped<IPublisher, RabbitMQPublisher>();
 
+        services.AddStackExchangeRedisCache(configure =>
+        {
+            configure.InstanceName = config["Redis:InstanceName"];
+            configure.Configuration = config.GetConnectionString("Redis");
+        });
+
         services
-            .AddIdentity<UserEntity, IdentityRole>()
+            .AddIdentity<UserEntity, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
             .AddEntityFrameworkStores<NetSpaceDbContext>()
             .AddDefaultTokenProviders();
 

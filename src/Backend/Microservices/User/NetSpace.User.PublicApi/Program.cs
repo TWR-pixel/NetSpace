@@ -1,7 +1,7 @@
 using NetSpace.User.Application.Common.Extensions;
 using NetSpace.User.Infrastructure.Common.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);   
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -10,7 +10,8 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("PostgreSql");
 
 builder.Services.AddApplicationLayer();
-builder.Services.AddInfrastructure(connectionString);
+builder.Services.AddInfrastructure(connectionString, builder.Configuration);
+//builder
 
 var app = builder.Build();
 

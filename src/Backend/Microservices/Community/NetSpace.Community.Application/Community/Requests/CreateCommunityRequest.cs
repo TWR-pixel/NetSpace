@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using NetSpace.Common.Application;
 using NetSpace.Community.Application.Common.Exceptions;
-using NetSpace.Community.Application.Common.MessageBroker;
 using NetSpace.Community.Domain;
 using NetSpace.Community.UseCases;
 

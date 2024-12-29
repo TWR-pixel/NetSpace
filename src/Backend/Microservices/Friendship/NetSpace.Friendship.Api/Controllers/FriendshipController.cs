@@ -18,7 +18,7 @@ public sealed class FriendshipController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet]
+    [HttpGet("followers")]
     public async Task<ActionResult<IEnumerable<UserEntity>>> GetAllFollowersByStatus([FromQuery] GetAllUserFollowersByStatusRequest request, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(request, cancellationToken);
