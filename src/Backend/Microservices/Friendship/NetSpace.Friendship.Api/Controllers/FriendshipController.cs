@@ -1,27 +1,44 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using NetSpace.Friendship.Application.User;
+using NetSpace.Friendship.Application.User.Requests;
 using NetSpace.Friendship.Domain;
-using NetSpace.Friendship.UseCases;
 
 namespace NetSpace.Friendship.Api.Controllers;
 
 [ApiController]
 [Route("/api/friendships/")]
-public sealed class FriendshipController(IUserRepository users) : ControllerBase
+public sealed class FriendshipController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<IEnumerable<UserEntity>> GetAllByStatus(Guid id)
+    public async Task<ActionResult<IEnumerable<UserResponse>>> GetAllByStatus([FromQuery] GetAllUserFriendsByStatusRequest request, CancellationToken cancellationToken)
     {
-        var result = await users.GetAllFriendsByStatus(id, FriendshipStatus.Accepted);
+        var result = await mediator.Send(request, cancellationToken);
 
-        return result;
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserEntity>>> GetAllFollowersByStatus([FromQuery] GetAllUserFollowersByStatusRequest request, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(request, cancellationToken);
+
+        return Ok(result);
     }
 
     [HttpPost]
-    public async Task<UserEntity> CreateUser()
+    public async Task<ActionResult<CreateFriendshipResponse>> CreateFriendship([FromBody] CreateFriendshipRequest request, CancellationToken cancellationToken)
     {
-        var user = new UserEntity(Guid.NewGuid(), "iowejf", "owijef", null, Gender.Male);
-        await users.AddAsync(user);
+        var result = await mediator.Send(request, cancellationToken);
 
-        return user;
+        return CreatedAtAction(nameof(CreateFriendship), result);
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<UpdateFriendshipResponse>> UpdateFriendship([FromBody] UpdateFriendshipRequest request, CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(request, cancellationToken);
+
+        return Ok(result);
     }
 }

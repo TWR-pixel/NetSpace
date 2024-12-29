@@ -3,3 +3,4 @@
 public sealed class CommunityUpdatedConsumer
 {
 }
+ 

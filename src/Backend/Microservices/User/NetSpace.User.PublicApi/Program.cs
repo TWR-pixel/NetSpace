@@ -7,8 +7,10 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
+var connectionString = builder.Configuration.GetConnectionString("PostgreSql");
+
 builder.Services.AddApplicationLayer();
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(connectionString);
 
 var app = builder.Build();
 

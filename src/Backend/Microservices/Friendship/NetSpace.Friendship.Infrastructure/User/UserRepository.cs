@@ -8,16 +8,14 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
 {
     public async Task<UserEntity> AddAsync(UserEntity entity, CancellationToken cancellationToken = default)
     {
-        await client.Cypher.Create("(user:UserEntity $entity)")
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var result = await client.Cypher.Create("(user:UserEntity $entity)")
             .WithParam("entity", entity)
-            .ExecuteWithoutResultsAsync(); // Будут статусы для дружбы: ACCEPTED (Принята), (REJECTED) Отвергнута,(WAITING_FOR_CONFIRMATION) Ждет ответа
+            .Return(user => user.As<UserEntity>())
+            .ResultsAsync;
 
-        return entity;
-    }
-
-    public Task<IEnumerable<UserEntity>> AddRangeAsync(IEnumerable<UserEntity> entities, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
+        return result.First();
     }
 
     public Task<bool> AnyAsync(CancellationToken cancellationToken = default)
@@ -25,74 +23,125 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
         throw new NotImplementedException();
     }
 
-    public Task<int> CountAsync(CancellationToken cancellationToken = default)
+    public async Task<long> FriendsCountById(string id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
-    }
+        cancellationToken.ThrowIfCancellationRequested();
 
-    public Task CreateFriendship(Guid fromId, Guid toId, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteAsync(UserEntity entity, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteRangeAsync(IEnumerable<UserEntity> entities, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<UserEntity?> FindByIdAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<UserEntity>> GetAllAcceptedFriendsById(Guid id, CancellationToken cancellationToken = default)
-    {
-        //var query = "match (users:UserEntity{Id: $id })-[:FRIENDS_WITH {status: $friendship_status }]->(friends:UserEntity) ";
-
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<UserEntity>?> GetAllAsync(CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<IEnumerable<UserEntity>> GetAllFriendsByStatus(Guid id, FriendshipStatus status, CancellationToken cancellationToken = default)
-    {
         var result = await client.Cypher
-            .Match("(us:UserEntity{Id: \"1a44aa32-4c26-41cc-8270-fcdc22e0f35f\" })-[:FRIEND_WITH {status: 1 }]->(u) ")
-           // .WithParam("id", id)
-            //.WithParam("status", status)
-            .Return(u => u.As<UserEntity>())
+            .Match("(user:UserEntity {Id: $id})-[:FRIEND_WITH]->(users:UserEntity)")
+            .Return(users => users.Count())
             .ResultsAsync;
 
-        Console.WriteLine(client.Cypher.Query.DebugQueryText);
+        return result.First();
+    }
+
+    public async Task<long> FollowersCountById(string id, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var result = await client.Cypher
+            .Match("(user:UserEntity {Id: $id})<-[:FRIEND_WITH]-(followers:UserEntity)")
+            .Return(followers => followers.Count())
+            .ResultsAsync;
+
+        return result.First();
+    }
+
+    public async Task CreateFriendship(string fromId, string toId, FriendshipStatus status, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        await client.Cypher
+            .Match("(fromEntity:UserEntity { Id: $fromId}), (toEntity:UserEntity {Id: $toId}) CREATE (fromEntity)-[:FRIEND_WITH {status: $status}]->(toEntity)")
+            .WithParam("fromId", fromId)
+            .WithParam("toId", toId)
+            .WithParam("status", status)
+            .ExecuteWithoutResultsAsync();
+    }
+
+    public async Task DeleteAsync(UserEntity entity, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        await client.Cypher
+            .Match("(user:UserEntity { Id: $id }) DELETE user")
+            .ExecuteWithoutResultsAsync();
+    }
+
+    public async Task<UserEntity?> FindByIdAsync(string id, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var result = await client.Cypher
+            .Match("(user:UserEntity { Id: $id })")
+            .Return(user => user.As<UserEntity>())
+            .ResultsAsync;
+
+        return result.FirstOrDefault();
+    }
+
+    public async Task<IEnumerable<UserEntity>> GetAllFollowersByStatus(string id, FriendshipStatus status, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var result = await client.Cypher
+            .Match("(user:UserEntity {Id: $id })<-[:FRIEND_WITH {status: $status}]-(all)")
+            .Return(all => all.As<UserEntity>())
+            .ResultsAsync;
 
         return result;
     }
 
-    public Task<IEnumerable<UserEntity>> GetAllRejectedFriendsById(Guid id, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<UserEntity>> GetAllFriendsByStatus(string id, FriendshipStatus status, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var result = await client.Cypher
+            .Match("(us:UserEntity{Id: $id })-[:FRIEND_WITH {status: $status }]->(u) ")
+            .WithParam("id", id)
+            .WithParam("status", status)
+            .Return(u => u.As<UserEntity>())
+            .ResultsAsync;
+
+        return result;
     }
 
-    public Task<IEnumerable<UserEntity>> GetAllWaitingForConfirmationFriendsById(Guid id, CancellationToken cancellationToken)
+    public async Task<IEnumerable<UserEntity>?> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var result = await client.Cypher
+            .Match("(n:UserEntity)")
+            .Return(n => n.As<UserEntity>())
+            .ResultsAsync;
+
+        return result;
     }
 
-    public Task UpdateAsync(UserEntity entity, CancellationToken cancellationToken = default)
+
+    public async Task UpdateAsync(UserEntity entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        cancellationToken.ThrowIfCancellationRequested();
+
+        await client.Cypher
+            .Match("(user:UserEntity {Id: $id})")
+            .WithParam("id", entity.Id)
+            .Set("user = $entity")
+            .WithParam("entity", entity)
+            .ExecuteWithoutResultsAsync();
     }
 
-    public Task UpdateRangeAsync(IEnumerable<UserEntity> entities, CancellationToken cancellationToken = default)
+    public async Task UpdateFriendshipStatus(string fromId, string toId, FriendshipStatus status, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        cancellationToken.ThrowIfCancellationRequested();
+
+        await client.Cypher
+            .Match("(fromUser:UserEntity {Id: $fromId })-[r:FRIEND_WITH]-(toUser:UserEntity {Id: $toId}) SET r.status = $status")
+            .WithParam("fromId", fromId)
+            .WithParam("toId", toId)
+            .WithParam("status", status)
+            .ExecuteWithoutResultsAsync();
     }
+
+
 }

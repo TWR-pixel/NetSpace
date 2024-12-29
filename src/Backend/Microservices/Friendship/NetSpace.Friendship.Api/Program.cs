@@ -1,15 +1,14 @@
+using NetSpace.Friendship.Application.Common.Extensions;
 using NetSpace.Friendship.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddOpenApi();
 
-//builder.Services.AddApplications();
+builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructure(builder.Configuration.GetSection("Neo4j"));
 
 var app = builder.Build();

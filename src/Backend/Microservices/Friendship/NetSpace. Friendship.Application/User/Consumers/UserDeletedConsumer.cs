@@ -8,7 +8,7 @@ public sealed class UserDeletedConsumer(IUserRepository users) : IConsumer<UserD
 {
     public async Task Consume(ConsumeContext<UserDeletedMessage> context)
     {
-        var userEntity = await users.FindByIdAsync(Guid.Parse(context.Message.Id), context.CancellationToken);
+        var userEntity = await users.FindByIdAsync(context.Message.Id, context.CancellationToken);
 
         if (userEntity != null)
         {

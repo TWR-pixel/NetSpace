@@ -2,7 +2,6 @@
 using NetSpace.Common.Application;
 using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.Domain;
-using NetSpace.User.UseCases;
 
 namespace NetSpace.User.Application.User.Requests;
 

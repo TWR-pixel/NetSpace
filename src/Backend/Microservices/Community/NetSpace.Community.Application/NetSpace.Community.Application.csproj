@@ -7,7 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Extensions\" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageReference Include="MassTransit" Version="8.3.4" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\NetSpace.Common.Application\NetSpace.Common.Application.csproj" />
+    <ProjectReference Include="..\..\Common\NetSpace.Common.Messages\NetSpace.Common.Messages.csproj" />
+    <ProjectReference Include="..\NetSpace.Community.UseCases\NetSpace.Community.UseCases.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Community\Mapper\Extensions\" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Common.Messages.User;
 using NetSpace.User.Domain;
@@ -9,7 +10,7 @@ namespace NetSpace.User.Infrastructure.Common.Extensions;
 
 public static class InfrastructureServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string? connectionString)
     {
         services.AddMassTransit(configure =>
         {
@@ -31,6 +32,7 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddDbContext<NetSpaceDbContext>(options =>
         {
+            options.UseNpgsql(connectionString);
         });
 
         services.AddScoped<IUserRepository, UserRepository>();

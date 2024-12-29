@@ -8,12 +8,12 @@ public sealed record CreateFriendshipRequest : RequestBase<CreateFriendshipRespo
     /// <summary>
     /// User, creating a friendship
     /// </summary>
-    public required Guid FollowingId { get; set; }
+    public required Guid FromId { get; set; }
 
     /// <summary>
     /// User, accepting following friendship request
     /// </summary>
-    public required Guid FollowerId { get; set; }
+    public required Guid ToId { get; set; }
 }
 
 public sealed record CreateFriendshipResponse : ResponseBase
@@ -25,9 +25,11 @@ public sealed class CreateFriendshipRequestHandler(IUserRepository userRepositor
 {
     public override async Task<CreateFriendshipResponse> Handle(CreateFriendshipRequest request, CancellationToken cancellationToken)
     {
-        var following = await userRepository.FindByIdAsync(request.FollowingId, cancellationToken);
-        var follower = await userRepository.FindByIdAsync(request.FollowerId, cancellationToken);
+        await userRepository.CreateFriendship(request.FromId.ToString(),
+                                              request.ToId.ToString(),
+                                              Domain.FriendshipStatus.WaitingForConfirmation,
+                                              cancellationToken);
 
-        throw new NotImplementedException();
+        return new CreateFriendshipResponse();
     }
 }

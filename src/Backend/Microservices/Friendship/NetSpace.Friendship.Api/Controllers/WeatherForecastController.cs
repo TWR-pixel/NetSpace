@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using NetSpace.Friendship.Domain;
 using NetSpace.Friendship.UseCases;
 
 namespace NetSpace.Friendship.Api.Controllers
@@ -17,10 +16,6 @@ namespace NetSpace.Friendship.Api.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public ActionResult Get()
         {
-            var follower = new UserEntity(Guid.NewGuid(), "iejof", "oiwjefiowje", null, Gender.NotSet);
-
-            userRepo.AddAsync(follower);
-
             return Ok();
         }
     }

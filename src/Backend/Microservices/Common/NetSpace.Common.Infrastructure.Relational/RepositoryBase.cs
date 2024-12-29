@@ -4,60 +4,84 @@ using NetSpace.Common.UseCases;
 
 namespace NetSpace.Common.Infrastructure.EntityFrameworkCore;
 
-public abstract class RepositoryBase<TEntity, TId, TDbContext>(TDbContext dbContext) : IRepository<TEntity, TId>
+public abstract class RepositoryBase<TEntity, TId, TDbContext> : IRepository<TEntity, TId>
     where TEntity : class, IEntity<TId>
     where TId : notnull
     where TDbContext : DbContext
 {
+
+    protected TDbContext DbContext { get; set; }
+
+    public RepositoryBase(TDbContext dbContext)
+    {
+        DbContext = dbContext;
+    }
+
     public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        var entry = await dbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
+        var entry = await DbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
 
         return entry.Entity;
     }
 
-    public Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        await DbContext.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
+
+        return entities;
     }
 
-    public Task<bool> AnyAsync(CancellationToken cancellationToken = default)
+    public async Task<bool> AnyAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var result = await DbContext.Set<TEntity>().AnyAsync(cancellationToken);
+
+        return result;
     }
 
-    public Task<int> CountAsync(CancellationToken cancellationToken = default)
+    public async Task<int> CountAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var result = await DbContext.Set<TEntity>().CountAsync(cancellationToken);
+
+        return result;
     }
 
     public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        DbContext.Set<TEntity>().Remove(entity);
+
+        return Task.CompletedTask;
     }
 
     public Task DeleteRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        DbContext.Set<TEntity>().RemoveRange(entities);
+
+        return Task.CompletedTask;
     }
 
-    public Task<TEntity?> FindByIdAsync(TId id, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> FindByIdAsync(TId id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var result = await DbContext.Set<TEntity>().FindAsync([id], cancellationToken);
+
+        return result;
     }
 
-    public Task<IEnumerable<TEntity>?> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>?> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var result = await DbContext.Set<TEntity>().ToListAsync(cancellationToken);
+
+        return result;
     }
 
-    public Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        DbContext.Set<TEntity>().Update(entity);
     }
 
     public Task UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        DbContext.Set<TEntity>().UpdateRange(entities);
+
+        return Task.CompletedTask;
     }
 }

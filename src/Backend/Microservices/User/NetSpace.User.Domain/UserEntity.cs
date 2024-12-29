@@ -24,5 +24,13 @@ public sealed class UserEntity(string nickname,
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
 
+    public string Hometown { get; set; } = string.Empty;
+    public Language Language { get; set; } = Language.NotSet;
+    public MaritalStatus MaritalStatus { get; set; } = MaritalStatus.NotSet;
+    public string CurrentCity { get; set; } = string.Empty;
+    public string PersonalSite { get; set; } = string.Empty;
+
     public Gender Gender { get; set; } = gender;
+
+    public string SchoolName { get; set; } = string.Empty;
 }

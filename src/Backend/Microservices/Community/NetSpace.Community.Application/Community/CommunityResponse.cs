@@ -1,5 +1,7 @@
-﻿namespace NetSpace.Community.Application.Community;
+﻿using NetSpace.Common.Application;
 
-public sealed record CommunityResponse
+namespace NetSpace.Community.Application.Community;
+
+public sealed record CommunityResponse : ResponseBase
 {
 }
