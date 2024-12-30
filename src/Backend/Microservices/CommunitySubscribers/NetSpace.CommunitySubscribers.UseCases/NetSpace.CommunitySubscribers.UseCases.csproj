@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NetSpace.CommunitySubscribers.Domain\NetSpace.CommunitySubscribers.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,7 @@
 using NetSpace.User.Application.Common.Extensions;
 using NetSpace.User.Infrastructure.Common.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);   
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -23,6 +23,7 @@ if (app.Environment.IsDevelopment())
     app.MapSwagger();
 }
 
+app.UseHsts();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

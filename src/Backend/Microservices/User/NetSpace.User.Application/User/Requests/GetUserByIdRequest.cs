@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Distributed;
-using NetSpace.Common.Application;
-using NetSpace.User.Domain;
+using NetSpace.User.Domain.User;
 using System.Text.Json;
 
 namespace NetSpace.User.Application.User.Requests;
@@ -17,7 +16,7 @@ public sealed class GetUserByIdRequestHandler(UserManager<UserEntity> userManage
 {
     public override async Task<GetUserByIdResponse> Handle(GetUserByIdRequest request, CancellationToken cancellationToken)
     {
-        UserEntity? userEntity = default;
+        UserEntity? userEntity;
         var cachedUser = await distributedCache.GetStringAsync(request.Id.ToString(), cancellationToken);
 
         if (cachedUser == null)

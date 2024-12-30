@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.Community.Application.Community.Requests;
 using NetSpace.Community.Domain;
-using NetSpace.Community.UseCases;
+using NetSpace.Community.UseCases.Community;
 
 namespace NetSpace.Community.Api.Controllers;
 

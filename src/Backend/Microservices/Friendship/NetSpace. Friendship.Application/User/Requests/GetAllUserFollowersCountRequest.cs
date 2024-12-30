@@ -1,5 +1,4 @@
-﻿using NetSpace.Common.Application;
-using NetSpace.Friendship.UseCases;
+﻿using NetSpace.Friendship.UseCases;
 
 namespace NetSpace.Friendship.Application.User.Requests;
 

@@ -1,6 +1,4 @@
-﻿using NetSpace.Common.Domain;
-
-namespace NetSpace.CommunitySubscribers.Domain;
+﻿namespace NetSpace.CommunitySubscribers.Domain;
 
 public sealed class UserEntity(string id,
                                string nickname,

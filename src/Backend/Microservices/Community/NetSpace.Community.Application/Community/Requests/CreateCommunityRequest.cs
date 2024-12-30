@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using NetSpace.Common.Application;
 using NetSpace.Community.Application.Common.Exceptions;
 using NetSpace.Community.Domain;
-using NetSpace.Community.UseCases;
+using NetSpace.Community.UseCases.Community;
+using NetSpace.Community.UseCases.User;
 
 namespace NetSpace.Community.Application.Community.Requests;
 

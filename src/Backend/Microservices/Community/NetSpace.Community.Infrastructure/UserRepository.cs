@@ -1,6 +1,5 @@
-﻿using NetSpace.Common.Infrastructure.EntityFrameworkCore;
-using NetSpace.Community.Domain;
-using NetSpace.Community.UseCases;
+﻿using NetSpace.Community.Domain;
+using NetSpace.Community.UseCases.User;
 
 namespace NetSpace.Community.Infrastructure;
 

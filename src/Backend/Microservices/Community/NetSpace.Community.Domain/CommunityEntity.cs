@@ -1,6 +1,4 @@
-﻿using NetSpace.Common.Domain;
-
-namespace NetSpace.Community.Domain;
+﻿namespace NetSpace.Community.Domain;
 
 public sealed class CommunityEntity : IEntity<int>
 {

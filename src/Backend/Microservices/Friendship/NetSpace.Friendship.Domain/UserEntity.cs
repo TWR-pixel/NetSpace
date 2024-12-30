@@ -1,5 +1,4 @@
-﻿using NetSpace.Common.Domain;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace NetSpace.Friendship.Domain;
 

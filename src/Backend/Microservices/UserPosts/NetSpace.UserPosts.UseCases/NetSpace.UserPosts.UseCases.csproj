@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\NetSpace.Common.UseCases\NetSpace.Common.UseCases.csproj" />
     <ProjectReference Include="..\NetSpace.UserPosts.Domain\NetSpace.UserPosts.Domain.csproj" />
   </ItemGroup>
 

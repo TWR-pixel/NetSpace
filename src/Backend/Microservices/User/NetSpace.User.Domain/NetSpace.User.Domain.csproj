@@ -11,8 +11,4 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\NetSpace.Common.Domain\NetSpace.Common.Domain.csproj" />
-  </ItemGroup>
-
 </Project>

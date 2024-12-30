@@ -1,4 +1,4 @@
-﻿using NetSpace.User.Domain;
+﻿using NetSpace.User.Domain.User;
 
 namespace NetSpace.User.Application.User.Extensions;
 

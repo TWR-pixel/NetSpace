@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using NetSpace.User.Domain;
+using NetSpace.User.Domain.User;
 
 namespace NetSpace.User.Infrastructure.Common;
 

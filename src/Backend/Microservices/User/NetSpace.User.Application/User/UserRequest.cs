@@ -1,5 +1,4 @@
-﻿using NetSpace.Common.Application;
-using NetSpace.User.Domain;
+﻿using NetSpace.User.Domain.User;
 using System.Diagnostics.CodeAnalysis;
 
 namespace NetSpace.User.Application.User;
@@ -25,8 +24,6 @@ public sealed record UserRequest(
     public string About { get; set; } = About;
     public string AvatarUrl { get; set; } = AvatarUrl;
     public DateTime? BirthDate { get; set; } = BirthDate;
-    public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
-    public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
 
     public Gender Gender { get; set; } = Gender;
 }

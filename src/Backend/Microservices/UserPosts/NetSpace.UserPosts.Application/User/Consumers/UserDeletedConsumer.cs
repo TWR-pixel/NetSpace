@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using NetSpace.Common.Messages.User;
-using NetSpace.UserPosts.UseCases;
+using NetSpace.UserPosts.UseCases.User;
 
 namespace NetSpace.UserPosts.Application.User.Consumers;
 

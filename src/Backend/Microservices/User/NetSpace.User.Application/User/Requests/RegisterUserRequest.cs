@@ -1,10 +1,9 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Distributed;
-using NetSpace.Common.Application;
 using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.User.Exceptions;
-using NetSpace.User.Domain;
+using NetSpace.User.Domain.User;
 using System.Text.Json;
 
 namespace NetSpace.User.Application.User.Requests;
@@ -31,7 +30,6 @@ public sealed class RegisterUserRequestHandler(UserManager<UserEntity> userManag
     public override async Task<RegisterUserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {
         var userEntity = new UserEntity(request.Nickname, request.Name, request.Surname, request.LastName);
-
         var userFromDb = await userManager.FindByEmailAsync(request.Email);
 
         if (userFromDb != null)

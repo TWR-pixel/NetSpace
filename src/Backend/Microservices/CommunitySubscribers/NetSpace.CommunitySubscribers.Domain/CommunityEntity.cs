@@ -1,6 +1,4 @@
-﻿using NetSpace.Common.Domain;
-
-namespace NetSpace.CommunitySubscribers.Domain;
+﻿namespace NetSpace.CommunitySubscribers.Domain;
 
 public sealed class CommunityEntity(string name, string? description, string? avatarUrl, UserEntity owner, CommunityType communityType) : IEntity<int>
 {

@@ -1,5 +1,4 @@
-﻿using NetSpace.Common.Application;
-using NetSpace.Community.UseCases;
+﻿using NetSpace.Community.UseCases.Community;
 
 namespace NetSpace.Community.Application.Community.Requests;
 

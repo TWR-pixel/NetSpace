@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using NetSpace.Community.UseCases;
+using NetSpace.Community.UseCases.Community;
+using NetSpace.Community.UseCases.User;
 
 namespace NetSpace.Community.Infrastructure.Common.Extensions;
 

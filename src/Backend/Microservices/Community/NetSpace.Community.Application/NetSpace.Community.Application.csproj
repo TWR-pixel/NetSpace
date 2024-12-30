@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\NetSpace.Common.Application\NetSpace.Common.Application.csproj" />
     <ProjectReference Include="..\..\Common\NetSpace.Common.Messages\NetSpace.Common.Messages.csproj" />
     <ProjectReference Include="..\NetSpace.Community.UseCases\NetSpace.Community.UseCases.csproj" />
   </ItemGroup>

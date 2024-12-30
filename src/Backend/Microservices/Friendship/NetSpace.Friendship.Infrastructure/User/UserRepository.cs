@@ -143,5 +143,8 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
             .ExecuteWithoutResultsAsync();
     }
 
-
+    public Task<int> CountAsync(CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
 }

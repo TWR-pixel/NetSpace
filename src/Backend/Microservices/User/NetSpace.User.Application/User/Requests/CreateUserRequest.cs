@@ -1,9 +1,8 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
-using NetSpace.Common.Application;
 using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.User.Extensions;
-using NetSpace.User.Domain;
+using NetSpace.User.Domain.User;
 
 namespace NetSpace.User.Application.User.Requests;
 
