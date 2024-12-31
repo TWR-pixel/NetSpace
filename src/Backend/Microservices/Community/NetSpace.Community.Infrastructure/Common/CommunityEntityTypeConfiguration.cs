@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NetSpace.Community.Domain;
+using NetSpace.Community.Domain.Community;
 
 namespace NetSpace.Community.Infrastructure.Common;
 

@@ -1,4 +1,5 @@
 ﻿using NetSpace.Community.Domain;
+using NetSpace.Community.Domain.User;
 using System.Diagnostics.CodeAnalysis;
 
 namespace NetSpace.Community.Application.User;

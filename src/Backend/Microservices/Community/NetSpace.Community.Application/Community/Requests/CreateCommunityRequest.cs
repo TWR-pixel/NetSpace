@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using NetSpace.Community.Application.Common.Exceptions;
-using NetSpace.Community.Domain;
+using NetSpace.Community.Domain.Community;
 using NetSpace.Community.UseCases.Community;
 using NetSpace.Community.UseCases.User;
 
@@ -43,7 +43,6 @@ public sealed class CreateCommunityRequestHandler(ICommunityRepository community
         var result = await communityRepository.AddAsync(communityEntity, cancellationToken);
         
         var response = new CommunityResponse();
-            
 
        return response;
     }

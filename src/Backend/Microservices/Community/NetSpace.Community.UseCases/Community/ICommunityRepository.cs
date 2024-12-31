@@ -1,4 +1,4 @@
-﻿using NetSpace.Community.Domain;
+﻿using NetSpace.Community.Domain.Community;
 
 namespace NetSpace.Community.UseCases.Community;
 

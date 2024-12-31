@@ -1,4 +1,4 @@
-﻿using NetSpace.Community.Domain;
+﻿using NetSpace.Community.Domain.User;
 
 namespace NetSpace.Community.Application.User.Mapper.Extensions;
 
