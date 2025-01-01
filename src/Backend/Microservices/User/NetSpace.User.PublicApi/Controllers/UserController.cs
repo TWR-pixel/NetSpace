@@ -13,7 +13,7 @@ public sealed class UserController(IMediator mediator) : ApiControllerBase(media
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserResponse>> GetById(GetUserByIdRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserResponse>> GetUsers(GetUsersRequest request, CancellationToken cancellationToken)
         => Ok(await Mediator.Send(request, cancellationToken));
 
     [HttpPost]
@@ -34,17 +34,5 @@ public sealed class UserController(IMediator mediator) : ApiControllerBase(media
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserResponse>> DeleteById(DeleteUserByIdRequest request, CancellationToken cancellationToken)
-        => Ok(await Mediator.Send(request, cancellationToken));
-
-    [HttpPost("register")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<UserResponse>> Register(RegisterUserRequest request, CancellationToken cancellationToken)
-        => CreatedAtAction(nameof(Register), await Mediator.Send(request, cancellationToken));
-
-    [HttpPost("login")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserResponse>> Login(LoginUserRequest request, CancellationToken cancellationToken)
         => Ok(await Mediator.Send(request, cancellationToken));
 }

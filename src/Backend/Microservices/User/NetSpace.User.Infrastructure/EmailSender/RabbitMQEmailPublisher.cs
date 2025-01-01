@@ -1,11 +1,10 @@
 ﻿using MassTransit;
-using Microsoft.AspNetCore.Identity;
 using NetSpace.Common.Messages;
 using NetSpace.User.Domain.User;
 
 namespace NetSpace.User.Infrastructure.EmailSender;
 
-public sealed class RabbitMQEmailPublisher(IPublishEndpoint publisher) : IEmailSender<UserEntity>
+public sealed class RabbitMQEmailPublisher(IPublishEndpoint publisher)
 {
     public async Task SendConfirmationLinkAsync(UserEntity user, string email, string confirmationLink)
     {

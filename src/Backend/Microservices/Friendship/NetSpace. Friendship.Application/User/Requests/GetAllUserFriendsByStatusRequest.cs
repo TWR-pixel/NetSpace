@@ -13,7 +13,7 @@ public sealed class GetAllUserFriendsByStatusRequestBase(IUserRepository userRep
 {
     public override async Task<IEnumerable<UserResponse>> Handle(GetAllUserFriendsByStatusRequest request, CancellationToken cancellationToken)
     {
-        var allUserFriends = await userRepository.GetAllFriendsByStatus(request.Id.ToString(), request.Status, cancellationToken);
+        var allUserFriends = await userRepository.GetAllFriendsByStatus(request.Id, request.Status, cancellationToken);
 
         var response = allUserFriends.Select(u => new UserResponse(u.Nickname, u.Name, u.Surname, u.LastName, u.About, u.AvatarUrl, u.BirthDate, u.Gender));
 

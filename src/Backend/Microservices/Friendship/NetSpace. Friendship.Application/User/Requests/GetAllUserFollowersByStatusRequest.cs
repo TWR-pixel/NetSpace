@@ -13,7 +13,7 @@ public sealed class GetAllUserFollowersByStatusRequestHandler(IUserRepository us
 {
     public override async Task<IEnumerable<UserEntity>> Handle(GetAllUserFollowersByStatusRequest request, CancellationToken cancellationToken)
     {
-        var result = await userRepository.GetAllFollowersByStatus(request.Id.ToString(), request.Status, cancellationToken);
+        var result = await userRepository.GetAllFollowersByStatus(request.Id, request.Status, cancellationToken);
 
         return result;
     }

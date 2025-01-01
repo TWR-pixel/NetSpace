@@ -1,21 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.User.Domain;
+using NetSpace.User.Infrastructure.Common;
 using NetSpace.User.UseCases;
 
 namespace NetSpace.User.Infrastructure;
 
-public abstract class RepositoryBase<TEntity, TId, TDbContext> : IRepository<TEntity, TId>
+public abstract class RepositoryBase<TEntity, TId>(NetSpaceDbContext dbContext) : IRepository<TEntity, TId>
     where TEntity : class, IEntity<TId>
     where TId : notnull
-    where TDbContext : DbContext
 {
 
-    protected TDbContext DbContext { get; set; }
-
-    public RepositoryBase(TDbContext dbContext)
-    {
-        DbContext = dbContext;
-    }
+    protected NetSpaceDbContext DbContext { get; set; } = dbContext;
 
     public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {

@@ -6,7 +6,7 @@ namespace NetSpace.Common.Messages.User;
 public sealed class UserCreatedMessage
 {
     [SetsRequiredMembers]
-    public UserCreatedMessage(string id, string nickname, string name, string surname, string? email, string lastName, string about, string avatarUrl, Gender gender)
+    public UserCreatedMessage(Guid id, string nickname, string name, string surname, string? email, string lastName, string about, string avatarUrl, Gender gender)
     {
         Id = id;
         Nickname = nickname;
@@ -19,7 +19,7 @@ public sealed class UserCreatedMessage
         Gender = gender;
     }
 
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public required string Nickname { get; set; }
     public required string Name { get; set; }
     public required string Surname { get; set; }

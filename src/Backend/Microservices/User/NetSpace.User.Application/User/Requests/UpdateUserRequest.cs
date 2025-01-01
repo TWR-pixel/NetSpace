@@ -1,10 +1,11 @@
 ﻿using NetSpace.User.Application.User.Exceptions;
+using NetSpace.User.Application.User.Extensions;
 using NetSpace.User.Domain.User;
 using NetSpace.User.UseCases.User;
 
 namespace NetSpace.User.Application.User.Requests;
 
-public sealed record UpdateUserRequest : RequestBase<UpdateUserResponse>
+public sealed record UpdateUserRequest : RequestBase<UserResponse>
 {
     public required Guid Id { get; set; }
     public string? Nickname { get; set; }
@@ -27,11 +28,11 @@ public sealed record UpdateUserRequest : RequestBase<UpdateUserResponse>
 
 public sealed record UpdateUserResponse : ResponseBase;
 
-public sealed class UpdateUserRequestHandler(IUserRepository userRepository) : RequestHandlerBase<UpdateUserRequest, UpdateUserResponse>
+public sealed class UpdateUserRequestHandler(IUserRepository userRepository) : RequestHandlerBase<UpdateUserRequest, UserResponse>
 {
-    public override async Task<UpdateUserResponse> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
+    public override async Task<UserResponse> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
     {
-        var userEntity = await userRepository.FindByIdAsync(request.Id.ToString(), cancellationToken)
+        var userEntity = await userRepository.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new UserNotFoundException(request.Id);
 
         if (!string.IsNullOrWhiteSpace(request.Nickname))
@@ -69,6 +70,6 @@ public sealed class UpdateUserRequestHandler(IUserRepository userRepository) : R
 
         await userRepository.SaveChangesAsync(cancellationToken);
 
-        return new UpdateUserResponse();
+        return userEntity.ToResponse();
     }
 }

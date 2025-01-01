@@ -1,25 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace NetSpace.User.Domain.User;
 
-[method: SetsRequiredMembers]
-public sealed class UserEntity(string nickname,
-                               string name,
-                               string surname,
-                               string lastName = "",
-                               string about = "",
-                               string avatarUrl = "",
-                               DateTime? birthDate = null,
-                               Gender gender = Gender.NotSet) : IdentityUser, IEntity<string>
+public sealed class UserEntity : IEntity<Guid>
 {
-    public required string Nickname { get; set; } = nickname;
-    public required string Name { get; set; } = name;
-    public required string Surname { get; set; } = surname;
-    public string LastName { get; set; } = lastName;
-    public string About { get; set; } = about;
-    public string AvatarUrl { get; set; } = avatarUrl;
-    public DateTime? BirthDate { get; set; } = birthDate;
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public required string Nickname { get; set; }
+    public required string Name { get; set; }
+    public required string Surname { get; set; }
+    public required string Email { get; set; }
+    public string LastName { get; set; } = string.Empty;
+    public string About { get; set; } = string.Empty;
+    public string AvatarUrl { get; set; } = string.Empty;
+    public DateTime? BirthDate { get; set; }
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
 
@@ -29,7 +22,7 @@ public sealed class UserEntity(string nickname,
     public string CurrentCity { get; set; } = string.Empty;
     public string PersonalSite { get; set; } = string.Empty;
 
-    public Gender Gender { get; set; } = gender;
+    public Gender Gender { get; set; } = Gender.NotSet;
 
     public string SchoolName { get; set; } = string.Empty;
 }

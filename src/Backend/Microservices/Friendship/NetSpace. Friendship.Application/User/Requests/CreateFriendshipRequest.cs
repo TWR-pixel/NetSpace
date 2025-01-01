@@ -24,8 +24,8 @@ public sealed class CreateFriendshipRequestHandler(IUserRepository userRepositor
 {
     public override async Task<CreateFriendshipResponse> Handle(CreateFriendshipRequest request, CancellationToken cancellationToken)
     {
-        await userRepository.CreateFriendship(request.FromId.ToString(),
-                                              request.ToId.ToString(),
+        await userRepository.CreateFriendship(request.FromId,
+                                              request.ToId,
                                               Domain.FriendshipStatus.WaitingForConfirmation,
                                               cancellationToken);
 

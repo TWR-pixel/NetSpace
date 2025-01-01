@@ -1,32 +1,28 @@
 ﻿using NetSpace.User.Domain.User;
-using System.Diagnostics.CodeAnalysis;
 
 namespace NetSpace.User.Application.User;
 
-[method: SetsRequiredMembers]
-public sealed record UserResponse(string Id,
-                                  string Nickname,
-                                  string Name,
-                                  string Surname,
-                                  string LastName = "",
-                                  string About = "",
-                                  string AvatarUrl = "",
-                                  string Password = "",
-                                  DateTime? BirthDate = null,
-                                  Gender Gender = Gender.NotSet) : ResponseBase
+public sealed record UserResponse : ResponseBase
 {
-    public string Id { get; set; } = Id;
-    public required string Nickname { get; set; } = Nickname;
-    public required string Name { get; set; } = Name;
-    public required string Surname { get; set; } = Surname;
-    public required string Password { get; set; } = Password;
-
-    public string LastName { get; set; } = LastName;
-    public string About { get; set; } = About;
-    public string AvatarUrl { get; set; } = AvatarUrl;
-    public DateTime? BirthDate { get; set; } = BirthDate;
+    public Guid Id { get; set; }
+    public required string Nickname { get; set; }
+    public required string Name { get; set; }
+    public required string Surname { get; set; }
+    public required string Email { get; set; }
+    public string LastName { get; set; } = string.Empty;
+    public string About { get; set; } = string.Empty;
+    public string AvatarUrl { get; set; } = string.Empty;
+    public DateTime? BirthDate { get; set; }
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
 
-    public Gender Gender { get; set; } = Gender;
+    public string Hometown { get; set; } = string.Empty;
+    public Language Language { get; set; } = Language.NotSet;
+    public MaritalStatus MaritalStatus { get; set; } = MaritalStatus.NotSet;
+    public string CurrentCity { get; set; } = string.Empty;
+    public string PersonalSite { get; set; } = string.Empty;
+
+    public Gender Gender { get; set; } = Gender.NotSet;
+
+    public string SchoolName { get; set; } = string.Empty;
 }

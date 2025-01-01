@@ -16,7 +16,7 @@ public sealed class UpdateFriendshipRequestHandler(IUserRepository userRepositor
 {
     public override async Task<UpdateFriendshipResponse> Handle(UpdateFriendshipRequest request, CancellationToken cancellationToken)
     {
-        await userRepository.UpdateFriendshipStatus(request.FromId.ToString(), request.ToId.ToString(), request.Status, cancellationToken);
+        await userRepository.UpdateFriendshipStatus(request.FromId, request.ToId, request.Status, cancellationToken);
 
         return new UpdateFriendshipResponse();
     }

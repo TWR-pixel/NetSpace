@@ -3,9 +3,9 @@
 namespace NetSpace.Common.Messages.User;
 
 [method: SetsRequiredMembers]
-public sealed class UserDeletedMessage(string id, string name, string surname, DateTime? birthDate, Gender gender = Gender.NotSet)
+public sealed class UserDeletedMessage(Guid id, string name, string surname, DateTime? birthDate, Gender gender = Gender.NotSet)
 {
-    public string Id { get; set; } = id;
+    public Guid Id { get; set; } = id;
     public required string Nickname { get; set; } = "";
     public required string Name { get; set; } = name;
     public required string Surname { get; set; } = surname;

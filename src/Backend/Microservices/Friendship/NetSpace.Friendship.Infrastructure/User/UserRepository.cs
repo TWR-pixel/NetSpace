@@ -23,7 +23,7 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
         throw new NotImplementedException();
     }
 
-    public async Task<long> FriendsCountById(string id, CancellationToken cancellationToken = default)
+    public async Task<long> FriendsCountById(Guid id, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -35,7 +35,7 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
         return result.First();
     }
 
-    public async Task<long> FollowersCountById(string id, CancellationToken cancellationToken = default)
+    public async Task<long> FollowersCountById(Guid id, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -47,7 +47,7 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
         return result.First();
     }
 
-    public async Task CreateFriendship(string fromId, string toId, FriendshipStatus status, CancellationToken cancellationToken = default)
+    public async Task CreateFriendship(Guid fromId, Guid toId, FriendshipStatus status, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -68,7 +68,7 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
             .ExecuteWithoutResultsAsync();
     }
 
-    public async Task<UserEntity?> FindByIdAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<UserEntity?> FindByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -80,7 +80,7 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
         return result.FirstOrDefault();
     }
 
-    public async Task<IEnumerable<UserEntity>> GetAllFollowersByStatus(string id, FriendshipStatus status, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<UserEntity>> GetAllFollowersByStatus(Guid id, FriendshipStatus status, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -92,7 +92,7 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
         return result;
     }
 
-    public async Task<IEnumerable<UserEntity>> GetAllFriendsByStatus(string id, FriendshipStatus status, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<UserEntity>> GetAllFriendsByStatus(Guid id, FriendshipStatus status, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -131,7 +131,7 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
             .ExecuteWithoutResultsAsync();
     }
 
-    public async Task UpdateFriendshipStatus(string fromId, string toId, FriendshipStatus status, CancellationToken cancellationToken = default)
+    public async Task UpdateFriendshipStatus(Guid fromId, Guid toId, FriendshipStatus status, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 

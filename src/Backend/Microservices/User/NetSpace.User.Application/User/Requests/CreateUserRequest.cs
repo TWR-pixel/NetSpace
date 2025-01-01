@@ -1,20 +1,19 @@
 ﻿using MassTransit;
-using Microsoft.AspNetCore.Identity;
 using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.Common.Cache;
 using NetSpace.User.Application.User.Extensions;
-using NetSpace.User.Domain.User;
+using NetSpace.User.UseCases.User;
 
 namespace NetSpace.User.Application.User.Requests;
 
 public sealed class CreateUserRequestHandler(IPublishEndpoint publisher,
-                                             UserManager<UserEntity> userManager,
+                                             IUserRepository userRepository,
                                              IUserDistributedCacheStorage cache) : RequestHandlerBase<UserRequest, UserResponse>
 {
     public override async Task<UserResponse> Handle(UserRequest request, CancellationToken cancellationToken)
     {
         var userEntity = request.ToEntity();
-        await userManager.CreateAsync(userEntity, request.Password);
+        await userRepository.AddAsync(userEntity, cancellationToken);
 
         var userCreatedMessage = new UserCreatedMessage(userEntity.Id,
                                                         userEntity.Nickname,
@@ -24,7 +23,7 @@ public sealed class CreateUserRequestHandler(IPublishEndpoint publisher,
                                                         userEntity.LastName,
                                                         userEntity.About,
                                                         userEntity.AvatarUrl,
-                                                        (NetSpace.Common.Messages.User.Gender)userEntity.Gender);
+                                                        (Gender)userEntity.Gender);
 
         await publisher.Publish(userCreatedMessage, cancellationToken);
         await cache.AddAsync(userEntity, cancellationToken);

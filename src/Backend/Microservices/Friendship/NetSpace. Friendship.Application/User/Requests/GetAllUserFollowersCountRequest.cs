@@ -13,7 +13,7 @@ public sealed class GetAllUserFollowersCountRequestHandler(IUserRepository userR
 {
     public override async Task<GetAllUserFollowersCountResponse> Handle(GetAllUserFollowersCountRequest request, CancellationToken cancellationToken)
     {
-        var result = await userRepository.FollowersCountById(request.Id.ToString(), cancellationToken);
+        var result = await userRepository.FollowersCountById(request.Id, cancellationToken);
 
         throw new NotImplementedException();
     }

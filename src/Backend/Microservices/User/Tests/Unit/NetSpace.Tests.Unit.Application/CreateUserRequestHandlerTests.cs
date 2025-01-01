@@ -6,7 +6,6 @@
         public void Should_CreateUserWithValidParameters()
         {
 
-
         }
     }
 }

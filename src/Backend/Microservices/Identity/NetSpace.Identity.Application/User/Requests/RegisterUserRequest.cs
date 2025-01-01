@@ -43,7 +43,7 @@ public sealed class RegisterUserRequestHandler(IUserRepository userRepository, I
 
         await userRepository.AddAsync(newUser, request.Password, cancellationToken);
 
-        await publishEndpoint.Publish(new UserCreatedMessage(newUser.Id,
+        await publishEndpoint.Publish(new UserCreatedMessage(Guid.Parse(newUser.Id),
                                                              newUser.Nickname,
                                                              newUser.Name,
                                                              newUser.Surname,

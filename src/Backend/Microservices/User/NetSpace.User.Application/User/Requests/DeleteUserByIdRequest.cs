@@ -1,27 +1,25 @@
-﻿using Microsoft.AspNetCore.Identity;
-using NetSpace.User.Application.Common.Cache;
+﻿using NetSpace.User.Application.Common.Cache;
 using NetSpace.User.Application.User.Exceptions;
-using NetSpace.User.Domain.User;
+using NetSpace.User.Application.User.Extensions;
+using NetSpace.User.UseCases.User;
 
 namespace NetSpace.User.Application.User.Requests;
 
-public sealed record DeleteUserByIdRequest : RequestBase<DeleteUserByIdResponse>
+public sealed record DeleteUserByIdRequest : RequestBase<UserResponse>
 {
     public required Guid Id { get; set; }
 }
 
-public sealed record DeleteUserByIdResponse : ResponseBase;
-
-public sealed class DeleteUserByIdRequestHandler(UserManager<UserEntity> userManager, IUserDistributedCacheStorage cache) : RequestHandlerBase<DeleteUserByIdRequest, DeleteUserByIdResponse>
+public sealed class DeleteUserByIdRequestHandler(IUserRepository userRepository, IUserDistributedCacheStorage cache) : RequestHandlerBase<DeleteUserByIdRequest, UserResponse>
 {
-    public override async Task<DeleteUserByIdResponse> Handle(DeleteUserByIdRequest request, CancellationToken cancellationToken)
+    public override async Task<UserResponse> Handle(DeleteUserByIdRequest request, CancellationToken cancellationToken)
     {
-        var userFromDb = await userManager.FindByIdAsync(request.Id.ToString())
+        var userFromDb = await userRepository.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new UserNotFoundException(request.Id);
 
-        await userManager.DeleteAsync(userFromDb);
+        await userRepository.DeleteAsync(userFromDb, cancellationToken);
         await cache.RemoveByIdAsync(userFromDb.Id, cancellationToken);
 
-        return new DeleteUserByIdResponse();
+        return userFromDb.ToResponse();
     }
 }
