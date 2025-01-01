@@ -6,7 +6,7 @@ namespace NetSpace.User.Infrastructure.UserPostUserComment;
 
 public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) : RepositoryBase<UserPostUserCommentEntity, int>(dbContext), IUserPostUserCommentRepository
 {
-    public IQueryable<UserPostUserCommentEntity> Filter(UserPostUserCommentFilterOptions filter)
+    public IQueryable<UserPostUserCommentEntity> Filter(UserPostUserCommentFilterOptions filter, PaginationOptions pagination, SortOptions sort)
     {
         var query = DbContext.UserPostUserComments.AsQueryable();
 
@@ -22,13 +22,4 @@ public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) :
         return query;
     }
 
-    public IQueryable<UserPostUserCommentEntity> Paginate(PaginationOptions pagination)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IQueryable<UserPostUserCommentEntity> Sort(SortOptions sort)
-    {
-        throw new NotImplementedException();
-    }
 }

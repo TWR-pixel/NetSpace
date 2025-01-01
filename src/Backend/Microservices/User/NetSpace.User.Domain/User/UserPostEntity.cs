@@ -7,7 +7,7 @@ public sealed class UserPostEntity : IEntity<int>
     public required string Title { get; set; } 
     public required string Body { get; set; }
 
-    public required Guid UserId { get; set; }
+    public Guid UserId { get; set; }
     public UserEntity User { get; set; }
 
     public IEnumerable<UserPostUserCommentEntity> UserComments { get; set; } = [];

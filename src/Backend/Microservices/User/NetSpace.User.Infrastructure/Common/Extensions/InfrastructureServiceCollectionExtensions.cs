@@ -35,6 +35,13 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddDbContext<NetSpaceDbContext>(options =>
         {
             options.UseNpgsql(connectionString);
+            if (bool.Parse(config["UseSeeding"]) == true)
+            {
+                options.UseSeeding((seed, _) =>
+                {
+                    NetSpaceDbContextSeeding.Seed(seed);
+                });
+            }
         });
 
         services.AddScoped<IUserRepository, UserRepository>();
