@@ -9,14 +9,14 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageReference Include="MassTransit" Version="8.3.4" />
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="User\Consumers\" />
-    <Folder Include="User\Exceptions\" />
-    <Folder Include="User\Requests\" />
+    <ProjectReference Include="..\..\Common\NetSpace.Common.Messages\NetSpace.Common.Messages.csproj" />
+    <ProjectReference Include="..\NetSpace.Identity.UseCases\NetSpace.Identity.UseCases.csproj" />
   </ItemGroup>
 
 </Project>

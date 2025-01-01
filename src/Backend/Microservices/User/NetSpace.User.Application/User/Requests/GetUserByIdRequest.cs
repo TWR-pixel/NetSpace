@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Caching.Distributed;
+using NetSpace.User.Application.Common.Cache;
+using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.Domain.User;
-using System.Text.Json;
 
 namespace NetSpace.User.Application.User.Requests;
 
@@ -12,18 +12,18 @@ public sealed record GetUserByIdRequest : RequestBase<GetUserByIdResponse>
 
 public sealed record GetUserByIdResponse : ResponseBase;
 
-public sealed class GetUserByIdRequestHandler(UserManager<UserEntity> userManager, IDistributedCache distributedCache) : RequestHandlerBase<GetUserByIdRequest, GetUserByIdResponse>
+public sealed class GetUserByIdRequestHandler(UserManager<UserEntity> userManager, IUserDistributedCacheStorage cache) : RequestHandlerBase<GetUserByIdRequest, GetUserByIdResponse>
 {
     public override async Task<GetUserByIdResponse> Handle(GetUserByIdRequest request, CancellationToken cancellationToken)
     {
-        UserEntity? userEntity;
-        var cachedUser = await distributedCache.GetStringAsync(request.Id.ToString(), cancellationToken);
+        var cachedUser = await cache.GetByIdAsync(request.Id.ToString(), cancellationToken);
 
         if (cachedUser == null)
         {
-            userEntity = await userManager.FindByIdAsync(request.Id.ToString());
+            var userEntity = await userManager.FindByIdAsync(request.Id.ToString())
+                ?? throw new UserNotFoundException(request.Id);
 
-            await distributedCache.SetStringAsync(request.Id.ToString(), JsonSerializer.Serialize(userEntity), cancellationToken);
+            await cache.AddAsync(userEntity, cancellationToken);
 
             return new GetUserByIdResponse();
         }

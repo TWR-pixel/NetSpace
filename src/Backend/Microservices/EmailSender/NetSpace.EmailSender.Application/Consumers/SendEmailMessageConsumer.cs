@@ -8,7 +8,7 @@ public sealed class SendEmailMessageConsumer(IEmailSender emailSender, IOptions<
 {
     private readonly EmailSenderOptions value = options.Value;
 
-    public Task Consume(ConsumeContext<SendEmailMessage> context)
+    public async Task Consume(ConsumeContext<SendEmailMessage> context)
     {
         var msg = context.Message;
 

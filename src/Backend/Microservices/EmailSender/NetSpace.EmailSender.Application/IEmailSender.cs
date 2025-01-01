@@ -1,6 +1,7 @@
-﻿namespace NetSpace.EmailSender.Application;
+﻿
+namespace NetSpace.EmailSender.Application;
 
 public interface IEmailSender
 {
-
+    Task SendAsync();
 }

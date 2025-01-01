@@ -1,4 +1,5 @@
-﻿using NetSpace.Identity.Domain;
+﻿using Microsoft.AspNetCore.Identity;
+using NetSpace.Identity.Domain;
 
 namespace NetSpace.Identity.UseCases;
 
@@ -6,10 +7,7 @@ public interface IWriteonlyRepository<TEntity, TId>
     where TEntity : class, IEntity<TId>
     where TId : notnull
 {
-    public Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
-    public Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+    public Task<IdentityResult> AddAsync(TEntity entity, string password, CancellationToken cancellationToken = default);
     public Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
-    public Task UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
     public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
-    public Task DeleteRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 }

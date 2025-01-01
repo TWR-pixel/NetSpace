@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using NetSpace.Identity.Application.User.Exceptions;
 
 namespace NetSpace.Identity.Application.Common.MediatR;
 

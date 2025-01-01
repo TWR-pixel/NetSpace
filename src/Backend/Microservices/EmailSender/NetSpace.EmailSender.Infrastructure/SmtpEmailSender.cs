@@ -1,10 +1,10 @@
-﻿using NetSpace.EmailSender.UseCases;
+﻿using NetSpace.EmailSender.Application;
 
 namespace NetSpace.EmailSender.Infrastructure;
 
 public sealed class SmtpEmailSender : IEmailSender
 {
-    public Task SendEmailAsync()
+    public Task SendAsync()
     {
         throw new NotImplementedException();
     }

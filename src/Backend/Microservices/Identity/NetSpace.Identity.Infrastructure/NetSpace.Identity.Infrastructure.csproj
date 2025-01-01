@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetSpace.Identity.Domain\NetSpace.Identity.Domain.csproj" />
-    <ProjectReference Include="..\NetSpace.Identity.UseCases\NetSpace.Identity.UseCases.csproj" />
+    <ProjectReference Include="..\NetSpace.Identity.Application\NetSpace.Identity.Application.csproj" />
   </ItemGroup>
 
 </Project>
