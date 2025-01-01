@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NetSpace.User.Domain.User;
+﻿using NetSpace.User.Domain.User;
+using NetSpace.User.UseCases;
 using NetSpace.User.UseCases.UserPostUserComment;
 
 namespace NetSpace.User.Infrastructure.UserPostUserComment;
@@ -22,4 +22,13 @@ public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) :
         return query;
     }
 
+    public IQueryable<UserPostUserCommentEntity> Paginate(PaginationOptions pagination)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IQueryable<UserPostUserCommentEntity> Sort(SortOptions sort)
+    {
+        throw new NotImplementedException();
+    }
 }
