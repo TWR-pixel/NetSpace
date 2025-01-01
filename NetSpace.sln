@@ -90,6 +90,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{DD2720AA-8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Application", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Application\NetSpace.Tests.Unit.Application.csproj", "{35416263-3DD5-4E40-8AF3-F93DB09BD2CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Infrastructure", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Infrastructure\NetSpace.Tests.Unit.Infrastructure.csproj", "{B834C4C3-1C38-4581-B53A-15910CF0DA4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Initializer", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Initializer\NetSpace.Tests.Unit.Initializer.csproj", "{800D75BF-BAB0-40F2-8534-B3D897A684F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -204,6 +208,14 @@ Global
 		{35416263-3DD5-4E40-8AF3-F93DB09BD2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35416263-3DD5-4E40-8AF3-F93DB09BD2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35416263-3DD5-4E40-8AF3-F93DB09BD2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B834C4C3-1C38-4581-B53A-15910CF0DA4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B834C4C3-1C38-4581-B53A-15910CF0DA4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B834C4C3-1C38-4581-B53A-15910CF0DA4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B834C4C3-1C38-4581-B53A-15910CF0DA4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{800D75BF-BAB0-40F2-8534-B3D897A684F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{800D75BF-BAB0-40F2-8534-B3D897A684F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{800D75BF-BAB0-40F2-8534-B3D897A684F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{800D75BF-BAB0-40F2-8534-B3D897A684F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -249,5 +261,7 @@ Global
 		{2229FC1B-7BB9-40CA-9917-85E0BFB3736C} = {20CD6DD9-C10D-4753-9D9D-A30847CE2CD1}
 		{DD2720AA-8D5F-423F-BB41-C110679199F9} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
 		{35416263-3DD5-4E40-8AF3-F93DB09BD2CF} = {DD2720AA-8D5F-423F-BB41-C110679199F9}
+		{B834C4C3-1C38-4581-B53A-15910CF0DA4F} = {DD2720AA-8D5F-423F-BB41-C110679199F9}
+		{800D75BF-BAB0-40F2-8534-B3D897A684F3} = {DD2720AA-8D5F-423F-BB41-C110679199F9}
 	EndGlobalSection
 EndGlobal

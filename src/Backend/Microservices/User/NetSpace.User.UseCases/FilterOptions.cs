@@ -2,5 +2,6 @@
 
 public sealed class FilterOptions
 {
-    public string OrderBy { get; set; } = "asc";
+    public Guid? Id { get; set; }
+    public string? Nickname { get; set; }
 }

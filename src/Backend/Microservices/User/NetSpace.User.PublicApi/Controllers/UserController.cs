@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.User.Application.User;
 using NetSpace.User.Application.User.Requests;
+using NetSpace.User.UseCases;
 
 namespace NetSpace.User.PublicApi.Controllers;
 
@@ -13,8 +14,12 @@ public sealed class UserController(IMediator mediator) : ApiControllerBase(media
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserResponse>> GetUsers(GetUsersRequest request, CancellationToken cancellationToken)
-        => Ok(await Mediator.Send(request, cancellationToken));
+    public async Task<ActionResult<UserResponse>> GetUsers([FromQuery] FilterOptions filter, SortOptions sorting, PaginationOptions pagination, CancellationToken cancellationToken)
+    {
+        var request = new GetUsersRequest { }
+
+        return Ok(await Mediator.Send(request, cancellationToken));
+    }
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
