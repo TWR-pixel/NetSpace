@@ -36,4 +36,15 @@ public static class TestInitializer
 
         return users;
     }
+
+    public static async Task<UserRepository> AddRangeAndSaveChangesToRepo3Users()
+    {
+        var repo = CreateUserRepo();
+        var testUsers = Create3Users();
+
+        await repo.AddRangeAsync(testUsers);
+        await repo.SaveChangesAsync();
+
+        return repo;
+    }
 }
