@@ -19,4 +19,10 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UserPostUserComment\Exceptions\" />
+    <Folder Include="UserPostUserComment\Extensions\" />
+    <Folder Include="UserPost\Exceptions\" />
+  </ItemGroup>
+
 </Project>

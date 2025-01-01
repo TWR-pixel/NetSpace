@@ -1,5 +1,4 @@
 ﻿using NetSpace.Tests.Unit.Initializer;
-using NetSpace.User.Domain.User;
 
 namespace NetSpace.Tests.Unit.Infrastructure;
 

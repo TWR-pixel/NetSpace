@@ -37,4 +37,31 @@ public static class UserResponseMapperExtensions
 
         return responses;
     }
+
+    public static UserEntity ToEntity(this UserResponse response)
+    {
+        var entity = new UserEntity
+        {
+            Id = response.Id,
+            Nickname = response.Nickname,
+            Name = response.Name,
+            Surname = response.Surname,
+            Email = response.Email,
+            LastName = response.LastName,
+            About = response.About,
+            AvatarUrl = response.AvatarUrl,
+            BirthDate = response.BirthDate,
+            RegistrationDate = response.RegistrationDate,
+            LastLoginAt = response.LastLoginAt,
+            Hometown = response.Hometown,
+            Language = response.Language,
+            MaritalStatus = response.MaritalStatus,
+            CurrentCity = response.CurrentCity,
+            PersonalSite = response.PersonalSite,
+            Gender = response.Gender,
+            SchoolName = response.SchoolName,
+        };
+
+        return entity;
+    }
 }

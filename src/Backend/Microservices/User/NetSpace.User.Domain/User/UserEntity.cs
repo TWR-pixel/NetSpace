@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace NetSpace.User.Domain.User;
+﻿namespace NetSpace.User.Domain.User;
 
 public sealed class UserEntity : IEntity<Guid>
 {
@@ -25,4 +23,7 @@ public sealed class UserEntity : IEntity<Guid>
     public Gender Gender { get; set; } = Gender.NotSet;
 
     public string SchoolName { get; set; } = string.Empty;
+
+    public IEnumerable<UserPostEntity> UserPosts { get; set; } = [];
+    public IEnumerable<UserPostUserCommentEntity> UserPostUserComments { get; set; } = [];
 }

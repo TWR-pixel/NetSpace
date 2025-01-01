@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.User.Domain.User;
 
-namespace NetSpace.User.Infrastructure.Common;
+namespace NetSpace.User.Infrastructure;
 
 public sealed class NetSpaceDbContext(DbContextOptions<NetSpaceDbContext> options) : DbContext(options)
 {
@@ -11,6 +11,6 @@ public sealed class NetSpaceDbContext(DbContextOptions<NetSpaceDbContext> option
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(NetSpaceDbContext).Assembly);
     }
 }

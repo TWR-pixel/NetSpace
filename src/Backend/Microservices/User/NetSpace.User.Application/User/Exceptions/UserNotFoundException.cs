@@ -1,6 +1,8 @@
-﻿namespace NetSpace.User.Application.User.Exceptions;
+﻿using NetSpace.User.Application.Common.Exceptions;
 
-public sealed class UserNotFoundException : Exception
+namespace NetSpace.User.Application.User.Exceptions;
+
+public sealed class UserNotFoundException : NotFoundException
 {
     public UserNotFoundException(string email) : base($"User with email '{email}' not found.")
     {

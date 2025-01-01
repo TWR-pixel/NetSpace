@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.User.Domain;
-using NetSpace.User.Infrastructure.Common;
 using NetSpace.User.UseCases;
 
 namespace NetSpace.User.Infrastructure;
@@ -54,7 +53,7 @@ public abstract class RepositoryBase<TEntity, TId>(NetSpaceDbContext dbContext) 
         return Task.CompletedTask;
     }
 
-    public async Task<TEntity?> FindByIdAsync(TId id, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity?> FindByIdAsync(TId id, CancellationToken cancellationToken = default)
     {
         var result = await DbContext.Set<TEntity>().FindAsync([id], cancellationToken);
 

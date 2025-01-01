@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.User.Domain.User;
 using NetSpace.User.Infrastructure;
-using NetSpace.User.Infrastructure.Common;
+using NetSpace.User.Infrastructure.User;
 
 namespace NetSpace.Tests.Unit.Initializer;
 

@@ -9,7 +9,7 @@ namespace NetSpace.User.Application.User.Requests;
 public sealed record GetUsersRequest : RequestBase<IEnumerable<UserResponse>>
 {
     public Guid Id { get; set; }
-    public FilterOptions FilterOptions { get; set; } = new FilterOptions();
+    public UserFilterOptions FilterOptions { get; set; } = new UserFilterOptions();
     public PaginationOptions PaginationOptions { get; set; } = new PaginationOptions();
 
 }

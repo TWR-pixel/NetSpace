@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Common.Messages;
 using NetSpace.Common.Messages.User;
+using NetSpace.User.Infrastructure.User;
 using NetSpace.User.UseCases.User;
 
 namespace NetSpace.User.Infrastructure.Common.Extensions;
