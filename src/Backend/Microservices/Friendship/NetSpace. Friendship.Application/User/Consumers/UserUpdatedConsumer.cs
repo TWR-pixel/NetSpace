@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using NetSpace.Common.Messages.User;
 using NetSpace.Friendship.Domain;
-using NetSpace.Friendship.UseCases;
+using NetSpace.Friendship.UseCases.User;
 
 namespace NetSpace.Friendship.Application.User.Consumers;
 

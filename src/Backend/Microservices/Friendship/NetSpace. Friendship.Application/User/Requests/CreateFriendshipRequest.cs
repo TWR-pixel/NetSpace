@@ -1,4 +1,6 @@
-﻿using NetSpace.Friendship.UseCases;
+﻿using NetSpace.Friendship.Application.User.Exceptions;
+using NetSpace.Friendship.UseCases.Friendship;
+using NetSpace.Friendship.UseCases.User;
 
 namespace NetSpace.Friendship.Application.User.Requests;
 
@@ -20,14 +22,25 @@ public sealed record CreateFriendshipResponse : ResponseBase
 
 }
 
-public sealed class CreateFriendshipRequestHandler(IUserRepository userRepository) : RequestHandlerBase<CreateFriendshipRequest, CreateFriendshipResponse>
+public sealed class CreateFriendshipRequestHandler(IFriendshipRepository friendshipRepository, IUserRepository userRepository) : RequestHandlerBase<CreateFriendshipRequest, CreateFriendshipResponse>
 {
     public override async Task<CreateFriendshipResponse> Handle(CreateFriendshipRequest request, CancellationToken cancellationToken)
     {
-        await userRepository.CreateFriendship(request.FromId,
-                                              request.ToId,
-                                              Domain.FriendshipStatus.WaitingForConfirmation,
-                                              cancellationToken);
+        var userFrom = await userRepository.FindByIdAsync(request.FromId, cancellationToken)
+            ?? throw new UserNotFoundException(request.FromId);
+
+        var userTo = await userRepository.FindByIdAsync(request.ToId, cancellationToken)
+            ?? throw new UserNotFoundException(request.ToId);
+
+        var friendshipExists = await friendshipRepository.ExistsFriendshipWithStatus(userFrom, userTo, Domain.FriendshipStatus.Accepted, cancellationToken);
+
+        if (friendshipExists)
+            throw new FriendshipAlreadyExistsException(userFrom.Id, userTo.Id);
+
+        await friendshipRepository.CreateFriendship(userFrom,
+                                                    userTo,
+                                                    Domain.FriendshipStatus.WaitingForConfirmation,
+                                                    cancellationToken);
 
         return new CreateFriendshipResponse();
     }

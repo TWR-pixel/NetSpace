@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Neo4jClient;
 using NetSpace.Friendship.Infrastructure.User;
-using NetSpace.Friendship.UseCases;
+using NetSpace.Friendship.UseCases.User;
 
 namespace NetSpace.Friendship.Infrastructure;
 

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using NetSpace.Friendship.UseCases;
+using NetSpace.Friendship.UseCases.User;
 
 namespace NetSpace.Friendship.Api.Controllers
 {

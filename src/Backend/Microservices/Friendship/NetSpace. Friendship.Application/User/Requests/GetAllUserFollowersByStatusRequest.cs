@@ -1,5 +1,7 @@
-﻿using NetSpace.Friendship.Domain;
-using NetSpace.Friendship.UseCases;
+﻿using NetSpace.Friendship.Application.User.Exceptions;
+using NetSpace.Friendship.Domain;
+using NetSpace.Friendship.UseCases.Friendship;
+using NetSpace.Friendship.UseCases.User;
 
 namespace NetSpace.Friendship.Application.User.Requests;
 
@@ -9,11 +11,14 @@ public sealed record GetAllUserFollowersByStatusRequest : RequestBase<IEnumerabl
     public required FriendshipStatus Status { get; set; }
 }
 
-public sealed class GetAllUserFollowersByStatusRequestHandler(IUserRepository userRepository) : RequestHandlerBase<GetAllUserFollowersByStatusRequest, IEnumerable<UserEntity>>
+public sealed class GetAllUserFollowersByStatusRequestHandler(IFriendshipRepository friendshipRepository, IUserRepository userRepository) : RequestHandlerBase<GetAllUserFollowersByStatusRequest, IEnumerable<UserEntity>>
 {
     public override async Task<IEnumerable<UserEntity>> Handle(GetAllUserFollowersByStatusRequest request, CancellationToken cancellationToken)
     {
-        var result = await userRepository.GetAllFollowersByStatus(request.Id, request.Status, cancellationToken);
+        var userFrom = await userRepository.FindByIdAsync(request.Id, cancellationToken)
+            ?? throw new UserNotFoundException(request.Id);
+
+        var result = await friendshipRepository.GetAllFollowersByStatus(userFrom, request.Status, cancellationToken);
 
         return result;
     }

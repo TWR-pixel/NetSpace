@@ -9,7 +9,7 @@ public class UserRepositoryTests
     public async Task SaveChangesAsync_ShouldReturn3()
     {
         //Arrange
-        var repo = TestInitializer.CreateUserRepo();
+        var repo = TestInitializer.CreateInMemoryUserRepo();
         var entities = TestInitializer.Create3Users();
         await repo.AddRangeAsync(entities);
 
@@ -46,7 +46,7 @@ public class UserRepositoryTests
     public async Task DeleteAsync_ShouldRemoveFirstUser()
     {
         //Arrange
-        var repo = TestInitializer.CreateUserRepo();
+        var repo = TestInitializer.CreateInMemoryUserRepo();
         var entities = TestInitializer.Create3Users();
         await repo.AddRangeAsync(entities);
         await repo.SaveChangesAsync();
@@ -66,7 +66,7 @@ public class UserRepositoryTests
     public async Task DeleteRangeAsync_ShouldRemoveAllUsers()
     {
         //Arrange
-        var repo = TestInitializer.CreateUserRepo();
+        var repo = TestInitializer.CreateInMemoryUserRepo();
         var entities = TestInitializer.Create3Users();
         await repo.AddRangeAsync(entities);
         await repo.SaveChangesAsync();
@@ -86,7 +86,7 @@ public class UserRepositoryTests
     public async Task FindByIdAsync_ShouldReturnUserWithExistingId()
     {
         //Arrange
-        var repo = TestInitializer.CreateUserRepo();
+        var repo = TestInitializer.CreateInMemoryUserRepo();
         var entities = TestInitializer.Create3Users();
         await repo.AddRangeAsync(entities);
         await repo.SaveChangesAsync();
@@ -103,7 +103,7 @@ public class UserRepositoryTests
     public async Task GetAllAsync_ShouldReturnAllAddedUsers()
     {
         //Arrange
-        var repo = TestInitializer.CreateUserRepo();
+        var repo = TestInitializer.CreateInMemoryUserRepo();
         var entities = TestInitializer.Create3Users();
         await repo.AddRangeAsync(entities);
         await repo.SaveChangesAsync();
@@ -120,7 +120,7 @@ public class UserRepositoryTests
     public async Task UpdateAsync_ShouldSetNewUserName()
     {
         //Arrange
-        var repo = TestInitializer.CreateUserRepo();
+        var repo = TestInitializer.CreateInMemoryUserRepo();
         var entities = TestInitializer.Create3Users();
         await repo.AddRangeAsync(entities);
         await repo.SaveChangesAsync();
@@ -140,7 +140,7 @@ public class UserRepositoryTests
     public async Task UpdateRangeAsync_ShouldSetNewUserNames()
     {
         //Arrange
-        var repo = TestInitializer.CreateUserRepo();
+        var repo = TestInitializer.CreateInMemoryUserRepo();
         var entities = TestInitializer.Create3Users();
         await repo.AddRangeAsync(entities);
         await repo.SaveChangesAsync();

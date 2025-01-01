@@ -7,7 +7,7 @@ namespace NetSpace.Tests.Unit.Initializer;
 
 public static class TestInitializer
 {
-    private static NetSpaceDbContext CreateDb()
+    private static NetSpaceDbContext CreateInMemoryDb()
     {
         var options = new DbContextOptionsBuilder<NetSpaceDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
@@ -18,9 +18,9 @@ public static class TestInitializer
         return db;
     }
 
-    public static UserRepository CreateUserRepo()
+    public static UserRepository CreateInMemoryUserRepo()
     {
-        var repo = new UserRepository(CreateDb());
+        var repo = new UserRepository(CreateInMemoryDb());
 
         return repo;
     }
@@ -39,7 +39,7 @@ public static class TestInitializer
 
     public static async Task<UserRepository> AddRangeAndSaveChangesToRepo3Users()
     {
-        var repo = CreateUserRepo();
+        var repo = CreateInMemoryUserRepo();
         var testUsers = Create3Users();
 
         await repo.AddRangeAsync(testUsers);
