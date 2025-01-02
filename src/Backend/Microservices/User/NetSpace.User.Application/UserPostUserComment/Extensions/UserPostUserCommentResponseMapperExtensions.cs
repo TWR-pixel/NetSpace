@@ -1,6 +1,6 @@
 ﻿using NetSpace.User.Application.User.Extensions;
 using NetSpace.User.Application.UserPost.Extensions;
-using NetSpace.User.Domain.User;
+using NetSpace.User.Domain.UserPostUserComment;
 
 namespace NetSpace.User.Application.UserPostUserComment.Extensions;
 

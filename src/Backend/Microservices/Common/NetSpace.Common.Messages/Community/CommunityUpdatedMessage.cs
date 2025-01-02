@@ -1,13 +1,13 @@
 ﻿namespace NetSpace.Common.Messages.Community;
 
-public sealed record CommunityUpdatedMessage(string Name, string Description, string AvatarUrl, string OwnerId, DateTime LastNameUpdatedAt, CommunityType CommunityType)
+public sealed record CommunityUpdatedMessag
 {
-    public required string Name { get; set; } = Name;
-    public string? Description { get; set; } = Description;
-    public string? AvatarUrl { get; set; } = AvatarUrl;
+    public required string Name { get; set; } 
+    public string? Description { get; set; } 
+    public string? AvatarUrl { get; set; } 
 
-    public required string OwnerId { get; set; } = OwnerId;
-    public required DateTime LastNameUpdatedAt { get; set; } = LastNameUpdatedAt;
+    public required string OwnerId { get; set; } 
+    public required DateTime LastNameUpdatedAt { get; set; } 
 
-    public CommunityType CommunityType { get; set; } = CommunityType;
+    public CommunityType CommunityType { get; set; }
 }

@@ -12,5 +12,8 @@ public sealed class NetSpaceDbContext : DbContext
 
     }
 
-    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(NetSpaceDbContext).Assembly);
+    }
 }

@@ -14,9 +14,9 @@ public class UserPostController(IMediator mediator) : ApiControllerBase(mediator
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<UserPostResponse>>> Get([FromQuery] UserPostFilterOptions filter,
-                                                                                  [FromQuery] PaginationOptions pagination,
-                                                                                  [FromQuery] SortOptions sort,
-                                                                                  CancellationToken cancellationToken)
+                                                                       [FromQuery] PaginationOptions pagination,
+                                                                       [FromQuery] SortOptions sort,
+                                                                       CancellationToken cancellationToken)
     {
         var request = new GetUserPostRequest { Filter = filter, Pagination = pagination, Sort = sort };
 

@@ -28,14 +28,14 @@ public sealed class CreateCommunityRequestHandler(ICommunityRepository community
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var userEntity = await userRepository.FindByIdAsync(request.OwnerId.ToString(), cancellationToken)
+        var userEntity = await userRepository.FindByIdAsync(request.OwnerId, cancellationToken)
             ?? throw new UserNotFoundException(request.OwnerId.ToString());
 
         var communityEntity = new CommunityEntity
         {
             Name = request.Name,
             Description = request.Description,
-            OwnerId = request.OwnerId.ToString(),
+            OwnerId = request.OwnerId,
             Owner = userEntity,
             AvatarUrl = request.AvatarUrl
         };

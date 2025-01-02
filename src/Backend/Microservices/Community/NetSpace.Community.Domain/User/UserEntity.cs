@@ -1,36 +1,33 @@
 ﻿using NetSpace.Community.Domain.Community;
-using System.Diagnostics.CodeAnalysis;
+using NetSpace.Community.Domain.CommunityPostUserComment;
 
 namespace NetSpace.Community.Domain.User;
 
-[method: SetsRequiredMembers]
-public sealed class UserEntity(string id,
-                               string nickname,
-                               string name,
-                               string surname,
-                               string lastName = "",
-                               string about = "",
-                               string avatarUrl = "",
-                               DateTime? birthDate = null,
-                               Gender gender = Gender.NotSet) : IEntity<string>
+public sealed class UserEntity : IEntity<Guid>
 {
-    public string Id { get; set; } = id;
-    public required string Nickname { get; set; } = nickname;
-    public required string Name { get; set; } = name;
-    public required string Surname { get; set; } = surname;
-    public string LastName { get; set; } = lastName;
-    public string About { get; set; } = about;
-    public string AvatarUrl { get; set; } = avatarUrl;
-    public DateTime? BirthDate { get; set; } = birthDate;
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public required string Nickname { get; set; }
+    public required string Name { get; set; }
+    public required string Surname { get; set; }
+    public required string Email { get; set; }
+    public string LastName { get; set; } = string.Empty;
+    public string About { get; set; } = string.Empty;
+    public string AvatarUrl { get; set; } = string.Empty;
+    public DateTime? BirthDate { get; set; }
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
 
     public string Hometown { get; set; } = string.Empty;
+    public Language Language { get; set; } = Language.NotSet;
+    public MaritalStatus MaritalStatus { get; set; } = MaritalStatus.NotSet;
     public string CurrentCity { get; set; } = string.Empty;
     public string PersonalSite { get; set; } = string.Empty;
+
+    public Gender Gender { get; set; } = Gender.NotSet;
+
     public string SchoolName { get; set; } = string.Empty;
 
-    public IEnumerable<CommunityEntity> CreatedCommunities { get; set; } = [];
-
-    public Gender Gender { get; set; } = gender;
+    public IEnumerable<CommunityEntity> CreatedCommunities { get; set; } = new List<CommunityEntity>();
+    public IEnumerable<CommunityEntity> CommunitySubscriptions { get; set; } = new List<CommunityEntity>();
+    public IEnumerable<CommunityPostUserCommentEntity> CommunityPostUserComments { get; set; } = new List<CommunityPostUserCommentEntity>();
 }

@@ -4,15 +4,14 @@ using NetSpace.Community.UseCases;
 
 namespace NetSpace.Community.Infrastructure;
 
-public abstract class RepositoryBase<TEntity, TId, TDbContext> : IRepository<TEntity, TId>
+public abstract class RepositoryBase<TEntity, TId> : IRepository<TEntity, TId>
     where TEntity : class, IEntity<TId>
     where TId : notnull
-    where TDbContext : DbContext
 {
 
-    protected TDbContext DbContext { get; set; }
+    protected NetSpaceDbContext DbContext { get; set; }
 
-    public RepositoryBase(TDbContext dbContext)
+    public RepositoryBase(NetSpaceDbContext dbContext)
     {
         DbContext = dbContext;
     }

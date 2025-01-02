@@ -4,7 +4,7 @@ using NetSpace.Community.UseCases.Community;
 
 namespace NetSpace.Community.Infrastructure;
 
-public sealed class CommunityRepository(NetSpaceDbContext dbContext) : RepositoryBase<CommunityEntity, int, NetSpaceDbContext>(dbContext), ICommunityRepository
+public sealed class CommunityRepository(NetSpaceDbContext dbContext) : RepositoryBase<CommunityEntity, int>(dbContext), ICommunityRepository
 {
     public async Task<IEnumerable<CommunityEntity>?> FilterAsync(FilterOptions options, CancellationToken cancellationToken = default)
     {

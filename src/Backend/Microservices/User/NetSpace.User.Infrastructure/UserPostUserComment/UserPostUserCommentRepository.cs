@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetSpace.User.Domain.User;
+using NetSpace.User.Domain.UserPostUserComment;
 using NetSpace.User.UseCases;
 using NetSpace.User.UseCases.UserPostUserComment;
 
@@ -25,13 +25,11 @@ public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) :
 
         if (filter.OwnerId != null)
             query = query
-                .Where(u => u.UserId == filter.OwnerId)
-                .Include(u => u.Owner);
+                .Where(u => u.UserId == filter.OwnerId);
 
         if (filter.UserPostId != null)
             query = query
-                .Where(u => u.UserPostId == filter.UserPostId)
-                .Include(u => u.UserPost);
+                .Where(u => u.UserPostId == filter.UserPostId);
 
         if (filter.IncludeUserPost == true)
         {
@@ -53,13 +51,15 @@ public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) :
         {
             "Id" => query.OrderBy(u => u.Id),
             "CreatedAt" => query.OrderBy(u => u.CreatedAt),
-            _ => query.OrderBy(u => u.Id),
+            "Body" => query.OrderBy(u => u.Body),
+            _ => query
         };
 
         query = sort.OrderByDescending switch
         {
             "Id" => query.OrderByDescending(u => u.Id),
             "CreatedAt" => query.OrderByDescending(u => u.CreatedAt),
+            "Body" => query.OrderByDescending(u => u.Body),
             _ => query
         };
 

@@ -1,6 +1,6 @@
 ﻿namespace NetSpace.Community.Domain.User;
 
-public enum Gender
+public enum Gender : byte
 {
     Male,
     Female,

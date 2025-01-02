@@ -18,20 +18,20 @@ public sealed record RegisterUserRequest : RequestBase<UserResponse>
 
     public DateTime? BirthDate { get; set; }
     public Domain.User.Gender Gender { get; set; } = Domain.User.Gender.NotSet;
-    public Language Language { get; set; } = Language.NotSet;
-    public MaritalStatus MaritalStatus { get; set; } = MaritalStatus.NotSet;
+    public Domain.User.Language Language { get; set; } = Domain.User.Language.NotSet;
+    public Domain.User.MaritalStatus MaritalStatus { get; set; } = Domain.User.MaritalStatus.NotSet;
 }
 
 public sealed class RegisterUserRequestHandler(IUserRepository userRepository, IPublishEndpoint publishEndpoint) : RequestHandlerBase<RegisterUserRequest, UserResponse>
 {
     public override async Task<UserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {
-        var userFromDb = await userRepository.FindByEmailAsync(request.Email);
+        var userFromDbEntity = await userRepository.FindByEmailAsync(request.Email);
 
-        if (userFromDb != null)
-            throw new UserAlreadyExistsException(userFromDb.Email);
+        if (userFromDbEntity != null)
+            throw new UserAlreadyExistsException(userFromDbEntity.Email);
 
-        var newUser = new UserEntity(request.Nickname,
+        var newUserEntity = new UserEntity(request.Nickname,
                                      request.UserName,
                                      request.Surname,
                                      request.LastName,
@@ -41,17 +41,17 @@ public sealed class RegisterUserRequestHandler(IUserRepository userRepository, I
                                      language: request.Language,
                                      maritalStatus: request.MaritalStatus);
 
-        await userRepository.AddAsync(newUser, request.Password, cancellationToken);
+        await userRepository.AddAsync(newUserEntity, request.Password, cancellationToken);
 
-        await publishEndpoint.Publish(new UserCreatedMessage(Guid.Parse(newUser.Id),
-                                                             newUser.Nickname,
-                                                             newUser.Name,
-                                                             newUser.Surname,
-                                                             newUser.Email,
-                                                             newUser.LastName,
-                                                             newUser.About,
-                                                             newUser.AvatarUrl,
-                                                             (NetSpace.Common.Messages.User.Gender)newUser.Gender), cancellationToken);
+        await publishEndpoint.Publish(new UserCreatedMessage(Guid.Parse(newUserEntity.Id),
+                                                             newUserEntity.Nickname,
+                                                             newUserEntity.Name,
+                                                             newUserEntity.Surname,
+                                                             newUserEntity.Email,
+                                                             newUserEntity.LastName,
+                                                             newUserEntity.About,
+                                                             newUserEntity.AvatarUrl,
+                                                             (NetSpace.Common.Messages.User.Gender)newUserEntity.Gender), cancellationToken);
 
         return new UserResponse();
     }

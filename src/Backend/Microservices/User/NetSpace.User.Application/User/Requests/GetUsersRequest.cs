@@ -1,5 +1,4 @@
 ﻿using NetSpace.User.Application.Common.Cache;
-using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.Application.User.Extensions;
 using NetSpace.User.UseCases;
 using NetSpace.User.UseCases.User;
