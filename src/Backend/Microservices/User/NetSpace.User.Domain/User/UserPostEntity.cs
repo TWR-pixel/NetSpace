@@ -9,7 +9,7 @@ public sealed class UserPostEntity : IEntity<int>
     public Guid UserId { get; set; }
     public UserEntity User { get; set; }
 
-    public IEnumerable<UserPostUserCommentEntity> UserComments { get; set; } = [];
+    public IEnumerable<UserPostUserCommentEntity> UserComments { get; set; } = new List<UserPostUserCommentEntity>();
 
     public UserPostEntity()
     {

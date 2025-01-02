@@ -24,10 +24,26 @@ public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) :
             query = query.Where(u => u.Body == filter.Body);
 
         if (filter.OwnerId != null)
-            query = query.Include(u => u.Owner);
+            query = query
+                .Where(u => u.UserId == filter.OwnerId)
+                .Include(u => u.Owner);
 
         if (filter.UserPostId != null)
-            query = query.Include(u => u.UserPost);
+            query = query
+                .Where(u => u.UserPostId == filter.UserPostId)
+                .Include(u => u.UserPost);
+
+        if (filter.IncludeUserPost == true)
+        {
+            query = query
+                .Include(u => u.UserPost);
+        }
+
+        if (filter.IncludeOwner == true)
+        {
+            query = query
+                .Include(u => u.Owner);
+        }
 
         query = query
             .Skip((pagination.PageCount - 1) * pagination.PageSize)

@@ -16,7 +16,7 @@ public sealed class UserCreatedConsumer(IUserRepository userRepository) : IConsu
 
         var userEntity = new UserEntity(msg.Id,
                                         msg.Nickname,
-                                        msg.Name,
+                                        msg.UserName,
                                         msg.Surname,
                                         msg.LastName,
                                         msg.About,

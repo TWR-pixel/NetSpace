@@ -4,5 +4,8 @@ namespace NetSpace.User.UseCases.User;
 
 public interface IUserRepository : IRepository<UserEntity, Guid>
 {
-    public Task<IEnumerable<UserEntity>> FilterAsync(UserFilterOptions filter, PaginationOptions pagination, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<UserEntity>> FilterAsync(UserFilterOptions filter,
+                                                     PaginationOptions pagination,
+                                                     SortOptions sort,
+                                                     CancellationToken cancellationToken = default);
 }

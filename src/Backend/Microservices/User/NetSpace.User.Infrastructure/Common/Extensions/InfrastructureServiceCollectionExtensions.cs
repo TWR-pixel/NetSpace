@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetSpace.Common.Messages;
+using NetSpace.Common.Messages.Email;
 using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.Common.Cache;
 using NetSpace.User.Infrastructure.Common.Cache;

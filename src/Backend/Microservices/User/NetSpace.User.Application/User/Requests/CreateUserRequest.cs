@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.Common.Cache;
 using NetSpace.User.Application.User.Extensions;
 using NetSpace.User.UseCases.User;
@@ -15,15 +14,7 @@ public sealed class CreateUserRequestHandler(IPublishEndpoint publisher,
         var userEntity = request.ToEntity();
         await userRepository.AddAsync(userEntity, cancellationToken);
 
-        var userCreatedMessage = new UserCreatedMessage(userEntity.Id,
-                                                        userEntity.Nickname,
-                                                        userEntity.Name,
-                                                        userEntity.Surname,
-                                                        userEntity.Email,
-                                                        userEntity.LastName,
-                                                        userEntity.About,
-                                                        userEntity.AvatarUrl,
-                                                        (Gender)userEntity.Gender);
+        var userCreatedMessage = userEntity.ToUserCreated();
 
         await publisher.Publish(userCreatedMessage, cancellationToken);
         await cache.AddAsync(userEntity, cancellationToken);

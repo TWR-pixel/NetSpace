@@ -15,11 +15,11 @@ public sealed class UserController(IMediator mediator) : ApiControllerBase(media
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserResponse>> GetUsers([FromQuery] UserFilterOptions filter,
-                                                           [FromQuery] SortOptions sorting,
+                                                           [FromQuery] SortOptions sort,
                                                            [FromQuery] PaginationOptions pagination,
                                                            CancellationToken cancellationToken)
     {
-        var request = new GetUsersRequest { FilterOptions = filter };
+        var request = new GetUsersRequest { Filter = filter, Pagination = pagination, Sort = sort };
 
         return Ok(await Mediator.Send(request, cancellationToken));
     }

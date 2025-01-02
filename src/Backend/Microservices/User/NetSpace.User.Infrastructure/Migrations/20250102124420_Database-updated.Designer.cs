@@ -70,7 +70,7 @@ namespace NetSpace.User.Infrastructure.Migrations
                     b.Property<int>("MaritalStatus")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
 

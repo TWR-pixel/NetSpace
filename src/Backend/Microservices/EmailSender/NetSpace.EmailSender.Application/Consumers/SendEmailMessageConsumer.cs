@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Options;
-using NetSpace.Common.Messages;
+using NetSpace.Common.Messages.Email;
 
 namespace NetSpace.EmailSender.Application.Consumers;
 

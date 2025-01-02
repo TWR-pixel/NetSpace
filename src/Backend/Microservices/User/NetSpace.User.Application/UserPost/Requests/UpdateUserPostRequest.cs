@@ -1,6 +1,4 @@
-﻿
-using MassTransit.Internals;
-using NetSpace.User.Application.UserPost.Exceptions;
+﻿using NetSpace.User.Application.UserPost.Exceptions;
 using NetSpace.User.Application.UserPost.Extensions;
 using NetSpace.User.UseCases.UserPost;
 

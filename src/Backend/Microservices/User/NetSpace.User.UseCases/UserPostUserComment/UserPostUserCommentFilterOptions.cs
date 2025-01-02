@@ -7,4 +7,6 @@ public sealed class UserPostUserCommentFilterOptions
     public Guid? OwnerId { get; set; }
     public int? UserPostId { get; set; }
     public DateTime? CreatedAt { get; set; }
+    public bool IncludeUserPost { get; set; } = false;
+    public bool IncludeOwner { get; set; } = false;
 }

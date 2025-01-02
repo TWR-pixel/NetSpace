@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using NetSpace.Common.Messages;
+using NetSpace.Common.Messages.Email;
 using NetSpace.User.Domain.User;
 
 namespace NetSpace.User.Infrastructure.EmailSender;

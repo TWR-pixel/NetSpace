@@ -12,7 +12,7 @@ public sealed class UserUpdatedConsumer(IUserRepository users) : IConsumer<UserU
         var msg = context.Message;
         var userEntity = new UserEntity(msg.Id,
                                         msg.Nickname,
-                                        msg.Name,
+                                        msg.UserName,
                                         msg.Surname,
                                         msg.LastName,
                                         msg.About,

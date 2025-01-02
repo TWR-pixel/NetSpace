@@ -8,10 +8,9 @@ namespace NetSpace.User.Application.User.Requests;
 
 public sealed record GetUsersRequest : RequestBase<IEnumerable<UserResponse>>
 {
-    public Guid Id { get; set; }
-    public UserFilterOptions FilterOptions { get; set; } = new UserFilterOptions();
-    public PaginationOptions PaginationOptions { get; set; } = new PaginationOptions();
-
+    public UserFilterOptions Filter { get; set; } = new UserFilterOptions();
+    public PaginationOptions Pagination { get; set; } = new PaginationOptions();
+    public SortOptions Sort { get; set; } = new SortOptions();
 }
 
 
@@ -19,8 +18,7 @@ public sealed class GetUsersRequestHandler(IUserRepository userRepository, IUser
 {
     public override async Task<IEnumerable<UserResponse>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
     {
-        var users = await userRepository.FilterAsync(request.FilterOptions, request.PaginationOptions, cancellationToken)
-            ?? throw new UserNotFoundException(request.Id);
+        var users = await userRepository.FilterAsync(request.Filter, request.Pagination, request.Sort, cancellationToken);
 
         return users.ToResponses();
     }

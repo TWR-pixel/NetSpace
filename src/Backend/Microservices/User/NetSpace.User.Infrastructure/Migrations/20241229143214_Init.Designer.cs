@@ -33,7 +33,7 @@ namespace NetSpace.User.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
@@ -145,13 +145,13 @@ namespace NetSpace.User.Infrastructure.Migrations
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("UserName")
                         .HasColumnType("text");
 
                     b.Property<string>("Value")
                         .HasColumnType("text");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("UserId", "LoginProvider", "UserName");
 
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
@@ -216,7 +216,7 @@ namespace NetSpace.User.Infrastructure.Migrations
                     b.Property<int>("MaritalStatus")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
 
