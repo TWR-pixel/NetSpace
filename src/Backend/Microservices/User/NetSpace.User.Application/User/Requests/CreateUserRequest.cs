@@ -28,6 +28,8 @@ public sealed class CreateUserRequestHandler(IPublishEndpoint publisher,
         await publisher.Publish(userCreatedMessage, cancellationToken);
         await cache.AddAsync(userEntity, cancellationToken);
 
+        await userRepository.SaveChangesAsync(cancellationToken);
+
         return userEntity.ToResponse();
     }
 }

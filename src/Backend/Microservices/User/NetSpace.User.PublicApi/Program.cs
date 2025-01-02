@@ -11,7 +11,6 @@ var connectionString = builder.Configuration.GetConnectionString("PostgreSql");
 
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructure(connectionString, builder.Configuration);
-//builder
 
 var app = builder.Build();
 

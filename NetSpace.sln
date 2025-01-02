@@ -12,6 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{618B39FD-FAB2-4A47-A507-A333961F315D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{20CD6DD9-C10D-4753-9D9D-A30847CE2CD1}"
+	ProjectSection(SolutionItems) = preProject
+		dbInit.sql = dbInit.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Community", "Community", "{6EDF22BB-0F3D-4DB0-A898-AD6DDF06D9DC}"
 EndProject

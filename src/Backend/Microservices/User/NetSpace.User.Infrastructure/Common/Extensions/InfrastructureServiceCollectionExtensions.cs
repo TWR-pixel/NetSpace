@@ -4,8 +4,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Common.Messages;
 using NetSpace.Common.Messages.User;
+using NetSpace.User.Application.Common.Cache;
+using NetSpace.User.Infrastructure.Common.Cache;
 using NetSpace.User.Infrastructure.User;
+using NetSpace.User.Infrastructure.UserPost;
+using NetSpace.User.Infrastructure.UserPostUserComment;
 using NetSpace.User.UseCases.User;
+using NetSpace.User.UseCases.UserPost;
+using NetSpace.User.UseCases.UserPostUserComment;
 
 namespace NetSpace.User.Infrastructure.Common.Extensions;
 
@@ -35,16 +41,12 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddDbContext<NetSpaceDbContext>(options =>
         {
             options.UseNpgsql(connectionString);
-            if (bool.Parse(config["UseSeeding"]) == true)
-            {
-                options.UseSeeding((seed, _) =>
-                {
-                    NetSpaceDbContextSeeding.Seed(seed);
-                });
-            }
         });
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserPostRepository, UserPostRepository>();
+        services.AddScoped<IUserPostUserCommentRepository, UserPostUserCommentRepository>();
+        services.AddScoped<IUserDistributedCacheStorage, UserDistributedCacheStorage>();
 
         return services;
     }

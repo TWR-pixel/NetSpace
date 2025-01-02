@@ -1,6 +1,5 @@
 ﻿namespace NetSpace.User.Domain.User;
 
-[method: SetsRequiredMembers]
 public sealed class UserPostEntity : IEntity<int>
 {
     public int Id { get; set; }
