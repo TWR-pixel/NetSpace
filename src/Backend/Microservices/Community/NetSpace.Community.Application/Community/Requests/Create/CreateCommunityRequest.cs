@@ -28,7 +28,7 @@ public sealed class CreateCommunityRequestHandler(ICommunityRepository community
 {
     public override async Task<CommunityResponse> Handle(CreateCommunityRequest request, CancellationToken cancellationToken)
     {
-        await validator.ValidateAndThrowAsync(request, cancellationToken);
+        //await validator.ValidateAndThrowAsync(request, cancellationToken);
         
         var userEntity = await userRepository.FindByIdAsync(request.OwnerId, cancellationToken)
             ?? throw new UserNotFoundException(request.OwnerId);
