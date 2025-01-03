@@ -1,8 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Community.Infrastructure.Community;
+using NetSpace.Community.Infrastructure.CommunityPost;
+using NetSpace.Community.Infrastructure.CommunityPostUserComment;
 using NetSpace.Community.Infrastructure.User;
 using NetSpace.Community.UseCases.Community;
+using NetSpace.Community.UseCases.CommunityPost;
+using NetSpace.Community.UseCases.CommunityPostUserComment;
 using NetSpace.Community.UseCases.User;
 
 namespace NetSpace.Community.Infrastructure.Common.Extensions;
@@ -18,6 +22,8 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddScoped<ICommunityRepository, CommunityRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICommunityPostRepository, CommunityPostRepository>();
+        services.AddScoped<ICommunityPostUserCommentRepository, CommunityPostUserCommentRepository>();
 
         return services;
     }

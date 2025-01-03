@@ -4,7 +4,7 @@ using NetSpace.Community.Application.Community.Mappers.Extensions;
 using NetSpace.Community.UseCases.Community;
 using NetSpace.Community.UseCases.User;
 
-namespace NetSpace.Community.Application.Community.Requests;
+namespace NetSpace.Community.Application.Community.Requests.Update;
 
 public sealed record UpdateCommunityRequest : RequestBase<CommunityResponse>
 {

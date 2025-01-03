@@ -15,7 +15,7 @@ public sealed class GetUserPostUserCommentRequestHandler(IUserPostUserCommentRep
 {
     public override async Task<IEnumerable<UserPostUserCommentResponse>> Handle(GetUserPostUserCommentRequest request, CancellationToken cancellationToken)
     {
-        var userComments = await userCommentRepository.Filter(request.Filter, request.Pagination, request.Sort, cancellationToken);
+        var userComments = await userCommentRepository.FilterAsync(request.Filter, request.Pagination, request.Sort, cancellationToken);
 
         return userComments.ToResponses();
     }

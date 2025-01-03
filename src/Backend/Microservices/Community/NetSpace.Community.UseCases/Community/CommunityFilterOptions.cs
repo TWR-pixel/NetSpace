@@ -8,4 +8,9 @@ public sealed class CommunityFilterOptions
 
     public DateTime? CreatedAt { get; set; }
     public DateTime? LastNameUpdatedAt { get; set; }
+
+    public Guid? OwnerId { get; set; }
+    public bool IncludeOwner { get; set; } = false;
+    public bool IncludeCommunitySubscribers { get; set; } = false;
+    public bool IncludeCommunityPosts { get; set; } = false;
 }

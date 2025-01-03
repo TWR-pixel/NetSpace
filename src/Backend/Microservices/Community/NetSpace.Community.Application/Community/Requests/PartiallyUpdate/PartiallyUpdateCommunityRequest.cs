@@ -5,7 +5,7 @@ using NetSpace.Community.Application.Community.Mappers.Extensions;
 using NetSpace.Community.UseCases.Community;
 using NetSpace.Community.UseCases.User;
 
-namespace NetSpace.Community.Application.Community.Requests;
+namespace NetSpace.Community.Application.Community.Requests.PartiallyUpdate;
 
 public sealed record PartiallyUpdateCommunityRequest : RequestBase<CommunityResponse>
 {

@@ -1,14 +1,20 @@
 ﻿using FluentValidation;
+using MapsterMapper;
 using NetSpace.Community.Application.Common.Exceptions;
 using NetSpace.Community.Application.Community.Mappers.Extensions;
+using NetSpace.Community.Domain.Community;
 using NetSpace.Community.UseCases.Community;
 using NetSpace.Community.UseCases.User;
 
-namespace NetSpace.Community.Application.Community.Requests;
+namespace NetSpace.Community.Application.Community.Requests.Create;
 
 public sealed record CreateCommunityRequest : RequestBase<CommunityResponse>
 {
-    public required CommunityRequest CommunityRequest { get; set; }
+    public required string Name { get; set; }
+    public string? Description { get; set; }
+    public string? AvatarUrl { get; set; }
+
+    public required Guid OwnerId { get; set; }
 }
 
 public sealed class CreateCommunityRequestValidator : AbstractValidator<CreateCommunityRequest>
@@ -18,18 +24,16 @@ public sealed class CreateCommunityRequestValidator : AbstractValidator<CreateCo
 
 public sealed class CreateCommunityRequestHandler(ICommunityRepository communityRepository,
                                                   IUserRepository userRepository,
-                                                  IValidator<CreateCommunityRequest> validator) : RequestHandlerBase<CreateCommunityRequest, CommunityResponse>
+                                                  IValidator<CreateCommunityRequest> validator,IMapper mapper) : RequestHandlerBase<CreateCommunityRequest, CommunityResponse>
 {
     public override async Task<CommunityResponse> Handle(CreateCommunityRequest request, CancellationToken cancellationToken)
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
+        
+        var userEntity = await userRepository.FindByIdAsync(request.OwnerId, cancellationToken)
+            ?? throw new UserNotFoundException(request.OwnerId);
 
-        var communityRequest = request.CommunityRequest;
-
-        var userEntity = await userRepository.FindByIdAsync(communityRequest.OwnerId, cancellationToken)
-            ?? throw new UserNotFoundException(communityRequest.OwnerId);
-
-        var communityEntity = communityRequest.ToEntity(userEntity);
+        var communityEntity = mapper.Map<CommunityEntity>(request);
 
         var result = await communityRepository.AddAsync(communityEntity, cancellationToken);
         await communityRepository.SaveChangesAsync(cancellationToken);

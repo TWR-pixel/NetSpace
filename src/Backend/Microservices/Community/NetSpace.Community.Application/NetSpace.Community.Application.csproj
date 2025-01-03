@@ -9,6 +9,10 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageReference Include="Mapster" Version="7.4.0" />
+    <PackageReference Include="Mapster.Async" Version="2.0.1" />
+    <PackageReference Include="Mapster.Core" Version="1.2.1" />
+    <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
     <PackageReference Include="MassTransit" Version="8.3.4" />
     <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
@@ -19,7 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Community\Mapper\Extensions\" />
+    <Folder Include="CommunityPost\Exceptions\" />
+    <Folder Include="User\Exceptions\" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ namespace NetSpace.User.Infrastructure.UserPostUserComment;
 
 public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) : RepositoryBase<UserPostUserCommentEntity, int>(dbContext), IUserPostUserCommentRepository
 {
-    public async Task<IEnumerable<UserPostUserCommentEntity>> Filter(UserPostUserCommentFilterOptions filter,
+    public async Task<IEnumerable<UserPostUserCommentEntity>> FilterAsync(UserPostUserCommentFilterOptions filter,
                                                          PaginationOptions pagination,
                                                          SortOptions sort,
                                                          CancellationToken cancellationToken = default)
@@ -43,16 +43,12 @@ public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) :
                 .Include(u => u.Owner);
         }
 
-        query = query
-            .Skip((pagination.PageCount - 1) * pagination.PageSize)
-            .Take(pagination.PageSize);
-
         query = sort.OrderByAscending switch
         {
             "Id" => query.OrderBy(u => u.Id),
             "CreatedAt" => query.OrderBy(u => u.CreatedAt),
             "Body" => query.OrderBy(u => u.Body),
-            _ => query
+            _ => query.OrderBy(u => u.Id)
         };
 
         query = sort.OrderByDescending switch
@@ -60,8 +56,13 @@ public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) :
             "Id" => query.OrderByDescending(u => u.Id),
             "CreatedAt" => query.OrderByDescending(u => u.CreatedAt),
             "Body" => query.OrderByDescending(u => u.Body),
-            _ => query
+            _ => query.OrderBy(u => u.Id)
         };
+
+        query = query
+            .Skip((pagination.PageCount - 1) * pagination.PageSize)
+            .Take(pagination.PageSize);
+
 
         return await query.ToListAsync(cancellationToken);
     }

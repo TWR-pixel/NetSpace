@@ -2,7 +2,7 @@
 using NetSpace.Community.Application.Community.Mappers.Extensions;
 using NetSpace.Community.UseCases.Community;
 
-namespace NetSpace.Community.Application.Community.Requests;
+namespace NetSpace.Community.Application.Community.Requests.Delete;
 
 public sealed record DeleteCommunityRequest : RequestBase<CommunityResponse>
 {

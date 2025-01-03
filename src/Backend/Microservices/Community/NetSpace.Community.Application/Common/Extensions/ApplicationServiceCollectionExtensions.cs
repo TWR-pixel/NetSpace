@@ -1,6 +1,9 @@
 ﻿using FluentValidation;
+using Mapster;
+using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
-using NetSpace.Community.Application.Community.Requests;
+using NetSpace.Community.Application.Community.Mappers;
+using NetSpace.Community.Application.Community.Requests.Update;
 
 namespace NetSpace.Community.Application.Common.Extensions;
 
@@ -14,6 +17,16 @@ public static class ApplicationServiceCollectionExtensions
         });
 
         services.AddValidatorsFromAssembly(typeof(UpdateCommunityRequest).Assembly);
+
+        services.AddSingleton(() =>
+        {
+            var config = new TypeAdapterConfig();
+            new RegisterCommunityMapper().Register(config);
+
+            return config;
+        });
+
+        services.AddMapster();
 
         return services;
     }

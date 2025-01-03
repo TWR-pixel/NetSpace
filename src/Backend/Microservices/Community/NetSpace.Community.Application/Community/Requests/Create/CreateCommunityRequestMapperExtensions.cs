@@ -1,11 +1,11 @@
 ﻿using NetSpace.Community.Domain.Community;
 using NetSpace.Community.Domain.User;
 
-namespace NetSpace.Community.Application.Community.Mappers.Extensions;
+namespace NetSpace.Community.Application.Community.Requests.Create;
 
-public static class CommunityRequestMapperExtensions
+public static class CreateCommunityRequestMapperExtensions
 {
-    public static CommunityEntity ToEntity(this CommunityRequest request, UserEntity owner)
+    public static CommunityEntity ToEntity(this CreateCommunityRequest request, UserEntity owner)
     {
         var entity = new CommunityEntity
         {
@@ -18,4 +18,6 @@ public static class CommunityRequestMapperExtensions
 
         return entity;
     }
+
+
 }

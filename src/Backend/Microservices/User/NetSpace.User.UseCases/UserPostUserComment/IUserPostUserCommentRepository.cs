@@ -4,7 +4,7 @@ namespace NetSpace.User.UseCases.UserPostUserComment;
 
 public interface IUserPostUserCommentRepository : IRepository<UserPostUserCommentEntity, int>
 {
-    public Task<IEnumerable<UserPostUserCommentEntity>> Filter(UserPostUserCommentFilterOptions filter,
+    public Task<IEnumerable<UserPostUserCommentEntity>> FilterAsync(UserPostUserCommentFilterOptions filter,
                                                         PaginationOptions pagination,
                                                         SortOptions sort,
                                                         CancellationToken cancellationToken = default);
