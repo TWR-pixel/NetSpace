@@ -4,15 +4,15 @@ using NetSpace.User.UseCases.UserPostUserComment;
 
 namespace NetSpace.User.Application.UserPostUserComment.Requests.PartiallyUpdate;
 
-public sealed record PartiallyUpdateUserCommentRequest : RequestBase<UserPostUserCommentResponse>
+public sealed record PartiallyUpdateUserPostUserCommentRequest : RequestBase<UserPostUserCommentResponse>
 {
     public required int Id { get; set; }
     public string? Body { get; set; } 
 }
 
-public sealed class PartiallyUpdateUserCommentRequestHandler(IUserPostUserCommentRepository userCommentRepository) : RequestHandlerBase<PartiallyUpdateUserCommentRequest, UserPostUserCommentResponse>
+public sealed class PartiallyUpdateUserPostUserCommentRequestHandler(IUserPostUserCommentRepository userCommentRepository) : RequestHandlerBase<PartiallyUpdateUserPostUserCommentRequest, UserPostUserCommentResponse>
 {
-    public override async Task<UserPostUserCommentResponse> Handle(PartiallyUpdateUserCommentRequest request, CancellationToken cancellationToken)
+    public override async Task<UserPostUserCommentResponse> Handle(PartiallyUpdateUserPostUserCommentRequest request, CancellationToken cancellationToken)
     {
         var userCommentEntity = await userCommentRepository.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new UserPostUserCommentNotFoundException(request.Id);

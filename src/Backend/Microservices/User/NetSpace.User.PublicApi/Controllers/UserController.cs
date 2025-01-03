@@ -4,6 +4,7 @@ using NetSpace.User.Application.User;
 using NetSpace.User.Application.User.Requests.Create;
 using NetSpace.User.Application.User.Requests.Delete;
 using NetSpace.User.Application.User.Requests.Get;
+using NetSpace.User.Application.User.Requests.PartiallyUpdate;
 using NetSpace.User.Application.User.Requests.Update;
 using NetSpace.User.UseCases;
 using NetSpace.User.UseCases.User;
@@ -17,6 +18,7 @@ public sealed class UserController(IMediator mediator) : ApiControllerBase(media
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<UserResponse>> GetUsers([FromQuery] UserFilterOptions filter,
                                                            [FromQuery] SortOptions sort,
                                                            [FromQuery] PaginationOptions pagination,
@@ -30,18 +32,28 @@ public sealed class UserController(IMediator mediator) : ApiControllerBase(media
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<UserResponse>> Create(CreateUserRequest request, CancellationToken cancellationToken)
         => CreatedAtAction(nameof(Create), await Mediator.Send(request, cancellationToken));
 
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<UserResponse>> Update(UpdateUserRequest request, CancellationToken cancellationToken)
+        => Ok(await Mediator.Send(request, cancellationToken));
+
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<UserResponse>> Patch(PartiallyUpdateUserRequest request, CancellationToken cancellationToken)
         => Ok(await Mediator.Send(request, cancellationToken));
 
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<UserResponse>> DeleteById(DeleteUserByIdRequest request, CancellationToken cancellationToken)
         => Ok(await Mediator.Send(request, cancellationToken));
 }
