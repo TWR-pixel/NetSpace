@@ -1,6 +1,6 @@
 ﻿using MassTransit;
-using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Application.User.Exceptions;
+using NetSpace.Identity.Application.User.Extensions.Mappers;
 using NetSpace.Identity.Domain.User;
 using NetSpace.Identity.UseCases.User;
 
@@ -17,9 +17,9 @@ public sealed record RegisterUserRequest : RequestBase<UserResponse>
     public string About { get; set; } = string.Empty;
 
     public DateTime? BirthDate { get; set; }
-    public Domain.User.Gender Gender { get; set; } = Domain.User.Gender.NotSet;
-    public Domain.User.Language Language { get; set; } = Domain.User.Language.NotSet;
-    public Domain.User.MaritalStatus MaritalStatus { get; set; } = Domain.User.MaritalStatus.NotSet;
+    public Gender Gender { get; set; } = Gender.NotSet;
+    public Language Language { get; set; } = Language.NotSet;
+    public MaritalStatus MaritalStatus { get; set; } = MaritalStatus.NotSet;
 }
 
 public sealed class RegisterUserRequestHandler(IUserRepository userRepository, IPublishEndpoint publishEndpoint) : RequestHandlerBase<RegisterUserRequest, UserResponse>
@@ -31,27 +31,21 @@ public sealed class RegisterUserRequestHandler(IUserRepository userRepository, I
         if (userFromDbEntity != null)
             throw new UserAlreadyExistsException(userFromDbEntity.Email);
 
-        var newUserEntity = new UserEntity(request.Nickname,
-                                     request.UserName,
-                                     request.Surname,
-                                     request.LastName,
-                                     request.About,
-                                     birthDate: request.BirthDate,
-                                     gender: request.Gender,
-                                     language: request.Language,
-                                     maritalStatus: request.MaritalStatus);
+        var newUserEntity = new UserEntity
+        {
+            Nickname = request.Nickname,
+            UserName = request.UserName,
+            Surname = request.Surname,
+            LastName = request.LastName,
+            About = request.About,
+            BirthDate = request.BirthDate,
+            Language = request.Language,
+            MaritalStatus = request.MaritalStatus,
+            Gender = request.Gender,
+        };
 
         await userRepository.AddAsync(newUserEntity, request.Password, cancellationToken);
-
-        await publishEndpoint.Publish(new UserCreatedMessage(Guid.Parse(newUserEntity.Id),
-                                                             newUserEntity.Nickname,
-                                                             newUserEntity.Name,
-                                                             newUserEntity.Surname,
-                                                             newUserEntity.Email,
-                                                             newUserEntity.LastName,
-                                                             newUserEntity.About,
-                                                             newUserEntity.AvatarUrl,
-                                                             (NetSpace.Common.Messages.User.Gender)newUserEntity.Gender), cancellationToken);
+        await publishEndpoint.Publish(newUserEntity.ToCreated(), cancellationToken);
 
         return new UserResponse();
     }

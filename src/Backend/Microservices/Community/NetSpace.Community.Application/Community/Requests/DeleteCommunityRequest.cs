@@ -1,4 +1,5 @@
 ﻿using NetSpace.Community.Application.Community.Exceptions;
+using NetSpace.Community.Application.Community.Mappers.Extensions;
 using NetSpace.Community.UseCases.Community;
 
 namespace NetSpace.Community.Application.Community.Requests;
@@ -16,7 +17,8 @@ public sealed class DeleteCommunityRequestHandler(ICommunityRepository community
             ?? throw new CommunityNotFoundException(request.Id);
 
         await communityRepository.DeleteAsync(entity, cancellationToken);
+        await communityRepository.SaveChangesAsync(cancellationToken);
 
-        return new CommunityResponse();
+        return entity.ToResponse();
     }
 }

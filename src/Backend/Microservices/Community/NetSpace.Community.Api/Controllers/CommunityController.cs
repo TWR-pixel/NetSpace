@@ -11,7 +11,7 @@ namespace NetSpace.Community.Api.Controllers;
 public sealed class CommunityController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<CommunityEntity>?>> GetByFilter([FromQuery] FilterOptions filter, CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<CommunityEntity>?>> GetByFilter([FromQuery] CommunityFilterOptions filter, CancellationToken cancellationToken)
     {
         var request = new GetCommunityRequest() { Filter = filter };
         var result = await mediator.Send(request, cancellationToken);

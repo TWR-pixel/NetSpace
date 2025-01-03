@@ -10,10 +10,10 @@ public static class ApplicationServiceCollectionExtensions
     {
         services.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssembly(typeof(UserRequest).Assembly);
+            config.RegisterServicesFromAssembly(typeof(UserResponse).Assembly);
         });
 
-        services.AddValidatorsFromAssembly(typeof(UserRequest).Assembly);
+        services.AddValidatorsFromAssembly(typeof(UserResponse).Assembly);
 
         return services;
     }

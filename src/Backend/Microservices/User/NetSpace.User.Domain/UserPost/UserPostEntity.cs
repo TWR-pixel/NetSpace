@@ -1,11 +1,12 @@
-﻿using NetSpace.User.Domain.UserPostUserComment;
+﻿using NetSpace.User.Domain.User;
+using NetSpace.User.Domain.UserPostUserComment;
 
-namespace NetSpace.User.Domain.User;
+namespace NetSpace.User.Domain.UserPost;
 
 public sealed class UserPostEntity : IEntity<int>
 {
     public int Id { get; set; }
-    public required string Title { get; set; } 
+    public required string Title { get; set; }
     public required string Body { get; set; }
 
     public Guid UserId { get; set; }
@@ -15,6 +16,6 @@ public sealed class UserPostEntity : IEntity<int>
 
     public UserPostEntity()
     {
-        
+
     }
 }

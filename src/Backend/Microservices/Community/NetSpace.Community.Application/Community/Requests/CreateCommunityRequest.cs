@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using NetSpace.Community.Application.Common.Exceptions;
-using NetSpace.Community.Domain.Community;
+using NetSpace.Community.Application.Community.Mappers.Extensions;
 using NetSpace.Community.UseCases.Community;
 using NetSpace.Community.UseCases.User;
 
@@ -8,11 +8,7 @@ namespace NetSpace.Community.Application.Community.Requests;
 
 public sealed record CreateCommunityRequest : RequestBase<CommunityResponse>
 {
-    public required string Name { get; set; }
-    public string? Description { get; set; }
-    public string? AvatarUrl { get; set; }
-
-    public required Guid OwnerId { get; set; }
+    public required CommunityRequest CommunityRequest { get; set; }
 }
 
 public sealed class CreateCommunityRequestValidator : AbstractValidator<CreateCommunityRequest>
@@ -28,22 +24,18 @@ public sealed class CreateCommunityRequestHandler(ICommunityRepository community
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var userEntity = await userRepository.FindByIdAsync(request.OwnerId, cancellationToken)
-            ?? throw new UserNotFoundException(request.OwnerId.ToString());
+        var communityRequest = request.CommunityRequest;
 
-        var communityEntity = new CommunityEntity
-        {
-            Name = request.Name,
-            Description = request.Description,
-            OwnerId = request.OwnerId,
-            Owner = userEntity,
-            AvatarUrl = request.AvatarUrl
-        };
+        var userEntity = await userRepository.FindByIdAsync(communityRequest.OwnerId, cancellationToken)
+            ?? throw new UserNotFoundException(communityRequest.OwnerId);
+
+        var communityEntity = communityRequest.ToEntity(userEntity);
 
         var result = await communityRepository.AddAsync(communityEntity, cancellationToken);
-        
-        var response = new CommunityResponse();
+        await communityRepository.SaveChangesAsync(cancellationToken);
 
-       return response;
+        var response = result.ToResponse();
+
+        return response;
     }
 }

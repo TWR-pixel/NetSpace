@@ -1,7 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.User.Application.UserPost;
-using NetSpace.User.Application.UserPost.Requests;
+using NetSpace.User.Application.UserPost.Requests.Create;
+using NetSpace.User.Application.UserPost.Requests.Delete;
+using NetSpace.User.Application.UserPost.Requests.Get;
+using NetSpace.User.Application.UserPost.Requests.PartiallyUpdate;
+using NetSpace.User.Application.UserPost.Requests.Update;
 using NetSpace.User.UseCases;
 using NetSpace.User.UseCases.UserPost;
 
@@ -29,11 +33,9 @@ public class UserPostController(IMediator mediator) : ApiControllerBase(mediator
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserPostResponse>> Create([FromBody] UserPostRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserPostResponse>> Create([FromBody] CreateUserPostRequest request, CancellationToken cancellationToken)
     {
-        var createRequest = new CreateUserPostRequest { UserPostRequest = request };
-
-        var result = await Mediator.Send(createRequest, cancellationToken);
+        var result = await Mediator.Send(request, cancellationToken);
 
         return CreatedAtAction(nameof(Create), result);
     }

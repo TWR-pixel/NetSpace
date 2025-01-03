@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetSpace.User.Domain.User;
+using NetSpace.User.Domain.UserPost;
 using NetSpace.User.UseCases;
 using NetSpace.User.UseCases.UserPost;
 

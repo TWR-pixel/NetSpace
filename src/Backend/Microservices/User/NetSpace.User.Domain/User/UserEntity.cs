@@ -1,4 +1,5 @@
-﻿using NetSpace.User.Domain.UserPostUserComment;
+﻿using NetSpace.User.Domain.UserPost;
+using NetSpace.User.Domain.UserPostUserComment;
 
 namespace NetSpace.User.Domain.User;
 
