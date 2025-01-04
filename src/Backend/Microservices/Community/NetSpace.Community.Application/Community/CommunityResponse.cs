@@ -1,4 +1,5 @@
-﻿using NetSpace.Community.Application.User;
+﻿using NetSpace.Community.Application.CommunityPost;
+using NetSpace.Community.Application.User;
 
 namespace NetSpace.Community.Application.Community;
 
@@ -12,6 +13,9 @@ public sealed record CommunityResponse : ResponseBase
     public UserResponse? Owner { get; set; }
     public required Guid OwnerId { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime LastNameUpdatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; }
+    public DateTime LastNameUpdatedAt { get; set; }
+
+    public IEnumerable<CommunityPostResponse> CommunityPosts { get; set; } = new List<CommunityPostResponse>();
+    public IEnumerable<UserResponse> CommunitySubscribers { get; set; } = new List<UserResponse>();
 }

@@ -6,7 +6,7 @@ public sealed class UserResponse
 {
     public Guid Id { get; set; }
     public required string Nickname { get; set; }
-    public required string Name { get; set; }
+    public required string UserName { get; set; }
     public required string Surname { get; set; }
     public required string Email { get; set; }
     public string LastName { get; set; } = string.Empty;

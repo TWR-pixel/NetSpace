@@ -10,5 +10,8 @@ public sealed class RegisterCommunityMapper : IRegister
     {
         config.NewConfig<CreateCommunityRequest, CommunityEntity>()
             .RequireDestinationMemberSource(true);
+
+        config.NewConfig<CommunityEntity, CommunityResponse>()
+            .RequireDestinationMemberSource(true);
     }
 }

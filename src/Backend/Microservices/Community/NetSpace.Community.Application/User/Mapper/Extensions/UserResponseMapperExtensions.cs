@@ -10,7 +10,7 @@ public static class UserResponseMapperExtensions
         {
             Id = entity.Id,
             Nickname = entity.Nickname,
-            Name = entity.UserName,
+            UserName = entity.UserName,
             Surname = entity.Surname,
             Email = entity.Email,
             LastName = entity.LastName,
@@ -37,7 +37,7 @@ public static class UserResponseMapperExtensions
         {
             Id = response.Id,
             Nickname = response.Nickname,
-            UserName = response.Name,
+            UserName = response.UserName,
             Surname = response.Surname,
             Email = response.Email,
             LastName = response.LastName,

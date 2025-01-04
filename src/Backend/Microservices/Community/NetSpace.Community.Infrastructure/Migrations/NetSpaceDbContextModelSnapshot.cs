@@ -57,7 +57,7 @@ namespace NetSpace.Community.Infrastructure.Migrations
                     b.Property<DateTime>("LastNameUpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
 

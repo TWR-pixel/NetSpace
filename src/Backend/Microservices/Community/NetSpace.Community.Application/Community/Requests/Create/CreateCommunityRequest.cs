@@ -24,12 +24,13 @@ public sealed class CreateCommunityRequestValidator : AbstractValidator<CreateCo
 
 public sealed class CreateCommunityRequestHandler(ICommunityRepository communityRepository,
                                                   IUserRepository userRepository,
-                                                  IValidator<CreateCommunityRequest> validator,IMapper mapper) : RequestHandlerBase<CreateCommunityRequest, CommunityResponse>
+                                                  IValidator<CreateCommunityRequest> validator,
+                                                  IMapper mapper) : RequestHandlerBase<CreateCommunityRequest, CommunityResponse>
 {
     public override async Task<CommunityResponse> Handle(CreateCommunityRequest request, CancellationToken cancellationToken)
     {
         //await validator.ValidateAndThrowAsync(request, cancellationToken);
-        
+
         var userEntity = await userRepository.FindByIdAsync(request.OwnerId, cancellationToken)
             ?? throw new UserNotFoundException(request.OwnerId);
 
@@ -38,7 +39,7 @@ public sealed class CreateCommunityRequestHandler(ICommunityRepository community
         var result = await communityRepository.AddAsync(communityEntity, cancellationToken);
         await communityRepository.SaveChangesAsync(cancellationToken);
 
-        var response = result.ToResponse();
+        var response = mapper.Map<CommunityResponse>(result);
 
         return response;
     }
