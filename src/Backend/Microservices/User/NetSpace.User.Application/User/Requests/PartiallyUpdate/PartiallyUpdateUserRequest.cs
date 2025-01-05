@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using MapsterMapper;
+using MassTransit;
+using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.Domain.User;
 using NetSpace.User.UseCases.User;
@@ -12,18 +14,17 @@ public sealed record PartiallyUpdateUserRequest : RequestBase<UserResponse>
     public string? Nickname { get; set; }
     public string? Name { get; set; }
     public string? Surname { get; set; }
-    public string? Email { get; set; }
     public string? LastName { get; set; }
     public string? About { get; set; }
     public DateTime? BirthDate { get; set; }
 
     public string? Hometown { get; set; }
-    public Language? Language { get; set; }
-    public MaritalStatus? MaritalStatus { get; set; }
+    public Domain.User.Language? Language { get; set; }
+    public Domain.User.MaritalStatus? MaritalStatus { get; set; }
     public string? CurrentCity { get; set; }
     public string? PersonalSite { get; set; }
 
-    public Gender? Gender { get; set; }
+    public Domain.User.Gender? Gender { get; set; }
 
     public string? SchoolName { get; set; }
 }
@@ -47,11 +48,11 @@ public sealed class PartiallyUpdateUserRequestValidator : AbstractValidator<Part
             .NotEmpty()
             .When(r => r.Surname is not null);
 
-        RuleFor(r => r.Email)
-            .MaximumLength(50)
-            .EmailAddress()
-            .Matches(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
-            .When(r => r.Email is not null);
+        //RuleFor(r => r.Email) move to identity
+        //    .MaximumLength(50)
+        //    .EmailAddress()
+        //    .Matches(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
+        //    .When(r => r.Email is not null);
 
         RuleFor(r => r.LastName)
             .MaximumLength(50)
@@ -78,7 +79,8 @@ public sealed class PartiallyUpdateUserRequestValidator : AbstractValidator<Part
 
 public sealed class PartiallyUpdateUserRequestHandler(IUserRepository userRepository,
                                                       IValidator<PartiallyUpdateUserRequest> requestValidator,
-                                                      IMapper mapper) : RequestHandlerBase<PartiallyUpdateUserRequest, UserResponse>
+                                                      IMapper mapper,
+                                                      IPublishEndpoint publisher) : RequestHandlerBase<PartiallyUpdateUserRequest, UserResponse>
 {
     public override async Task<UserResponse> Handle(PartiallyUpdateUserRequest request, CancellationToken cancellationToken)
     {
@@ -86,10 +88,11 @@ public sealed class PartiallyUpdateUserRequestHandler(IUserRepository userReposi
 
         var userEntity = await userRepository.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new UserNotFoundException(request.Id);
-        
+
         mapper.Map(request, userEntity);
 
         await userRepository.SaveChangesAsync(cancellationToken);
+        await publisher.Publish(mapper.Map<UserUpdatedMessage>(userEntity), cancellationToken);
 
         var response = mapper.Map<UserResponse>(userEntity);
 

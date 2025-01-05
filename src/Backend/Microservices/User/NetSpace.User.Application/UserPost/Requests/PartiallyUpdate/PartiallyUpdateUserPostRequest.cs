@@ -8,8 +8,8 @@ namespace NetSpace.User.Application.UserPost.Requests.PartiallyUpdate;
 public sealed record PartiallyUpdateUserPostRequest : RequestBase<UserPostResponse>
 {
     public required int Id { get; set; }
-    public string Title { get; set; } = string.Empty;
-    public string Body { get; set; } = string.Empty;
+    public string? Title { get; set; }
+    public string? Body { get; set; }
 }
 
 public sealed class PartiallyUpdateUserPostRequestValidator : AbstractValidator<PartiallyUpdateUserPostRequest>
@@ -31,10 +31,8 @@ public sealed class PartiallyUpdateUserPostRequestHandler(IUserPostRepository us
         var userPostEntity = await userPostRepository.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new UserPostNotFoundException(request.Id);
 
-        userPostEntity.Title = request.Title;
-        userPostEntity.Body = request.Body;
+        mapper.Map(request, userPostEntity);
 
-        await userPostRepository.UpdateAsync(userPostEntity, cancellationToken);
         await userPostRepository.SaveChangesAsync(cancellationToken);
 
         return mapper.Map<UserPostResponse>(userPostEntity);

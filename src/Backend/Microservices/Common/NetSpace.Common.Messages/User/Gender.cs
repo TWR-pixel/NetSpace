@@ -1,6 +1,6 @@
 ﻿namespace NetSpace.Common.Messages.User;
 
-public enum Gender
+public enum Gender : byte
 {
     Male,
     Female,

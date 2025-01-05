@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.UserPost.Requests.Create;
 using NetSpace.User.Application.UserPost.Requests.PartiallyUpdate;
 using NetSpace.User.Application.UserPost.Requests.Update;
@@ -21,5 +22,13 @@ public sealed class RegisterUserPostMapper : IRegister
 
         config.NewConfig<IEnumerable<UserPostEntity>, IEnumerable<UserPostResponse>>()
             .RequireDestinationMemberSource(true);
+
+        #region Common messages
+
+        config.NewConfig<UserPostEntity, UserUpdatedMessage>();
+        config.NewConfig<UserPostEntity, UserDeletedMessage>();
+        config.NewConfig<UserPostEntity, UserCreatedMessage>();
+
+        #endregion
     }
 }

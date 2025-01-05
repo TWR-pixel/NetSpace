@@ -22,5 +22,10 @@ public sealed class RegisterUserPostUserCommentMapper : IRegister
 
         config.NewConfig<PartiallyUpdateUserPostUserCommentRequest, UserPostUserCommentEntity>()
             .RequireDestinationMemberSource(true);
+
+        #region Common messages
+
+
+        #endregion
     }
 }

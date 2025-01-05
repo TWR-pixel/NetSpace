@@ -1,5 +1,5 @@
 ﻿namespace NetSpace.Identity.Application.User.Exceptions;
 
-public sealed class UserNotFoundException() : Exception($"")
+public sealed class UserNotFoundException(Guid id) : Exception($"User with id '{id}' not found. ")
 {
 }

@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using MassTransit;
 using NetSpace.User.Application.UserPost.Exceptions;
 using NetSpace.User.UseCases.UserPost;
 
@@ -9,7 +10,7 @@ public sealed record DeleteUserPostByIdRequest : RequestBase<UserPostResponse>
     public required int Id { get; set; }
 }
 
-public sealed class DeleteUserPostByIdRequestHandler(IUserPostRepository userPostRepository, IMapper mapper) : RequestHandlerBase<DeleteUserPostByIdRequest, UserPostResponse>
+public sealed class DeleteUserPostByIdRequestHandler(IUserPostRepository userPostRepository, IMapper mapper, IPublishEndpoint publisher) : RequestHandlerBase<DeleteUserPostByIdRequest, UserPostResponse>
 {
     public override async Task<UserPostResponse> Handle(DeleteUserPostByIdRequest request, CancellationToken cancellationToken)
     {

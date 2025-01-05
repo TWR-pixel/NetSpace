@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using MapsterMapper;
+using MediatR;
+using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.Domain.User;
 using NetSpace.User.UseCases.User;
@@ -9,22 +11,22 @@ namespace NetSpace.User.Application.User.Requests.Update;
 public sealed record UpdateUserRequest : RequestBase<UserResponse>
 {
     public required Guid Id { get; set; }
-    public string? Nickname { get; set; }
-    public string? Name { get; set; }
-    public string? Surname { get; set; }
+    public required string Nickname { get; set; }
+    public required string Name { get; set; }
+    public required string Surname { get; set; }
     public string? LastName { get; set; }
     public string? About { get; set; }
     public DateTime? BirthDate { get; set; }
 
-    public string? Hometown { get; set; }
-    public Language Language { get; set; }
-    public MaritalStatus MaritalStatus { get; set; }
-    public string? CurrentCity { get; set; }
-    public string? PersonalSite { get; set; }
+    public string Hometown { get; set; } = string.Empty;
+    public Domain.User.Language Language { get; set; } = Domain.User.Language.NotSet;
+    public Domain.User.MaritalStatus MaritalStatus { get; set; } = Domain.User.MaritalStatus.NotSet;
+    public string CurrentCity { get; set; } = string.Empty;
+    public string PersonalSite { get; set; } = string.Empty;
 
-    public Gender Gender { get; set; }
+    public Domain.User.Gender Gender { get; set; } = Domain.User.Gender.NotSet;
 
-    public string? SchoolName { get; set; }
+    public string SchoolName { get; set; } = string.Empty;
 }
 
 public sealed class UpdateUserRequestValidator : AbstractValidator<UpdateUserRequest>
@@ -42,11 +44,6 @@ public sealed class UpdateUserRequestValidator : AbstractValidator<UpdateUserReq
         RuleFor(r => r.Surname)
             .MaximumLength(100)
             .NotEmpty();
-
-        //RuleFor(r => r.Email)
-        //    .MaximumLength(50)
-        //    .EmailAddress()
-        //    .Matches(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
 
         RuleFor(r => r.LastName)
             .MaximumLength(50)
@@ -66,7 +63,10 @@ public sealed class UpdateUserRequestValidator : AbstractValidator<UpdateUserReq
     }
 }
 
-public sealed class UpdateUserRequestHandler(IUserRepository userRepository, IValidator<UpdateUserRequest> requestValidator, IMapper mapper) : RequestHandlerBase<UpdateUserRequest, UserResponse>
+public sealed class UpdateUserRequestHandler(IUserRepository userRepository,
+                                             IValidator<UpdateUserRequest> requestValidator,
+                                             IMapper mapper,
+                                             IPublisher publisher) : RequestHandlerBase<UpdateUserRequest, UserResponse>
 {
     public override async Task<UserResponse> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
     {
@@ -75,40 +75,9 @@ public sealed class UpdateUserRequestHandler(IUserRepository userRepository, IVa
         var userEntity = await userRepository.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new UserNotFoundException(request.Id);
 
-        if (!string.IsNullOrWhiteSpace(request.Nickname))
-            userEntity.Nickname = request.Nickname;
-
-        if (!string.IsNullOrWhiteSpace(request.Name))
-            userEntity.Name = request.Name;
-
-        if (!string.IsNullOrWhiteSpace(request.Surname))
-            userEntity.Surname = request.Surname;
-
-        if (!string.IsNullOrWhiteSpace(request.LastName))
-            userEntity.LastName = request.LastName;
-
-        if (!string.IsNullOrWhiteSpace(request.About))
-            userEntity.About = request.About;
-
-        if (request.BirthDate is not null)
-            userEntity.BirthDate = request.BirthDate;
-
-        if (!string.IsNullOrWhiteSpace(request.Hometown))
-            userEntity.Hometown = request.Hometown;
-
-        if (request.Language != userEntity.Language)
-            userEntity.Language = request.Language;
-
-        if (request.MaritalStatus != userEntity.MaritalStatus)
-            userEntity.MaritalStatus = request.MaritalStatus;
-
-        if (request.Gender != userEntity.Gender)
-            userEntity.Gender = request.Gender;
-
-        if (!string.IsNullOrWhiteSpace(request.SchoolName))
-            userEntity.SchoolName = request.SchoolName;
-
+        mapper.Map(request, userEntity);
         await userRepository.SaveChangesAsync(cancellationToken);
+        await publisher.Publish(mapper.Map<UserUpdatedMessage>(userEntity), cancellationToken);
 
         return mapper.Map<UserResponse>(userEntity);
     }

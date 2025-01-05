@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.User.Requests.Create;
 using NetSpace.User.Application.User.Requests.Delete;
 using NetSpace.User.Application.User.Requests.PartiallyUpdate;
@@ -21,11 +22,18 @@ public sealed class RegisterUserMapper : IRegister
             .RequireDestinationMemberSource(true);
 
         config.NewConfig<PartiallyUpdateUserRequest, UserEntity>()
-           // .RequireDestinationMemberSource(true)
             .IgnoreNullValues(true)
             .Ignore(u => u.Id);
 
         config.NewConfig<DeleteUserByIdRequest, UserEntity>()
             .RequireDestinationMemberSource(true);
+
+        #region Common messages
+
+        config.NewConfig<UserEntity, UserCreatedMessage>();
+        config.NewConfig<UserEntity, UserUpdatedMessage>();
+        config.NewConfig<UserEntity, UserDeletedMessage>();
+
+        #endregion
     }
 }

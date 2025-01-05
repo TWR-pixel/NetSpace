@@ -1,4 +1,6 @@
-﻿using MassTransit;
+﻿using MapsterMapper;
+using MassTransit;
+using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Application.User.Exceptions;
 using NetSpace.Identity.Domain.User;
 using NetSpace.Identity.UseCases.User;
@@ -16,12 +18,12 @@ public sealed record RegisterUserRequest : RequestBase<UserResponse>
     public string About { get; set; } = string.Empty;
 
     public DateTime? BirthDate { get; set; }
-    public Gender Gender { get; set; } = Gender.NotSet;
-    public Language Language { get; set; } = Language.NotSet;
-    public MaritalStatus MaritalStatus { get; set; } = MaritalStatus.NotSet;
+    public Domain.User.Gender Gender { get; set; } = Domain.User.Gender.NotSet;
+    public Domain.User.Language Language { get; set; } = Domain.User.Language.NotSet;
+    public Domain.User.MaritalStatus MaritalStatus { get; set; } = Domain.User.MaritalStatus.NotSet;
 }
 
-public sealed class RegisterUserRequestHandler(IUserRepository userRepository, IPublishEndpoint publishEndpoint) : RequestHandlerBase<RegisterUserRequest, UserResponse>
+public sealed class RegisterUserRequestHandler(IUserRepository userRepository, IPublishEndpoint publishEndpoint, IMapper mapper) : RequestHandlerBase<RegisterUserRequest, UserResponse>
 {
     public override async Task<UserResponse> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
     {
@@ -30,21 +32,10 @@ public sealed class RegisterUserRequestHandler(IUserRepository userRepository, I
         if (userFromDbEntity != null)
             throw new UserAlreadyExistsException(userFromDbEntity.Email);
 
-        var newUserEntity = new UserEntity
-        {
-            Nickname = request.Nickname,
-            UserName = request.UserName,
-            Surname = request.Surname,
-            LastName = request.LastName,
-            About = request.About,
-            BirthDate = request.BirthDate,
-            Language = request.Language,
-            MaritalStatus = request.MaritalStatus,
-            Gender = request.Gender,
-        };
+        var newUserEntity = mapper.Map<UserEntity>(request);
 
         await userRepository.AddAsync(newUserEntity, request.Password, cancellationToken);
-        await publishEndpoint.Publish(newUserEntity.ToCreated(), cancellationToken);
+        await publishEndpoint.Publish(mapper.Map<UserCreatedMessage>(newUserEntity), cancellationToken);
 
         return new UserResponse();
     }

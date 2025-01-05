@@ -79,14 +79,11 @@ public sealed class CreateUserRequestHandler(IPublishEndpoint publisher,
         await requestValidator.ValidateAndThrowAsync(request, cancellationToken);
 
         var userEntity = mapper.Map<UserEntity>(request);
+
         await userRepository.AddAsync(userEntity, cancellationToken);
-
-        var userCreatedMessage = mapper.Map<UserCreatedMessage>(userEntity);
-
-        await publisher.Publish(userCreatedMessage, cancellationToken);
-        await cache.AddAsync(userEntity, cancellationToken);
-
         await userRepository.SaveChangesAsync(cancellationToken);
+        await cache.AddAsync(userEntity, cancellationToken);
+        await publisher.Publish(mapper.Map<UserCreatedMessage>(userEntity), cancellationToken);
 
         return mapper.Map<UserResponse>(userEntity);
     }

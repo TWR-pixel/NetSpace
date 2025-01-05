@@ -1,4 +1,5 @@
-﻿using MapsterMapper;
+﻿using FluentValidation;
+using MapsterMapper;
 using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.Domain.UserPost;
 using NetSpace.User.UseCases.User;
@@ -14,12 +15,23 @@ public sealed record CreateUserPostRequest : RequestBase<UserPostResponse>
     public required Guid OwnerId { get; set; }
 }
 
+public sealed class CreateUserPostRequestValidator : AbstractValidator<CreateUserPostRequest>
+{
+    public CreateUserPostRequestValidator()
+    {
 
-public sealed class CreateUserPostRequestHandler(IUserPostRepository userPostRepository, IUserRepository userRepository,
-    IMapper mapper) : RequestHandlerBase<CreateUserPostRequest, UserPostResponse>
+    }
+}
+
+public sealed class CreateUserPostRequestHandler(IUserPostRepository userPostRepository,
+                                                 IUserRepository userRepository,
+                                                 IMapper mapper,
+                                                 IValidator<CreateUserPostRequest> requestValidator) : RequestHandlerBase<CreateUserPostRequest, UserPostResponse>
 {
     public override async Task<UserPostResponse> Handle(CreateUserPostRequest request, CancellationToken cancellationToken)
     {
+        await requestValidator.ValidateAndThrowAsync(request, cancellationToken);
+
         _ = await userRepository.FindByIdAsync(request.OwnerId, cancellationToken)
             ?? throw new UserNotFoundException(request.OwnerId);
 

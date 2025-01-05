@@ -1,6 +1,4 @@
-﻿using NetSpace.User.Application.UserPost;
-
-namespace NetSpace.User.Application.UserPostUserComment;
+﻿namespace NetSpace.User.Application.UserPostUserComment;
 
 public sealed record UserPostUserCommentResponse : ResponseBase
 {
