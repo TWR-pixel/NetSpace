@@ -1,4 +1,4 @@
-﻿namespace NetSpace.Community.Application;
+﻿namespace NetSpace.Community.Application.Common;
 
 public abstract record ResponseBase
 {

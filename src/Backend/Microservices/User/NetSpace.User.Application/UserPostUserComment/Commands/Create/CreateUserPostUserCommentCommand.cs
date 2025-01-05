@@ -6,7 +6,7 @@ using NetSpace.User.UseCases.Common;
 
 namespace NetSpace.User.Application.UserPostUserComment.Commands.Create;
 
-public sealed record CreateUserPostUserCommentRequest : CommandBase<UserPostUserCommentResponse>
+public sealed record CreateUserPostUserCommentCommand : CommandBase<UserPostUserCommentResponse>
 {
     public required string Body { get; set; }
 
@@ -16,12 +16,10 @@ public sealed record CreateUserPostUserCommentRequest : CommandBase<UserPostUser
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
 
-
-
-public sealed class CreateUserPostUserCommentRequestHandler(IUnitOfWork unitOfWork,
-                                                            IMapper mapper) : CommandHandlerBase<CreateUserPostUserCommentRequest, UserPostUserCommentResponse>(unitOfWork)
+public sealed class CreateUserPostUserCommentCommandHandler(IUnitOfWork unitOfWork,
+                                                            IMapper mapper) : CommandHandlerBase<CreateUserPostUserCommentCommand, UserPostUserCommentResponse>(unitOfWork)
 {
-    public override async Task<UserPostUserCommentResponse> Handle(CreateUserPostUserCommentRequest request, CancellationToken cancellationToken)
+    public override async Task<UserPostUserCommentResponse> Handle(CreateUserPostUserCommentCommand request, CancellationToken cancellationToken)
     {
 
         _ = await UnitOfWork.Users.FindByIdAsync(request.UserId, cancellationToken)

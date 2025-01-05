@@ -4,16 +4,16 @@ using NetSpace.User.UseCases.Common;
 
 namespace NetSpace.User.Application.UserPostUserComment.Commands.Update;
 
-public sealed record UpdateUserPostUserCommentRequest : CommandBase<UserPostUserCommentResponse>
+public sealed record UpdateUserPostUserCommentCommand : CommandBase<UserPostUserCommentResponse>
 {
     public required int Id { get; set; }
     public required string Body { get; set; }
 }
 
-public sealed class UpdateUserPostUserCommentRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) 
-    : CommandHandlerBase<UpdateUserPostUserCommentRequest, UserPostUserCommentResponse>(unitOfWork)
+public sealed class UpdateUserPostUserCommentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) 
+    : CommandHandlerBase<UpdateUserPostUserCommentCommand, UserPostUserCommentResponse>(unitOfWork)
 {
-    public override async Task<UserPostUserCommentResponse> Handle(UpdateUserPostUserCommentRequest request, CancellationToken cancellationToken)
+    public override async Task<UserPostUserCommentResponse> Handle(UpdateUserPostUserCommentCommand request, CancellationToken cancellationToken)
     {
         var userCommentEntity = await UnitOfWork.UserPostUserComments.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new UserPostUserCommentNotFoundException(request.Id);

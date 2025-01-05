@@ -5,15 +5,15 @@ using NetSpace.User.UseCases.Common;
 
 namespace NetSpace.User.Application.UserPostUserComment.Commands.PartiallyUpdate;
 
-public sealed record PartiallyUpdateUserPostUserCommentRequest : CommandBase<UserPostUserCommentResponse>
+public sealed record PartiallyUpdateUserPostUserCommentCommand : CommandBase<UserPostUserCommentResponse>
 {
     public required int Id { get; set; }
     public string? Body { get; set; }
 }
 
-public sealed class PartiallyUpdateUserPostUserCommentRequestValidator : AbstractValidator<PartiallyUpdateUserPostUserCommentRequest>
+public sealed class PartiallyUpdateUserPostUserCommentCommandValidator : AbstractValidator<PartiallyUpdateUserPostUserCommentCommand>
 {
-    public PartiallyUpdateUserPostUserCommentRequestValidator()
+    public PartiallyUpdateUserPostUserCommentCommandValidator()
     {
         RuleFor(p => p.Body)
             .NotEmpty()
@@ -25,12 +25,12 @@ public sealed class PartiallyUpdateUserPostUserCommentRequestValidator : Abstrac
     }
 }
 
-public sealed class PartiallyUpdateUserPostUserCommentRequestHandler(IUnitOfWork unitOfWork,
+public sealed class PartiallyUpdateUserPostUserCommentCommandHandler(IUnitOfWork unitOfWork,
                                                                      IMapper mapper,
-                                                                     IValidator<PartiallyUpdateUserPostUserCommentRequest> requestValidator)
-    : CommandHandlerBase<PartiallyUpdateUserPostUserCommentRequest, UserPostUserCommentResponse>(unitOfWork)
+                                                                     IValidator<PartiallyUpdateUserPostUserCommentCommand> requestValidator)
+    : CommandHandlerBase<PartiallyUpdateUserPostUserCommentCommand, UserPostUserCommentResponse>(unitOfWork)
 {
-    public override async Task<UserPostUserCommentResponse> Handle(PartiallyUpdateUserPostUserCommentRequest request, CancellationToken cancellationToken)
+    public override async Task<UserPostUserCommentResponse> Handle(PartiallyUpdateUserPostUserCommentCommand request, CancellationToken cancellationToken)
     {
         await requestValidator.ValidateAndThrowAsync(request, cancellationToken);
 

@@ -5,15 +5,15 @@ using NetSpace.User.UseCases.Common;
 
 namespace NetSpace.User.Application.UserPost.Commands.Delete;
 
-public sealed record DeleteUserPostByIdRequest : CommandBase<UserPostResponse>
+public sealed record DeleteUserPostByIdCommand : CommandBase<UserPostResponse>
 {
     public required int Id { get; set; }
 }
 
-public sealed class DeleteUserPostByIdRequestHandler(IUnitOfWork unitOfWork,IMapper mapper, IPublishEndpoint publisher)
-    : CommandHandlerBase<DeleteUserPostByIdRequest, UserPostResponse>(unitOfWork)
+public sealed class DeleteUserPostByIdCommandHandler(IUnitOfWork unitOfWork,IMapper mapper, IPublishEndpoint publisher)
+    : CommandHandlerBase<DeleteUserPostByIdCommand, UserPostResponse>(unitOfWork)
 {
-    public override async Task<UserPostResponse> Handle(DeleteUserPostByIdRequest request, CancellationToken cancellationToken)
+    public override async Task<UserPostResponse> Handle(DeleteUserPostByIdCommand request, CancellationToken cancellationToken)
     {
         var userPost = await UnitOfWork.UserPosts.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new UserPostNotFoundException(request.Id);

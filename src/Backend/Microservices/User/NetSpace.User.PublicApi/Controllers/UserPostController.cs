@@ -23,7 +23,7 @@ public class UserPostController(IMediator mediator) : ApiControllerBase(mediator
                                                                        [FromQuery] SortOptions sort,
                                                                        CancellationToken cancellationToken)
     {
-        var request = new GetUserPostRequest { Filter = filter, Pagination = pagination, Sort = sort };
+        var request = new GetUserPostQuery { Filter = filter, Pagination = pagination, Sort = sort };
 
         var result = await Mediator.Send(request, cancellationToken);
 
@@ -34,7 +34,7 @@ public class UserPostController(IMediator mediator) : ApiControllerBase(mediator
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserPostResponse>> Create([FromBody] CreateUserPostRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserPostResponse>> Create([FromBody] CreateUserPostCommand request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 
@@ -45,7 +45,7 @@ public class UserPostController(IMediator mediator) : ApiControllerBase(mediator
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserPostResponse>> Update([FromBody] UpdateUserPostRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserPostResponse>> Update([FromBody] UpdateUserPostCommand request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 
@@ -56,7 +56,7 @@ public class UserPostController(IMediator mediator) : ApiControllerBase(mediator
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserPostResponse>> Patch([FromBody] PartiallyUpdateUserPostRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserPostResponse>> Patch([FromBody] PartiallyUpdateUserPostCommand request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 
@@ -67,7 +67,7 @@ public class UserPostController(IMediator mediator) : ApiControllerBase(mediator
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserPostResponse>> Delete([FromBody] DeleteUserPostByIdRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserPostResponse>> Delete([FromBody] DeleteUserPostByIdCommand request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 

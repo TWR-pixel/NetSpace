@@ -11,13 +11,13 @@ public sealed class RegisterUserPostMapper : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<CreateUserPostRequest, UserPostEntity>()
+        config.NewConfig<CreateUserPostCommand, UserPostEntity>()
             .RequireDestinationMemberSource(true);
 
-        config.NewConfig<UpdateUserPostRequest, UserPostEntity>()
+        config.NewConfig<UpdateUserPostCommand, UserPostEntity>()
             .RequireDestinationMemberSource(true);
 
-        config.NewConfig<PartiallyUpdateUserPostRequest, UserPostEntity>()
+        config.NewConfig<PartiallyUpdateUserPostCommand, UserPostEntity>()
             .RequireDestinationMemberSource(true);
 
         config.NewConfig<IEnumerable<UserPostEntity>, IEnumerable<UserPostResponse>>()

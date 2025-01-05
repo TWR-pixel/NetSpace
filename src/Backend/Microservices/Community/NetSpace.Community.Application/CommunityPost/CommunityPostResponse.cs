@@ -1,4 +1,5 @@
-﻿using NetSpace.Community.Application.Community;
+﻿using NetSpace.Community.Application.Common;
+using NetSpace.Community.Application.Community;
 
 namespace NetSpace.Community.Application.CommunityPost;
 

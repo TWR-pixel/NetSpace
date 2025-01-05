@@ -11,16 +11,16 @@ public sealed class RegisterUserPostUserCommentMapper : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<CreateUserPostUserCommentRequest, UserPostUserCommentEntity>()
+        config.NewConfig<CreateUserPostUserCommentCommand, UserPostUserCommentEntity>()
             .RequireDestinationMemberSource(true);
 
-        config.NewConfig<UpdateUserPostUserCommentRequest, UserPostUserCommentEntity>()
+        config.NewConfig<UpdateUserPostUserCommentCommand, UserPostUserCommentEntity>()
             .RequireDestinationMemberSource(true);
 
         config.NewConfig<IEnumerable<UserPostEntity>, IEnumerable<UserPostUserCommentResponse>>()
             .RequireDestinationMemberSource(true);
 
-        config.NewConfig<PartiallyUpdateUserPostUserCommentRequest, UserPostUserCommentEntity>()
+        config.NewConfig<PartiallyUpdateUserPostUserCommentCommand, UserPostUserCommentEntity>()
             .RequireDestinationMemberSource(true);
 
         #region Common messages

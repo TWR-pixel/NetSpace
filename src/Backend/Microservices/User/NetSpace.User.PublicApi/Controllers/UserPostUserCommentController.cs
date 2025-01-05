@@ -39,7 +39,7 @@ public sealed class UserPostUserCommentController(IMediator mediator) : ApiContr
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserPostUserCommentResponse>> Create([FromBody] CreateUserPostUserCommentRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserPostUserCommentResponse>> Create([FromBody] CreateUserPostUserCommentCommand request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 
@@ -50,7 +50,7 @@ public sealed class UserPostUserCommentController(IMediator mediator) : ApiContr
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserPostUserCommentResponse>> Update([FromBody] UpdateUserPostUserCommentRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserPostUserCommentResponse>> Update([FromBody] UpdateUserPostUserCommentCommand request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 
@@ -61,7 +61,7 @@ public sealed class UserPostUserCommentController(IMediator mediator) : ApiContr
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserPostUserCommentResponse>> Patch([FromBody] PartiallyUpdateUserPostUserCommentRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserPostUserCommentResponse>> Patch([FromBody] PartiallyUpdateUserPostUserCommentCommand request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 
@@ -72,7 +72,7 @@ public sealed class UserPostUserCommentController(IMediator mediator) : ApiContr
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserPostUserCommentResponse>> Delete([FromBody] DeleteUserPostUserCommentRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserPostUserCommentResponse>> Delete([FromBody] DeleteUserPostUserCommentCommand request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 

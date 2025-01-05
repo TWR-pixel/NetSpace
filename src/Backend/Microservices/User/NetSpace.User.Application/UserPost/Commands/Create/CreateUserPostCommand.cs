@@ -6,7 +6,7 @@ using NetSpace.User.UseCases.Common;
 
 namespace NetSpace.User.Application.UserPost.Commands.Create;
 
-public sealed record CreateUserPostRequest : CommandBase<UserPostResponse>
+public sealed record CreateUserPostCommand : CommandBase<UserPostResponse>
 {
     public required string Title { get; set; }
     public required string Body { get; set; }
@@ -14,19 +14,19 @@ public sealed record CreateUserPostRequest : CommandBase<UserPostResponse>
     public required Guid OwnerId { get; set; }
 }
 
-public sealed class CreateUserPostRequestValidator : AbstractValidator<CreateUserPostRequest>
+public sealed class CreateUserPostCommandValidator : AbstractValidator<CreateUserPostCommand>
 {
-    public CreateUserPostRequestValidator()
+    public CreateUserPostCommandValidator()
     {
 
     }
 }
 
-public sealed class CreateUserPostRequestHandler(IUnitOfWork unitOfWork,
+public sealed class CreateUserPostCommandHandler(IUnitOfWork unitOfWork,
                                                  IMapper mapper,
-                                                 IValidator<CreateUserPostRequest> requestValidator) : CommandHandlerBase<CreateUserPostRequest, UserPostResponse>(unitOfWork)
+                                                 IValidator<CreateUserPostCommand> requestValidator) : CommandHandlerBase<CreateUserPostCommand, UserPostResponse>(unitOfWork)
 {
-    public override async Task<UserPostResponse> Handle(CreateUserPostRequest request, CancellationToken cancellationToken)
+    public override async Task<UserPostResponse> Handle(CreateUserPostCommand request, CancellationToken cancellationToken)
     {
         await requestValidator.ValidateAndThrowAsync(request, cancellationToken);
 
