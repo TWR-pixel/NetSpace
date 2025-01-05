@@ -1,4 +1,4 @@
-﻿using NetSpace.User.Application.UserPostUserComment.Extensions;
+﻿using MapsterMapper;
 using NetSpace.User.UseCases;
 using NetSpace.User.UseCases.UserPostUserComment;
 
@@ -11,12 +11,12 @@ public sealed record GetUserPostUserCommentRequest : RequestBase<IEnumerable<Use
     public SortOptions Sort { get; set; } = new();
 }
 
-public sealed class GetUserPostUserCommentRequestHandler(IUserPostUserCommentRepository userCommentRepository) : RequestHandlerBase<GetUserPostUserCommentRequest, IEnumerable<UserPostUserCommentResponse>>
+public sealed class GetUserPostUserCommentRequestHandler(IUserPostUserCommentRepository userCommentRepository, IMapper mapper) : RequestHandlerBase<GetUserPostUserCommentRequest, IEnumerable<UserPostUserCommentResponse>>
 {
     public override async Task<IEnumerable<UserPostUserCommentResponse>> Handle(GetUserPostUserCommentRequest request, CancellationToken cancellationToken)
     {
         var userComments = await userCommentRepository.FilterAsync(request.Filter, request.Pagination, request.Sort, cancellationToken);
 
-        return userComments.ToResponses();
+        return mapper.Map<IEnumerable<UserPostUserCommentResponse>>(userComments);
     }
 }

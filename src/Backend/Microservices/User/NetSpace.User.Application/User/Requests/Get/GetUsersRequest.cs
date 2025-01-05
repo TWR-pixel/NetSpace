@@ -1,5 +1,5 @@
-﻿using NetSpace.User.Application.Common.Cache;
-using NetSpace.User.Application.User.Extensions;
+﻿using MapsterMapper;
+using NetSpace.User.Application.Common.Cache;
 using NetSpace.User.UseCases;
 using NetSpace.User.UseCases.User;
 
@@ -13,12 +13,12 @@ public sealed record GetUsersRequest : RequestBase<IEnumerable<UserResponse>>
 }
 
 
-public sealed class GetUsersRequestHandler(IUserRepository userRepository, IUserDistributedCacheStorage cache) : RequestHandlerBase<GetUsersRequest, IEnumerable<UserResponse>>
+public sealed class GetUsersRequestHandler(IUserRepository userRepository, IUserDistributedCacheStorage cache, IMapper mapper) : RequestHandlerBase<GetUsersRequest, IEnumerable<UserResponse>>
 {
     public override async Task<IEnumerable<UserResponse>> Handle(GetUsersRequest request, CancellationToken cancellationToken)
     {
         var users = await userRepository.FilterAsync(request.Filter, request.Pagination, request.Sort, cancellationToken);
 
-        return users.ToResponses();
+        return mapper.Map<IEnumerable<UserResponse>>(users);
     }
 }

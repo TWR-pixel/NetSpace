@@ -1,9 +1,11 @@
 ﻿using FluentValidation;
 using Mapster;
-using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
-using NetSpace.Community.Application.Community.Mappers;
+using NetSpace.Community.Application.Community;
 using NetSpace.Community.Application.Community.Requests.Update;
+using NetSpace.Community.Application.CommunityPost;
+using NetSpace.Community.Application.CommunityPostUserComment;
+using NetSpace.Community.Application.User;
 
 namespace NetSpace.Community.Application.Common.Extensions;
 
@@ -22,6 +24,9 @@ public static class ApplicationServiceCollectionExtensions
         {
             var config = new TypeAdapterConfig();
             new RegisterCommunityMapper().Register(config);
+            new RegisterCommunityPostMapper().Register(config);
+            new RegisterCommunitypostUserCommentMapper().Register(config);
+            new RegisterUserMapper().Register(config);
 
             return config;
         });

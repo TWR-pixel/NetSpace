@@ -1,5 +1,4 @@
 ﻿using NetSpace.Community.Application.Community;
-using NetSpace.Community.Application.CommunityPostUserComment;
 
 namespace NetSpace.Community.Application.CommunityPost;
 

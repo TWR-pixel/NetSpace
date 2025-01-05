@@ -1,5 +1,5 @@
-﻿using NetSpace.User.Application.UserPostUserComment.Exceptions;
-using NetSpace.User.Application.UserPostUserComment.Extensions;
+﻿using MapsterMapper;
+using NetSpace.User.Application.UserPostUserComment.Exceptions;
 using NetSpace.User.UseCases.UserPostUserComment;
 
 namespace NetSpace.User.Application.UserPostUserComment.Requests.Delete;
@@ -9,7 +9,7 @@ public sealed record DeleteUserPostUserCommentRequest : RequestBase<UserPostUser
     public required int Id { get; set; }
 }
 
-public sealed class DeleteUserPostUserCommentRequestHandler(IUserPostUserCommentRepository userCommentRepository) : RequestHandlerBase<DeleteUserPostUserCommentRequest, UserPostUserCommentResponse>
+public sealed class DeleteUserPostUserCommentRequestHandler(IUserPostUserCommentRepository userCommentRepository, IMapper mapper) : RequestHandlerBase<DeleteUserPostUserCommentRequest, UserPostUserCommentResponse>
 {
     public override async Task<UserPostUserCommentResponse> Handle(DeleteUserPostUserCommentRequest request, CancellationToken cancellationToken)
     {
@@ -19,6 +19,6 @@ public sealed class DeleteUserPostUserCommentRequestHandler(IUserPostUserComment
         await userCommentRepository.DeleteAsync(userCommentEntity, cancellationToken);
         await userCommentRepository.SaveChangesAsync(cancellationToken);
 
-        return userCommentEntity.ToResponse();
+        return mapper.Map<UserPostUserCommentResponse>(userCommentEntity);
     }
 }

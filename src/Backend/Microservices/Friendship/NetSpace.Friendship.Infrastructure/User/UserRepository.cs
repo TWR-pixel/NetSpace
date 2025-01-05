@@ -1,5 +1,5 @@
 ﻿using Neo4jClient;
-using NetSpace.Friendship.Domain;
+using NetSpace.Friendship.Domain.User;
 using NetSpace.Friendship.UseCases.User;
 
 namespace NetSpace.Friendship.Infrastructure.User;
@@ -59,7 +59,7 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
     public async Task UpdateAsync(UserEntity entity, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
-
+        
         await client.Cypher
             .Match("(user:UserEntity {Id: $id})")
             .WithParam("id", entity.Id)
@@ -73,8 +73,4 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
         throw new NotImplementedException();
     }
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -1,4 +1,5 @@
 ﻿using NetSpace.Friendship.Domain;
+using NetSpace.Friendship.Domain.User;
 
 namespace NetSpace.Friendship.UseCases.Friendship;
 

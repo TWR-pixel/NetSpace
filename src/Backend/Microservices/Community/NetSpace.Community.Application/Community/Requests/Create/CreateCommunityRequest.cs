@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using MapsterMapper;
 using NetSpace.Community.Application.Common.Exceptions;
-using NetSpace.Community.Application.Community.Mappers.Extensions;
 using NetSpace.Community.Domain.Community;
 using NetSpace.Community.UseCases.Community;
 using NetSpace.Community.UseCases.User;
@@ -29,7 +28,7 @@ public sealed class CreateCommunityRequestHandler(ICommunityRepository community
 {
     public override async Task<CommunityResponse> Handle(CreateCommunityRequest request, CancellationToken cancellationToken)
     {
-        //await validator.ValidateAndThrowAsync(request, cancellationToken);
+        await validator.ValidateAndThrowAsync(request, cancellationToken);
 
         var userEntity = await userRepository.FindByIdAsync(request.OwnerId, cancellationToken)
             ?? throw new UserNotFoundException(request.OwnerId);

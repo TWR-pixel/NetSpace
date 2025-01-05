@@ -1,5 +1,5 @@
-﻿using NetSpace.User.Application.UserPost.Exceptions;
-using NetSpace.User.Application.UserPost.Extensions;
+﻿using MapsterMapper;
+using NetSpace.User.Application.UserPost.Exceptions;
 using NetSpace.User.UseCases.UserPost;
 
 namespace NetSpace.User.Application.UserPost.Requests.Update;
@@ -11,7 +11,7 @@ public sealed record UpdateUserPostRequest : RequestBase<UserPostResponse>
     public required string Body { get; set; }
 }
 
-public sealed class UpdateUserPostRequestHandler(IUserPostRepository userPostRepository) : RequestHandlerBase<UpdateUserPostRequest, UserPostResponse>
+public sealed class UpdateUserPostRequestHandler(IUserPostRepository userPostRepository, IMapper mapper) : RequestHandlerBase<UpdateUserPostRequest, UserPostResponse>
 {
     public override async Task<UserPostResponse> Handle(UpdateUserPostRequest request, CancellationToken cancellationToken)
     {
@@ -24,6 +24,6 @@ public sealed class UpdateUserPostRequestHandler(IUserPostRepository userPostRep
         await userPostRepository.UpdateAsync(userPostEntity, cancellationToken);
         await userPostRepository.SaveChangesAsync(cancellationToken);
 
-        return userPostEntity.ToResponse();
+        return mapper.Map<UserPostResponse>(userPostEntity);
     }
 }

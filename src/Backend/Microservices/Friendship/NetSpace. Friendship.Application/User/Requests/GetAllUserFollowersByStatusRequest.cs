@@ -1,5 +1,6 @@
 ﻿using NetSpace.Friendship.Application.User.Exceptions;
 using NetSpace.Friendship.Domain;
+using NetSpace.Friendship.Domain.User;
 using NetSpace.Friendship.UseCases.Friendship;
 using NetSpace.Friendship.UseCases.User;
 

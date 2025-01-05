@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
+using MapsterMapper;
 using NetSpace.Community.Application.Common.Exceptions;
 using NetSpace.Community.Application.Community.Exceptions;
-using NetSpace.Community.Application.Community.Mappers.Extensions;
 using NetSpace.Community.UseCases.Community;
 using NetSpace.Community.UseCases.User;
 
@@ -26,7 +26,9 @@ public sealed class PartiallyUpdateCommunityRequestValidator : AbstractValidator
     }
 }
 
-public sealed class PartiallyUpdateCommunityRequestHandler(ICommunityRepository communityRepository, IUserRepository userRepository) : RequestHandlerBase<PartiallyUpdateCommunityRequest, CommunityResponse>
+public sealed class PartiallyUpdateCommunityRequestHandler(ICommunityRepository communityRepository,
+                                                           IUserRepository userRepository,
+                                                           IMapper mapper) : RequestHandlerBase<PartiallyUpdateCommunityRequest, CommunityResponse>
 {
     public override async Task<CommunityResponse> Handle(PartiallyUpdateCommunityRequest request, CancellationToken cancellationToken)
     {
@@ -51,9 +53,8 @@ public sealed class PartiallyUpdateCommunityRequestHandler(ICommunityRepository 
             communityEntity.Owner = ownerEntity;
         }
 
-        await communityRepository.UpdateAsync(communityEntity, cancellationToken);
         await communityRepository.SaveChangesAsync(cancellationToken);
 
-        return communityEntity.ToResponse();
+        return mapper.Map<CommunityResponse>(communityEntity);
     }
 }

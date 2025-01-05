@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.Friendship.Application.User;
 using NetSpace.Friendship.Application.User.Requests;
-using NetSpace.Friendship.Domain;
+using NetSpace.Friendship.Domain.User;
 
 namespace NetSpace.Friendship.Api.Controllers;
 

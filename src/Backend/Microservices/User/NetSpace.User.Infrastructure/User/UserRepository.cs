@@ -7,10 +7,15 @@ namespace NetSpace.User.Infrastructure.User;
 
 public sealed class UserRepository(NetSpaceDbContext dbContext) : RepositoryBase<UserEntity, Guid>(dbContext), IUserRepository
 {
+    public override Task UpdateAsync(UserEntity entity, CancellationToken cancellationToken = default)
+    {
+        return Task.CompletedTask;
+    }
+
     public async Task<IEnumerable<UserEntity>> FilterAsync(UserFilterOptions filter,
-                                                     PaginationOptions pagination,
-                                                     SortOptions sort,
-                                                     CancellationToken cancellationToken = default)
+                                                           PaginationOptions pagination,
+                                                           SortOptions sort,
+                                                           CancellationToken cancellationToken = default)
     {
         var query = DbContext.Users.AsQueryable();
 
@@ -65,6 +70,12 @@ public sealed class UserRepository(NetSpaceDbContext dbContext) : RepositoryBase
         if (!string.IsNullOrWhiteSpace(filter.SchoolName))
             query = query.Where(u => u.SchoolName == filter.SchoolName);
 
+        if (filter.IncludePosts)
+            query = query.Include(u => u.UserPosts);
+
+        if (filter.IncludeComments)
+            query = query.Include(u => u.UserPostUserComments);
+
         query = query
             .Skip((pagination.PageCount - 1) * pagination.PageSize)
             .Take(pagination.PageSize);
@@ -89,7 +100,7 @@ public sealed class UserRepository(NetSpaceDbContext dbContext) : RepositoryBase
             "PersonalSite" => query.OrderBy(u => u.PersonalSite),
             "Gender" => query.OrderBy(u => u.Gender),
             "SchoolName" => query.OrderBy(u => u.SchoolName),
-            _ => query
+            _ => query.OrderBy(u => u.Id)
         };
 
         query = sort.OrderByDescending switch
@@ -112,7 +123,7 @@ public sealed class UserRepository(NetSpaceDbContext dbContext) : RepositoryBase
             "PersonalSite" => query.OrderByDescending(u => u.PersonalSite),
             "Gender" => query.OrderByDescending(u => u.Gender),
             "SchoolName" => query.OrderByDescending(u => u.SchoolName),
-            _ => query
+            _ => query.OrderBy(u => u.Id)
         };
 
         return await query.ToListAsync(cancellationToken);

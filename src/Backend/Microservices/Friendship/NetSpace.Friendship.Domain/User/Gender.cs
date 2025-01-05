@@ -1,4 +1,4 @@
-﻿namespace NetSpace.Friendship.Domain;
+﻿namespace NetSpace.Friendship.Domain.User;
 
 public enum Gender : byte
 {

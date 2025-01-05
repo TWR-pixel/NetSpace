@@ -1,5 +1,6 @@
 ﻿using Neo4jClient;
 using NetSpace.Friendship.Domain;
+using NetSpace.Friendship.Domain.User;
 using NetSpace.Friendship.UseCases.Friendship;
 
 namespace NetSpace.Friendship.Infrastructure.Friendship;

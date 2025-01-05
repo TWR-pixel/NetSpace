@@ -1,6 +1,5 @@
 ﻿using MassTransit;
 using NetSpace.Identity.Application.User.Exceptions;
-using NetSpace.Identity.Application.User.Extensions.Mappers;
 using NetSpace.Identity.Domain.User;
 using NetSpace.Identity.UseCases.User;
 

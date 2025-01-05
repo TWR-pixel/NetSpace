@@ -1,5 +1,6 @@
-﻿using NetSpace.User.Application.User.Exceptions;
-using NetSpace.User.Application.UserPost.Extensions;
+﻿using MapsterMapper;
+using NetSpace.User.Application.User.Exceptions;
+using NetSpace.User.Domain.UserPost;
 using NetSpace.User.UseCases.User;
 using NetSpace.User.UseCases.UserPost;
 
@@ -14,19 +15,19 @@ public sealed record CreateUserPostRequest : RequestBase<UserPostResponse>
 }
 
 
-public sealed class CreateUserPostRequestHandler(IUserPostRepository userPostRepository, IUserRepository userRepository) : RequestHandlerBase<CreateUserPostRequest, UserPostResponse>
+public sealed class CreateUserPostRequestHandler(IUserPostRepository userPostRepository, IUserRepository userRepository,
+    IMapper mapper) : RequestHandlerBase<CreateUserPostRequest, UserPostResponse>
 {
     public override async Task<UserPostResponse> Handle(CreateUserPostRequest request, CancellationToken cancellationToken)
     {
-
-        var userEntity = await userRepository.FindByIdAsync(request.OwnerId, cancellationToken)
+        _ = await userRepository.FindByIdAsync(request.OwnerId, cancellationToken)
             ?? throw new UserNotFoundException(request.OwnerId);
 
-        var entity = request.ToEntity();
+        var entity = mapper.Map<UserPostEntity>(request);
 
         await userPostRepository.AddAsync(entity, cancellationToken);
         await userPostRepository.SaveChangesAsync(cancellationToken);
 
-        return entity.ToResponse();
+        return mapper.Map<UserPostResponse>(entity);
     }
 }

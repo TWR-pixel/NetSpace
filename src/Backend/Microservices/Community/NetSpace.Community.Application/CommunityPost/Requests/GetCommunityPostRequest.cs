@@ -1,5 +1,4 @@
-﻿
-using NetSpace.Community.Application.CommunityPost.Mappers;
+﻿using MapsterMapper;
 using NetSpace.Community.UseCases;
 using NetSpace.Community.UseCases.CommunityPost;
 
@@ -12,12 +11,12 @@ public sealed record GetCommunityPostRequest : RequestBase<IEnumerable<Community
     public SortOptions Sort { get; set; } = new SortOptions();
 }
 
-public sealed class GetCommunityPostRequestHandler(ICommunityPostRepository communityPostRepository) : RequestHandlerBase<GetCommunityPostRequest, IEnumerable<CommunityPostResponse>>
+public sealed class GetCommunityPostRequestHandler(ICommunityPostRepository communityPostRepository, IMapper mapper) : RequestHandlerBase<GetCommunityPostRequest, IEnumerable<CommunityPostResponse>>
 {
     public override async Task<IEnumerable<CommunityPostResponse>> Handle(GetCommunityPostRequest request, CancellationToken cancellationToken)
     {
         var result = await communityPostRepository.FilterAsync(request.Filter, request.Pagination, request.Sort, cancellationToken);
 
-        return result.ToResponses();
+        return mapper.Map<IEnumerable<CommunityPostResponse>>(result ?? []);
     }
 }

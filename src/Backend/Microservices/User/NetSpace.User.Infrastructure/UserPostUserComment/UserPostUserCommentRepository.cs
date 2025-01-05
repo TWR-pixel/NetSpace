@@ -31,18 +31,6 @@ public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) :
             query = query
                 .Where(u => u.UserPostId == filter.UserPostId);
 
-        if (filter.IncludeUserPost == true)
-        {
-            query = query
-                .Include(u => u.UserPost);
-        }
-
-        if (filter.IncludeOwner == true)
-        {
-            query = query
-                .Include(u => u.Owner);
-        }
-
         query = sort.OrderByAscending switch
         {
             "Id" => query.OrderBy(u => u.Id),

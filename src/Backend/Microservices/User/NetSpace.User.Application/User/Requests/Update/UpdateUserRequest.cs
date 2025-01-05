@@ -1,5 +1,6 @@
-﻿using NetSpace.User.Application.User.Exceptions;
-using NetSpace.User.Application.User.Extensions;
+﻿using FluentValidation;
+using MapsterMapper;
+using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.Domain.User;
 using NetSpace.User.UseCases.User;
 
@@ -26,12 +27,51 @@ public sealed record UpdateUserRequest : RequestBase<UserResponse>
     public string? SchoolName { get; set; }
 }
 
-public sealed record UpdateUserResponse : ResponseBase;
+public sealed class UpdateUserRequestValidator : AbstractValidator<UpdateUserRequest>
+{
+    public UpdateUserRequestValidator()
+    {
+        RuleFor(r => r.Nickname)
+            .MaximumLength(50)
+            .NotEmpty();
 
-public sealed class UpdateUserRequestHandler(IUserRepository userRepository) : RequestHandlerBase<UpdateUserRequest, UserResponse>
+        RuleFor(r => r.Name)
+            .MaximumLength(100)
+            .NotEmpty();
+
+        RuleFor(r => r.Surname)
+            .MaximumLength(100)
+            .NotEmpty();
+
+        //RuleFor(r => r.Email)
+        //    .MaximumLength(50)
+        //    .EmailAddress()
+        //    .Matches(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
+
+        RuleFor(r => r.LastName)
+            .MaximumLength(50)
+            .NotEmpty();
+
+        RuleFor(r => r.About)
+            .MaximumLength(512);
+
+        RuleFor(r => r.Hometown)
+            .MaximumLength(50);
+
+        RuleFor(r => r.CurrentCity)
+            .MaximumLength(55);
+
+        RuleFor(r => r.SchoolName)
+            .MaximumLength(50);
+    }
+}
+
+public sealed class UpdateUserRequestHandler(IUserRepository userRepository, IValidator<UpdateUserRequest> requestValidator, IMapper mapper) : RequestHandlerBase<UpdateUserRequest, UserResponse>
 {
     public override async Task<UserResponse> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
     {
+        await requestValidator.ValidateAndThrowAsync(request, cancellationToken);
+
         var userEntity = await userRepository.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new UserNotFoundException(request.Id);
 
@@ -68,9 +108,8 @@ public sealed class UpdateUserRequestHandler(IUserRepository userRepository) : R
         if (!string.IsNullOrWhiteSpace(request.SchoolName))
             userEntity.SchoolName = request.SchoolName;
 
-        await userRepository.UpdateAsync(userEntity, cancellationToken);
         await userRepository.SaveChangesAsync(cancellationToken);
 
-        return userEntity.ToResponse();
+        return mapper.Map<UserResponse>(userEntity);
     }
 }

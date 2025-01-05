@@ -1,5 +1,5 @@
-﻿using NetSpace.User.Application.UserPostUserComment.Exceptions;
-using NetSpace.User.Application.UserPostUserComment.Extensions;
+﻿using MapsterMapper;
+using NetSpace.User.Application.UserPostUserComment.Exceptions;
 using NetSpace.User.UseCases.UserPostUserComment;
 
 namespace NetSpace.User.Application.UserPostUserComment.Requests.Update;
@@ -10,7 +10,7 @@ public sealed record UpdateUserPostUserCommentRequest : RequestBase<UserPostUser
     public required string Body { get; set; }
 }
 
-public sealed class UpdateUserPostUserCommentRequestHandler(IUserPostUserCommentRepository userCommentRepository) : RequestHandlerBase<UpdateUserPostUserCommentRequest, UserPostUserCommentResponse>
+public sealed class UpdateUserPostUserCommentRequestHandler(IUserPostUserCommentRepository userCommentRepository, IMapper mapper) : RequestHandlerBase<UpdateUserPostUserCommentRequest, UserPostUserCommentResponse>
 {
     public override async Task<UserPostUserCommentResponse> Handle(UpdateUserPostUserCommentRequest request, CancellationToken cancellationToken)
     {
@@ -19,9 +19,8 @@ public sealed class UpdateUserPostUserCommentRequestHandler(IUserPostUserComment
 
         userCommentEntity.Body = request.Body;
 
-        await userCommentRepository.UpdateAsync(userCommentEntity, cancellationToken);
         await userCommentRepository.SaveChangesAsync(cancellationToken);
 
-        return userCommentEntity.ToResponse();
+        return mapper.Map<UserPostUserCommentResponse>(userCommentEntity);
     }
 }

@@ -1,6 +1,6 @@
-﻿using NetSpace.Community.Application.Common.Exceptions;
+﻿using MapsterMapper;
+using NetSpace.Community.Application.Common.Exceptions;
 using NetSpace.Community.Application.Community.Exceptions;
-using NetSpace.Community.Application.Community.Mappers.Extensions;
 using NetSpace.Community.UseCases.Community;
 using NetSpace.Community.UseCases.User;
 
@@ -16,7 +16,9 @@ public sealed record UpdateCommunityRequest : RequestBase<CommunityResponse>
     public required Guid OwnerId { get; set; }
 }
 
-public sealed class UpdateCommunityRequestHandler(ICommunityRepository communityRepository, IUserRepository userRepository) : RequestHandlerBase<UpdateCommunityRequest, CommunityResponse>
+public sealed class UpdateCommunityRequestHandler(ICommunityRepository communityRepository,
+                                                  IUserRepository userRepository,
+                                                  IMapper mapper) : RequestHandlerBase<UpdateCommunityRequest, CommunityResponse>
 {
     public async override Task<CommunityResponse> Handle(UpdateCommunityRequest request, CancellationToken cancellationToken)
     {
@@ -31,6 +33,8 @@ public sealed class UpdateCommunityRequestHandler(ICommunityRepository community
         communityEntity.Description = request.Description;
         communityEntity.AvatarUrl = request.AvatarUrl;
 
-        return communityEntity.ToResponse();
+        await communityRepository.SaveChangesAsync(cancellationToken);
+
+        return mapper.Map<CommunityResponse>(communityEntity);
     }
 }

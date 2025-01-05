@@ -7,5 +7,5 @@ public sealed class UserPostFilterOptions
     public string? Body { get; set; }
 
     public Guid? UserId { get; set; }
-    public bool IncludeUser { get; set; } = false;
+    public bool IncludeComments { get; set; } = false;
 }

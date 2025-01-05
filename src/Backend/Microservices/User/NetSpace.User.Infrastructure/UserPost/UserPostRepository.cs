@@ -24,12 +24,6 @@ public sealed class UserPostRepository(NetSpaceDbContext dbContext) : Repository
             query = query
                 .Where(u => u.UserId == filter.UserId);
 
-        if (filter.IncludeUser == true)
-        {
-            query = query
-                .Include(u => u.User);
-        }
-
         query = query
             .Skip((pagination.PageCount - 1) * pagination.PageSize)
             .Take(pagination.PageSize);

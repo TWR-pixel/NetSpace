@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
+using MapsterMapper;
 using NetSpace.User.Application.UserPost.Exceptions;
-using NetSpace.User.Application.UserPost.Extensions;
 using NetSpace.User.UseCases.UserPost;
 
 namespace NetSpace.User.Application.UserPost.Requests.PartiallyUpdate;
@@ -21,7 +21,8 @@ public sealed class PartiallyUpdateUserPostRequestValidator : AbstractValidator<
 }
 
 public sealed class PartiallyUpdateUserPostRequestHandler(IUserPostRepository userPostRepository,
-                                                          IValidator<PartiallyUpdateUserPostRequest> requestValidator) : RequestHandlerBase<PartiallyUpdateUserPostRequest, UserPostResponse>
+                                                          IValidator<PartiallyUpdateUserPostRequest> requestValidator,
+                                                          IMapper mapper) : RequestHandlerBase<PartiallyUpdateUserPostRequest, UserPostResponse>
 {
     public override async Task<UserPostResponse> Handle(PartiallyUpdateUserPostRequest request, CancellationToken cancellationToken)
     {
@@ -36,6 +37,6 @@ public sealed class PartiallyUpdateUserPostRequestHandler(IUserPostRepository us
         await userPostRepository.UpdateAsync(userPostEntity, cancellationToken);
         await userPostRepository.SaveChangesAsync(cancellationToken);
 
-        return userPostEntity.ToResponse();
+        return mapper.Map<UserPostResponse>(userPostEntity);
     }
 }
