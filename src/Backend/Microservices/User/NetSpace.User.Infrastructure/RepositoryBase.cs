@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.User.Domain;
-using NetSpace.User.UseCases;
+using NetSpace.User.UseCases.Common.Repositories;
 
 namespace NetSpace.User.Infrastructure;
 
@@ -77,10 +77,5 @@ public abstract class RepositoryBase<TEntity, TId>(NetSpaceDbContext dbContext) 
         DbContext.Set<TEntity>().UpdateRange(entities);
 
         return Task.CompletedTask;
-    }
-
-    public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return await DbContext.SaveChangesAsync(cancellationToken);
     }
 }

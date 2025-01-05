@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.User.Domain.UserPost;
-using NetSpace.User.UseCases;
+using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.UserPost;
 
 namespace NetSpace.User.Infrastructure.UserPost;
 
-public sealed class UserPostRepository(NetSpaceDbContext dbContext) : RepositoryBase<UserPostEntity, int>(dbContext), IUserPostRepository
+public sealed class UserPostRepository(NetSpaceDbContext dbContext) : RepositoryBase<UserPostEntity, int>(dbContext), IUserPostRepository, IUserPostReadonlyRepository
 {
     public async Task<IEnumerable<UserPostEntity>> FilterAsync(UserPostFilterOptions filter, PaginationOptions pagination, SortOptions sort, CancellationToken cancellationToken = default)
     {

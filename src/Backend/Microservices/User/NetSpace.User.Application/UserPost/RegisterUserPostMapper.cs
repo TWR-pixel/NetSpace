@@ -1,8 +1,8 @@
 ﻿using Mapster;
 using NetSpace.Common.Messages.User;
-using NetSpace.User.Application.UserPost.Requests.Create;
-using NetSpace.User.Application.UserPost.Requests.PartiallyUpdate;
-using NetSpace.User.Application.UserPost.Requests.Update;
+using NetSpace.User.Application.UserPost.Commands.Create;
+using NetSpace.User.Application.UserPost.Commands.PartiallyUpdate;
+using NetSpace.User.Application.UserPost.Commands.Update;
 using NetSpace.User.Domain.UserPost;
 
 namespace NetSpace.User.Application.UserPost;

@@ -21,4 +21,9 @@
     <ProjectReference Include="..\NetSpace.Friendship.UseCases\NetSpace.Friendship.UseCases.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="User\Commands\" />
+    <Folder Include="User\Queries\" />
+  </ItemGroup>
+
 </Project>

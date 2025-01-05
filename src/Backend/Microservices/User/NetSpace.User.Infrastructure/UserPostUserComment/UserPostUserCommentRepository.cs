@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.User.Domain.UserPostUserComment;
-using NetSpace.User.UseCases;
+using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.UserPostUserComment;
 
 namespace NetSpace.User.Infrastructure.UserPostUserComment;
 
-public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) : RepositoryBase<UserPostUserCommentEntity, int>(dbContext), IUserPostUserCommentRepository
+public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext) 
+    : RepositoryBase<UserPostUserCommentEntity, int>(dbContext), IUserPostUserCommentRepository, IUserPostUserCommentReadonlyRepository
 {
     public async Task<IEnumerable<UserPostUserCommentEntity>> FilterAsync(UserPostUserCommentFilterOptions filter,
                                                          PaginationOptions pagination,

@@ -9,6 +9,7 @@ using NetSpace.User.Infrastructure.Common.Cache;
 using NetSpace.User.Infrastructure.User;
 using NetSpace.User.Infrastructure.UserPost;
 using NetSpace.User.Infrastructure.UserPostUserComment;
+using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.User;
 using NetSpace.User.UseCases.UserPost;
 using NetSpace.User.UseCases.UserPostUserComment;
@@ -47,6 +48,13 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IUserPostRepository, UserPostRepository>();
         services.AddScoped<IUserPostUserCommentRepository, UserPostUserCommentRepository>();
         services.AddScoped<IUserDistributedCacheStorage, UserDistributedCacheStorage>();
+
+        services.AddScoped<IUserReadonlyRepository, UserRepository>();
+        services.AddScoped<IUserPostReadonlyRepository, UserPostRepository>();
+        services.AddScoped<IUserPostUserCommentReadonlyRepository, UserPostUserCommentRepository>();
+
+        services.AddScoped<IReadonlyUnitOfWork, ReadonlyUnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

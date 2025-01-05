@@ -12,4 +12,5 @@ public interface IFriendshipRepository
     public Task<long> FollowersCountById(UserEntity from, CancellationToken cancellationToken = default);
     public Task UpdateFriendshipStatus(UserEntity from, UserEntity to, FriendshipStatus status, CancellationToken cancellationToken = default);
     public Task<bool> ExistsFriendshipWithStatus(UserEntity from, UserEntity to, FriendshipStatus status, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<UserEntity>> GetPossibleFriends(UserEntity from, CancellationToken cancellationToken = default);
 }

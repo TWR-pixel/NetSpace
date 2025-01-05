@@ -1,7 +1,7 @@
 ﻿using Mapster;
-using NetSpace.User.Application.UserPostUserComment.Requests.Create;
-using NetSpace.User.Application.UserPostUserComment.Requests.PartiallyUpdate;
-using NetSpace.User.Application.UserPostUserComment.Requests.Update;
+using NetSpace.User.Application.UserPostUserComment.Commands.Create;
+using NetSpace.User.Application.UserPostUserComment.Commands.PartiallyUpdate;
+using NetSpace.User.Application.UserPostUserComment.Commands.Update;
 using NetSpace.User.Domain.UserPost;
 using NetSpace.User.Domain.UserPostUserComment;
 

@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.User.Application.UserPost;
-using NetSpace.User.Application.UserPost.Requests.Create;
-using NetSpace.User.Application.UserPost.Requests.Delete;
-using NetSpace.User.Application.UserPost.Requests.Get;
-using NetSpace.User.Application.UserPost.Requests.PartiallyUpdate;
-using NetSpace.User.Application.UserPost.Requests.Update;
-using NetSpace.User.UseCases;
+using NetSpace.User.Application.UserPost.Commands.Create;
+using NetSpace.User.Application.UserPost.Commands.Delete;
+using NetSpace.User.Application.UserPost.Commands.PartiallyUpdate;
+using NetSpace.User.Application.UserPost.Commands.Update;
+using NetSpace.User.Application.UserPost.Queries.Get;
+using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.UserPost;
 
 namespace NetSpace.User.PublicApi.Controllers;

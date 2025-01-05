@@ -100,4 +100,19 @@ public sealed class FriendshipRepository(IGraphClient client) : IFriendshipRepos
 
         return true;
     }
+
+    public async Task<IEnumerable<UserEntity>> GetPossibleFriends(UserEntity from, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        var result = await client.Cypher
+            .Match("(from:UserEntity{Id: $id})")
+            .Match("(from)-[:FRIENDS_WITH*2]-(to)")
+            .Where("NOT (from)-[:FRIEND_WITH]-(to)")
+            .Return(to => to.As<UserEntity>())
+            .Limit(10)
+            .ResultsAsync;
+
+        return result;
+    }
 }

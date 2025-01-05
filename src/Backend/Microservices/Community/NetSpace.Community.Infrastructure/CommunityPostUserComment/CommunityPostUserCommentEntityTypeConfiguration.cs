@@ -8,13 +8,15 @@ public sealed class CommunityPostUserCommentEntityTypeConfiguration : IEntityTyp
 {
     public void Configure(EntityTypeBuilder<CommunityPostUserCommentEntity> builder)
     {
-        builder
-            .HasOne(b => b.Owner)
+        builder.Property(b => b.Body)
+            .IsRequired(true)
+            .HasMaxLength(1024);
+
+        builder.HasOne(b => b.Owner)
             .WithMany(b => b.CommunityPostUserComments)
             .HasForeignKey(b => b.OwnerId);
 
-        builder
-            .HasOne(b => b.CommunityPost)
+        builder.HasOne(b => b.CommunityPost)
             .WithMany(b => b.UserComments)
             .HasForeignKey(b => b.CommunityPostId);
     }

@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.User.Application.UserPostUserComment;
-using NetSpace.User.Application.UserPostUserComment.Requests.Create;
-using NetSpace.User.Application.UserPostUserComment.Requests.Delete;
-using NetSpace.User.Application.UserPostUserComment.Requests.Get;
-using NetSpace.User.Application.UserPostUserComment.Requests.PartiallyUpdate;
-using NetSpace.User.Application.UserPostUserComment.Requests.Update;
-using NetSpace.User.UseCases;
+using NetSpace.User.Application.UserPostUserComment.Commands.Create;
+using NetSpace.User.Application.UserPostUserComment.Commands.Delete;
+using NetSpace.User.Application.UserPostUserComment.Commands.PartiallyUpdate;
+using NetSpace.User.Application.UserPostUserComment.Commands.Update;
+using NetSpace.User.Application.UserPostUserComment.Queries.Get;
+using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.UserPostUserComment;
 
 namespace NetSpace.User.PublicApi.Controllers;
@@ -23,7 +23,7 @@ public sealed class UserPostUserCommentController(IMediator mediator) : ApiContr
                                                                                   [FromQuery] SortOptions sort,
                                                                                   CancellationToken cancellationToken)
     {
-        var request = new GetUserPostUserCommentRequest
+        var request = new GetUserPostUserCommentQuery
         {
             Filter = filter,
             Pagination = pagination,
