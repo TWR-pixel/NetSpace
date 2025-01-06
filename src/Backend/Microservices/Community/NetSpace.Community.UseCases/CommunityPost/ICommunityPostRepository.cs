@@ -2,10 +2,6 @@
 
 namespace NetSpace.Community.UseCases.CommunityPost;
 
-public interface ICommunityPostRepository : IRepository<CommunityPostEntity, int>
+public interface ICommunityPostRepository : IRepository<CommunityPostEntity, int>, ICommunityPostReadonlyRepository
 {
-    public Task<IEnumerable<CommunityPostEntity>> FilterAsync(CommunityPostFilterOptions filter,
-                                                                    PaginationOptions pagination,
-                                                                    SortOptions sort,
-                                                                    CancellationToken cancellationToken = default);
 }

@@ -1,4 +1,4 @@
-﻿using NetSpace.User.Application.Common;
+﻿using NetSpace.Community.Application.Common;
 
 namespace NetSpace.Community.Application;
 

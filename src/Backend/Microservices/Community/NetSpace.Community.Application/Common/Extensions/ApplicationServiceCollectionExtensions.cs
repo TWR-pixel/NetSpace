@@ -2,7 +2,7 @@
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Community.Application.Community;
-using NetSpace.Community.Application.Community.Requests.Update;
+using NetSpace.Community.Application.Community.Commands.Update;
 using NetSpace.Community.Application.CommunityPost;
 using NetSpace.Community.Application.CommunityPostUserComment;
 using NetSpace.Community.Application.User;
@@ -15,10 +15,10 @@ public static class ApplicationServiceCollectionExtensions
     {
         services.AddMediatR(configuration =>
         {
-            configuration.RegisterServicesFromAssembly(typeof(UpdateCommunityRequest).Assembly);
+            configuration.RegisterServicesFromAssembly(typeof(UpdateCommunityCommand).Assembly);
         });
 
-        services.AddValidatorsFromAssembly(typeof(UpdateCommunityRequest).Assembly);
+        services.AddValidatorsFromAssembly(typeof(UpdateCommunityCommand).Assembly);
 
         services.AddSingleton(() =>
         {

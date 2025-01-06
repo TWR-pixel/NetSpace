@@ -1,5 +1,5 @@
-﻿using NetSpace.User.Application.Common;
-using NetSpace.User.UseCases.Common;
+﻿using NetSpace.Community.Application.Common;
+using NetSpace.Community.UseCases.Common;
 
 namespace NetSpace.Community.Application;
 

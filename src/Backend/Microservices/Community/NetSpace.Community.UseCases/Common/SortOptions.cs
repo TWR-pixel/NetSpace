@@ -1,4 +1,4 @@
-﻿namespace NetSpace.Community.UseCases;
+﻿namespace NetSpace.Community.UseCases.Common;
 
 public sealed class SortOptions
 {

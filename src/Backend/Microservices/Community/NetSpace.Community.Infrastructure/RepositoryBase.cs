@@ -83,9 +83,4 @@ public abstract class RepositoryBase<TEntity, TId> : IRepository<TEntity, TId>
 
         return Task.CompletedTask;
     }
-
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return await DbContext.SaveChangesAsync(cancellationToken);
-    }
 }

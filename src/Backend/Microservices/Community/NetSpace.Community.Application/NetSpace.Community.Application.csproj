@@ -25,11 +25,7 @@
   <ItemGroup>
     <Folder Include="CommunityPostUserComment\Commands\" />
     <Folder Include="CommunityPostUserComment\Queries\" />
-    <Folder Include="CommunityPost\Commands\" />
     <Folder Include="CommunityPost\Exceptions\" />
-    <Folder Include="CommunityPost\Queries\" />
-    <Folder Include="Community\Commands\" />
-    <Folder Include="Community\Queries\" />
     <Folder Include="User\Exceptions\" />
   </ItemGroup>
 

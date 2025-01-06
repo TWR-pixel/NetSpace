@@ -1,6 +1,6 @@
 ﻿using Mapster;
 using NetSpace.Community.Application.Community;
-using NetSpace.Community.Application.CommunityPost.Requests;
+using NetSpace.Community.Application.CommunityPost.Commands;
 using NetSpace.Community.Domain.CommunityPost;
 
 namespace NetSpace.Community.Application.CommunityPost;
@@ -9,7 +9,7 @@ public sealed class RegisterCommunityPostMapper : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<CreateCommunityPostRequest, CommunityPostEntity>()
+        config.NewConfig<CreateCommunityPostCommand, CommunityPostEntity>()
             .RequireDestinationMemberSource(true);
 
         config.NewConfig<CommunityPostEntity, CommunityPostResponse>()

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.Community.Domain.CommunityPostUserComment;
-using NetSpace.Community.UseCases;
+using NetSpace.Community.UseCases.Common;
 using NetSpace.Community.UseCases.CommunityPostUserComment;
 
 namespace NetSpace.Community.Infrastructure.CommunityPostUserComment;

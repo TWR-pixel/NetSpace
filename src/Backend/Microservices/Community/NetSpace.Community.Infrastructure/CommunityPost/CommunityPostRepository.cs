@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.Community.Domain.CommunityPost;
-using NetSpace.Community.UseCases;
+using NetSpace.Community.UseCases.Common;
 using NetSpace.Community.UseCases.CommunityPost;
 
 namespace NetSpace.Community.Infrastructure.CommunityPost;

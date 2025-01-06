@@ -2,6 +2,7 @@
 
 namespace NetSpace.Community.UseCases.User;
 
-public interface IUserRepository : IRepository<UserEntity, Guid>, IUserReadonlyRepository
+public interface IUserReadonlyRepository : IReadonlyRepository<UserEntity, Guid>
 {
+    
 }

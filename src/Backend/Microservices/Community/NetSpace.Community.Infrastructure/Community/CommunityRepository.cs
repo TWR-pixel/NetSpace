@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.Community.Domain.Community;
-using NetSpace.Community.UseCases;
+using NetSpace.Community.UseCases.Common;
 using NetSpace.Community.UseCases.Community;
 
 namespace NetSpace.Community.Infrastructure.Community;
