@@ -9,5 +9,6 @@ public interface ICommunityPostReadonlyRepository : IReadonlyRepository<Communit
                                                                 PaginationOptions pagination,
                                                                 SortOptions sort,
                                                                 CancellationToken cancellationToken = default);
-    public Task<CommunityPostEntity?> GetByIdWithDetails(int id, CancellationToken cancellationToken = default);    
+    public Task<CommunityPostEntity?> GetByIdWithDetails(int id, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<CommunityPostEntity>> GetLatest(PaginationOptions pagination, CancellationToken cancellationToken = default);
 }

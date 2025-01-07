@@ -2,7 +2,7 @@
 
 namespace NetSpace.Community.Application.Common.Caching;
 
-public interface IDistributedCache<TEntity, TId>
+public interface IDistributedCacheStorage<TEntity, TId>
     where TEntity : class, IEntity<TId>
     where TId : notnull
 {

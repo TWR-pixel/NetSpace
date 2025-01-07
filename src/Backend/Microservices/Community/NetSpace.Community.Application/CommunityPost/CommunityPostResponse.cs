@@ -16,4 +16,5 @@ public sealed record CommunityPostResponse : ResponseBase
     public uint Likes { get; set; }
     public uint Dislikes { get; set; }
 
+    public DateTime CreatedAt { get; set; }
 }

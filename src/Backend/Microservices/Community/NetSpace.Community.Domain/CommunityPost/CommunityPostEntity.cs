@@ -15,6 +15,8 @@ public sealed class CommunityPostEntity : IEntity<int>
     public uint Likes { get; set; }
     public uint Dislikes { get; set; }
 
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
     public CommunityPostEntity()
     {
 

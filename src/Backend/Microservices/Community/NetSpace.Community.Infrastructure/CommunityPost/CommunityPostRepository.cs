@@ -61,4 +61,17 @@ public sealed class CommunityPostRepository(NetSpaceDbContext dbContext) : Repos
 
         return communityPostEntity;
     }
+
+    public async Task<IEnumerable<CommunityPostEntity>> GetLatest(PaginationOptions pagination, CancellationToken cancellationToken = default)
+    {
+        var communityPostEntities = await DbContext.CommunityPosts
+            .OrderBy(c => c.CreatedAt)
+            .Skip((pagination.PageCount - 1) * pagination.PageSize)
+            .Take(pagination.PageSize)
+            .Include(c => c.Community)
+            .ToArrayAsync(cancellationToken);
+
+
+        return communityPostEntities;
+    }
 }

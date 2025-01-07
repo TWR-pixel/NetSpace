@@ -4,8 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Common.Messages.Email;
 using NetSpace.Common.Messages.User;
-using NetSpace.User.Application.Common.Cache;
-using NetSpace.User.Infrastructure.Common.Cache;
+using NetSpace.User.Application.User;
+using NetSpace.User.Application.UserPost;
+using NetSpace.User.Application.UserPostUserComment;
 using NetSpace.User.Infrastructure.User;
 using NetSpace.User.Infrastructure.UserPost;
 using NetSpace.User.Infrastructure.UserPostUserComment;
@@ -47,7 +48,10 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserPostRepository, UserPostRepository>();
         services.AddScoped<IUserPostUserCommentRepository, UserPostUserCommentRepository>();
+
         services.AddScoped<IUserDistributedCacheStorage, UserDistributedCacheStorage>();
+        services.AddScoped<IUserPostDistributedCacheStorage, UserPostDistributedCacheStorage>();
+        services.AddScoped<IUserPostUsercommentDistrubutedCacheStorage, UserPostUSercommentDistrubutedCacheStorage>();
 
         services.AddScoped<IUserReadonlyRepository, UserRepository>();
         services.AddScoped<IUserPostReadonlyRepository, UserPostRepository>();

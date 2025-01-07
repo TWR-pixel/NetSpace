@@ -1,7 +1,6 @@
 ﻿using MapsterMapper;
 using MassTransit;
 using NetSpace.Common.Messages.User;
-using NetSpace.User.Application.Common.Cache;
 using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.UseCases.Common;
 

@@ -1,7 +1,4 @@
-﻿using NetSpace.User.Domain.UserPost;
-using NetSpace.User.Domain.UserPostUserComment;
-
-namespace NetSpace.User.Domain.User;
+﻿namespace NetSpace.User.Domain.User;
 
 public sealed class UserEntity : IEntity<Guid>
 {

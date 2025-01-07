@@ -31,7 +31,7 @@ public class UserPostController(IMediator mediator) : ApiControllerBase(mediator
         return Ok(result);
     }
 
-    [HttpGet("latests")]
+    [HttpGet("latest")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<UserPostResponse>>> GetLatest([FromQuery] PaginationOptions pagination, CancellationToken cancellationToken)

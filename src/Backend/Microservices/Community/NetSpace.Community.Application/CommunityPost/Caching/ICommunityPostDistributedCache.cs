@@ -3,6 +3,8 @@ using NetSpace.Community.Domain.CommunityPost;
 
 namespace NetSpace.Community.Application.CommunityPost.Caching;
 
-public interface ICommunityPostDistributedCache : IDistributedCache<CommunityPostEntity, int>
+public interface ICommunityPostDistributedCache : IDistributedCacheStorage<CommunityPostEntity, int>
 {
+    public Task<IEnumerable<CommunityPostEntity>?> GetLatest(CancellationToken cancellationToken);
+    public Task SetLatest(IEnumerable<CommunityPostEntity> entities, CancellationToken cancellationToken);
 }

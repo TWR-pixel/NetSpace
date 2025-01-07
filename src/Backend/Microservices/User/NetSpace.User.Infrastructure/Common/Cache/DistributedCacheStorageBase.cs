@@ -1,14 +1,16 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using NetSpace.Community.Application.Common.Caching;
-using NetSpace.Community.Domain;
+using NetSpace.User.Application.Common.Cache;
+using NetSpace.User.Domain;
 using System.Text.Json;
 
-namespace NetSpace.Community.Infrastructure.Common;
+namespace NetSpace.User.Infrastructure.Common.Cache;
 
-public abstract class DistributedCacheBase<TEntity, TId>(IDistributedCache cache) : IDistributedCacheStorage<TEntity, TId>
+public abstract class DistributedCacheStorageBase<TEntity, TId>(IDistributedCache cache) : IDistributedCacheStorage<TEntity, TId>
     where TEntity : class, IEntity<TId>
     where TId : notnull
 {
+    protected IDistributedCache Cache => cache;
+
     public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(30));

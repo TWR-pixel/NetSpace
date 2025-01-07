@@ -13,5 +13,5 @@ public interface IUserPostReadonlyRepository : IReadonlyRepository<UserPostEntit
                                                          CancellationToken cancellationToken = default);
 
     public Task<UserPostEntity?> GetByIdWithDetails(int id, CancellationToken cancellationToken = default);
-    public Task<IEnumerable<UserPostEntity>> GetLatests(PaginationOptions pagination, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<UserPostEntity>> GetLatest(PaginationOptions pagination, CancellationToken cancellationToken = default);
 }

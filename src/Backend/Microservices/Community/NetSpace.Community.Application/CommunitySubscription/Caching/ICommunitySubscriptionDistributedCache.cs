@@ -3,7 +3,7 @@ using NetSpace.Community.Domain.CommunitySubscription;
 
 namespace NetSpace.Community.Application.CommunitySubscription.Caching;
 
-public interface ICommunitySubscriptionDistributedCache : IDistributedCache<CommunitySubscriptionEntity, int>
+public interface ICommunitySubscriptionDistributedCache : IDistributedCacheStorage<CommunitySubscriptionEntity, int>
 {
 
 }

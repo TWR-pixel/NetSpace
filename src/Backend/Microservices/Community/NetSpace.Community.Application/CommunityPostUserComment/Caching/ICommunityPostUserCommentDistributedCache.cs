@@ -3,7 +3,7 @@ using NetSpace.Community.Domain.CommunityPostUserComment;
 
 namespace NetSpace.Community.Application.CommunityPostUserComment.Caching;
 
-public interface ICommunityPostUserCommentDistributedCache : IDistributedCache<CommunityPostUserCommentEntity, int>
+public interface ICommunityPostUserCommentDistributedCache : IDistributedCacheStorage<CommunityPostUserCommentEntity, int>
 {
 
 }

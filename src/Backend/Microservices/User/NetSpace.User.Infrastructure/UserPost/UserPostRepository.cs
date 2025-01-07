@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using NetSpace.User.Domain.UserPost;
 using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.UserPost;
@@ -65,7 +64,7 @@ public sealed class UserPostRepository(NetSpaceDbContext dbContext) : Repository
         return result;
     }
 
-    public async Task<IEnumerable<UserPostEntity>> GetLatests(PaginationOptions pagination, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<UserPostEntity>> GetLatest(PaginationOptions pagination, CancellationToken cancellationToken = default)
     {
         var result = await DbContext.UserPosts
             .OrderBy(u => u.CreatedAt)

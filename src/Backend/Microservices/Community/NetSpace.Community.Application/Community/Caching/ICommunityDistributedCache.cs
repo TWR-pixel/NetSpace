@@ -3,6 +3,6 @@ using NetSpace.Community.Domain.Community;
 
 namespace NetSpace.Community.Application.Community.Caching;
 
-public interface ICommunityDistributedCache : IDistributedCache<CommunityEntity, int>
+public interface ICommunityDistributedCache : IDistributedCacheStorage<CommunityEntity, int>
 {
 }
