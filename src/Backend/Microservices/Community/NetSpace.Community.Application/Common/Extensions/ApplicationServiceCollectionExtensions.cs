@@ -1,11 +1,9 @@
 ﻿using FluentValidation;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
-using NetSpace.Community.Application.Community;
+using NetSpace.Community.Application.Common.MediatR;
 using NetSpace.Community.Application.Community.Commands.Update;
-using NetSpace.Community.Application.CommunityPost;
-using NetSpace.Community.Application.CommunityPostUserComment;
-using NetSpace.Community.Application.User;
+using System.Reflection;
 
 namespace NetSpace.Community.Application.Common.Extensions;
 
@@ -20,18 +18,20 @@ public static class ApplicationServiceCollectionExtensions
 
         services.AddValidatorsFromAssembly(typeof(UpdateCommunityCommand).Assembly);
 
-        services.AddSingleton(() =>
-        {
-            var config = new TypeAdapterConfig();
-            new RegisterCommunityMapper().Register(config);
-            new RegisterCommunityPostMapper().Register(config);
-            new RegisterCommunitypostUserCommentMapper().Register(config);
-            new RegisterUserMapper().Register(config);
-
-            return config;
-        });
-
+        services.AddMapsterAdapterConfig();
         services.AddMapster();
+
+        return services;
+    }
+
+    public static IServiceCollection AddMapsterAdapterConfig(this IServiceCollection services)
+    {
+        var config = new TypeAdapterConfig();
+
+        var registers = config.Scan(Assembly.GetAssembly(typeof(ResponseBase)) ?? Assembly.GetExecutingAssembly());
+        config.Apply(registers);
+
+        services.AddSingleton(config);
 
         return services;
     }

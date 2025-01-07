@@ -16,6 +16,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Prometheus-net" Version="8.2.1" />
+    <PackageReference Include="Prometheus-net.AspNetCore" Version="8.2.1" />
+    <PackageReference Include="Prometheus-net.AspNetCore.HealthChecks" Version="8.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
@@ -25,6 +28,10 @@
   <ItemGroup>
     <ProjectReference Include="..\NetSpace.Community.Application\NetSpace.Community.Application.csproj" />
     <ProjectReference Include="..\NetSpace.Community.Infrastructure\NetSpace.Community.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CommunitySubscriptions\" />
   </ItemGroup>
 
 </Project>

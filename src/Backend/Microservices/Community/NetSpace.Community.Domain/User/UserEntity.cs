@@ -1,7 +1,4 @@
-﻿using NetSpace.Community.Domain.Community;
-using NetSpace.Community.Domain.CommunityPostUserComment;
-
-namespace NetSpace.Community.Domain.User;
+﻿namespace NetSpace.Community.Domain.User;
 
 public sealed class UserEntity : IEntity<Guid>
 {
@@ -26,8 +23,4 @@ public sealed class UserEntity : IEntity<Guid>
     public Gender Gender { get; set; } = Gender.NotSet;
 
     public string SchoolName { get; set; } = string.Empty;
-
-    public IEnumerable<CommunityEntity> CreatedCommunities { get; set; } = new List<CommunityEntity>();
-    public IEnumerable<CommunityEntity> CommunitySubscriptions { get; set; } = new List<CommunityEntity>();
-    public IEnumerable<CommunityPostUserCommentEntity> CommunityPostUserComments { get; set; } = new List<CommunityPostUserCommentEntity>();
 }

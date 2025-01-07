@@ -2,18 +2,18 @@
 using MapsterMapper;
 using MassTransit;
 using NetSpace.Common.Messages.User;
-using NetSpace.User.Application.Common.Cache;
-using NetSpace.User.Domain.User;
-using NetSpace.User.UseCases.Common;
+using NetSpace.Identity.Domain.User;
+using NetSpace.Identity.UseCases.User;
 
-namespace NetSpace.User.Application.User.Commands.Create;
+namespace NetSpace.Identity.Application.User.Commands.Create;
 
-public sealed record CreateUserCommand : CommandBase<UserResponse>
+public sealed record CreateUserCommand : RequestBase<UserResponse>
 {
     public required string Nickname { get; set; }
     public required string Name { get; set; }
     public required string Surname { get; set; }
     public required string Email { get; set; }
+    public required string Password { get; set; }
     public string LastName { get; set; } = string.Empty;
     public string About { get; set; } = string.Empty;
     public DateTime? BirthDate { get; set; }
@@ -69,10 +69,9 @@ public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCom
 }
 
 public sealed class CreateUserCommandHandler(IPublishEndpoint publisher,
-                                             IUnitOfWork unitOfWork,
-                                             IUserDistributedCacheStorage cache,
+                                             IUserRepository userRepository,
                                              IMapper mapper,
-                                             IValidator<CreateUserCommand> requestValidator) : CommandHandlerBase<CreateUserCommand, UserResponse>(unitOfWork)
+                                             IValidator<CreateUserCommand> requestValidator) : RequestHandlerBase<CreateUserCommand, UserResponse>
 {
     public override async Task<UserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
@@ -80,9 +79,7 @@ public sealed class CreateUserCommandHandler(IPublishEndpoint publisher,
 
         var userEntity = mapper.Map<UserEntity>(request);
 
-        await UnitOfWork.Users.AddAsync(userEntity, cancellationToken);
-        await UnitOfWork.SaveChangesAsync(cancellationToken);
-        await cache.AddAsync(userEntity, cancellationToken);
+        await userRepository.AddAsync(userEntity, request.Password, cancellationToken);
         await publisher.Publish(mapper.Map<UserCreatedMessage>(userEntity), cancellationToken);
 
         return mapper.Map<UserResponse>(userEntity);

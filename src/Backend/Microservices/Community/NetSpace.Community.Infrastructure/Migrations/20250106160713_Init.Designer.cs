@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NetSpace.Community.Infrastructure.Migrations
 {
     [DbContext(typeof(NetSpaceDbContext))]
-    [Migration("20250103223858_Init")]
+    [Migration("20250106160713_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -55,14 +55,16 @@ namespace NetSpace.Community.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
 
                     b.Property<DateTime>("LastNameUpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
@@ -84,14 +86,22 @@ namespace NetSpace.Community.Infrastructure.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
 
                     b.Property<int>("CommunityId")
                         .HasColumnType("integer");
 
+                    b.Property<long>("Dislikes")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Likes")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -110,7 +120,8 @@ namespace NetSpace.Community.Infrastructure.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
 
                     b.Property<int>("CommunityPostId")
                         .HasColumnType("integer");

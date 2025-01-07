@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MapsterMapper;
+using NetSpace.Community.Application.Community.Caching;
 using NetSpace.Community.Application.Community.Exceptions;
 using NetSpace.Community.UseCases.Common;
 
@@ -25,6 +26,7 @@ public sealed class PartiallyUpdateCommunityCommandValidator : AbstractValidator
 }
 
 public sealed class PartiallyUpdateCommunityCommandHandler(IUnitOfWork unitOfWork,
+                                                           ICommunityDistributedCache cache,
                                                            IMapper mapper) : CommandHandlerBase<PartiallyUpdateCommunityCommand, CommunityResponse>(unitOfWork)
 {
     public override async Task<CommunityResponse> Handle(PartiallyUpdateCommunityCommand request, CancellationToken cancellationToken)
@@ -35,6 +37,7 @@ public sealed class PartiallyUpdateCommunityCommandHandler(IUnitOfWork unitOfWor
         mapper.Map(request, communityEntity);
 
         await UnitOfWork.SaveChangesAsync(cancellationToken);
+        await cache.UpdateByIdAsync(communityEntity, communityEntity.Id, cancellationToken);
 
         return mapper.Map<CommunityResponse>(communityEntity);
     }

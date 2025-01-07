@@ -1,5 +1,4 @@
 ﻿using NetSpace.Community.Domain.Community;
-using NetSpace.Community.Domain.CommunityPostUserComment;
 
 namespace NetSpace.Community.Domain.CommunityPost;
 
@@ -13,7 +12,8 @@ public sealed class CommunityPostEntity : IEntity<int>
     public CommunityEntity Community { get; set; }
     public int CommunityId { get; set; }
 
-    public IEnumerable<CommunityPostUserCommentEntity> UserComments { get; set; } = new List<CommunityPostUserCommentEntity>();
+    public uint Likes { get; set; }
+    public uint Dislikes { get; set; }
 
     public CommunityPostEntity()
     {

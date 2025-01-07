@@ -9,4 +9,6 @@ public interface ICommunityPostUserCommentReadonlyRepository : IReadonlyReposito
                                                                       PaginationOptions pagination,
                                                                       SortOptions sort,
                                                                       CancellationToken cancellationToken = default);
+
+    public Task<CommunityPostUserCommentEntity?> GetByIdWithDetails(int id, CancellationToken cancellationToken = default);
 }

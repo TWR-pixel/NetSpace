@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using NetSpace.Community.Application.Community.Caching;
 using NetSpace.Community.Application.Community.Exceptions;
 using NetSpace.Community.UseCases.Common;
 
@@ -15,6 +16,7 @@ public sealed record UpdateCommunityCommand : CommandBase<CommunityResponse>
 }
 
 public sealed class UpdateCommunityCommandHandler(IUnitOfWork unitOfWork,
+                                                  ICommunityDistributedCache cache,
                                                   IMapper mapper) : CommandHandlerBase<UpdateCommunityCommand, CommunityResponse>(unitOfWork)
 {
     public async override Task<CommunityResponse> Handle(UpdateCommunityCommand request, CancellationToken cancellationToken)
@@ -25,6 +27,7 @@ public sealed class UpdateCommunityCommandHandler(IUnitOfWork unitOfWork,
         mapper.Map(request, communityEntity);
 
         await UnitOfWork.SaveChangesAsync(cancellationToken);
+        await cache.UpdateByIdAsync(communityEntity, communityEntity.Id, cancellationToken);
 
         return mapper.Map<CommunityResponse>(communityEntity);
     }

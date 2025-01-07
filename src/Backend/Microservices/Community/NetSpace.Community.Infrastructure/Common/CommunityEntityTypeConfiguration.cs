@@ -8,10 +8,6 @@ public sealed class CommunityEntityTypeConfiguration : IEntityTypeConfiguration<
 {
     public void Configure(EntityTypeBuilder<CommunityEntity> builder)
     {
-        builder.HasOne(c => c.Owner)
-            .WithMany(c => c.CreatedCommunities)
-            .HasForeignKey(c => c.OwnerId);
-
 
     }
 }

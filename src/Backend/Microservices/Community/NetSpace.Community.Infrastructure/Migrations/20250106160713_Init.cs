@@ -45,8 +45,8 @@ namespace NetSpace.Community.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
                     AvatarUrl = table.Column<string>(type: "text", nullable: true),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -93,9 +93,11 @@ namespace NetSpace.Community.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "text", nullable: false),
-                    Body = table.Column<string>(type: "text", nullable: false),
-                    CommunityId = table.Column<int>(type: "integer", nullable: false)
+                    Title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Body = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
+                    CommunityId = table.Column<int>(type: "integer", nullable: false),
+                    Likes = table.Column<long>(type: "bigint", nullable: false),
+                    Dislikes = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,7 +116,7 @@ namespace NetSpace.Community.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Body = table.Column<string>(type: "text", nullable: false),
+                    Body = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
                     OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     CommunityPostId = table.Column<int>(type: "integer", nullable: false)
                 },

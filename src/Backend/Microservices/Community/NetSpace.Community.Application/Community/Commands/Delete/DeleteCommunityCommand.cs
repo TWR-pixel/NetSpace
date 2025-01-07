@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using NetSpace.Community.Application.Community.Caching;
 using NetSpace.Community.Application.Community.Exceptions;
 using NetSpace.Community.UseCases.Common;
 
@@ -9,7 +10,7 @@ public sealed record DeleteCommunityCommand : CommandBase<CommunityResponse>
     public required int Id { get; set; }
 }
 
-public sealed class DeleteCommunityRequestHandler(IUnitOfWork unitOfWork, IMapper mapper) : CommandHandlerBase<DeleteCommunityCommand, CommunityResponse>(unitOfWork)
+public sealed class DeleteCommunityRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, ICommunityDistributedCache cache) : CommandHandlerBase<DeleteCommunityCommand, CommunityResponse>(unitOfWork)
 {
     public override async Task<CommunityResponse> Handle(DeleteCommunityCommand request, CancellationToken cancellationToken)
     {
@@ -18,6 +19,7 @@ public sealed class DeleteCommunityRequestHandler(IUnitOfWork unitOfWork, IMappe
 
         await UnitOfWork.Communities.DeleteAsync(entity, cancellationToken);
         await UnitOfWork.SaveChangesAsync(cancellationToken);
+        await cache.RemoveByIdAsync(request.Id, cancellationToken);
 
         return mapper.Map<CommunityResponse>(entity);
     }

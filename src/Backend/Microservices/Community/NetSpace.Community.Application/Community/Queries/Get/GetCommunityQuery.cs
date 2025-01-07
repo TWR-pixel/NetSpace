@@ -11,7 +11,7 @@ public sealed record GetCommunityQuery : QueryBase<IEnumerable<CommunityResponse
     public SortOptions Sort { get; set; } = new SortOptions();
 }
 
-public sealed class GetCommunityByIdQueryHandler(IReadonlyUnitOfWork unitOfWork, IMapper mapper) : QueryHandlerBase<GetCommunityQuery, IEnumerable<CommunityResponse>?>(unitOfWork)
+public sealed class GetCommunityQueryHandler(IReadonlyUnitOfWork unitOfWork, IMapper mapper) : QueryHandlerBase<GetCommunityQuery, IEnumerable<CommunityResponse>?>(unitOfWork)
 {
     public override async Task<IEnumerable<CommunityResponse>?> Handle(GetCommunityQuery request, CancellationToken cancellationToken)
     {

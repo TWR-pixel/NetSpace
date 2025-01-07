@@ -1,5 +1,6 @@
 using NetSpace.Community.Application.Common.Extensions;
 using NetSpace.Community.Infrastructure.Common.Extensions;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +10,11 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("PostgreSql");
 
+var redisInstanceName = builder.Configuration["RedisInstanceName"] ?? "";
+var redisConnectionString = builder.Configuration.GetConnectionString("Redis") ?? "";
+
 builder.Services.AddApplicationLayer();
-builder.Services.AddInfrastructure(connectionString);
+builder.Services.AddInfrastructure(connectionString, redisInstanceName, redisConnectionString);
 
 var app = builder.Build();
 
@@ -23,6 +27,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseHttpMetrics(options =>
+{
+    options.AddCustomLabel("host", context => context.Request.Host.Host);
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

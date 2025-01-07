@@ -8,12 +8,6 @@ public sealed class CommunityEntityTypeConfiguration : IEntityTypeConfiguration<
 {
     public void Configure(EntityTypeBuilder<CommunityEntity> builder)
     {
-        builder.HasOne(b => b.Owner)
-            .WithMany(b => b.CreatedCommunities)
-            .HasForeignKey(b => b.OwnerId);
-
-        builder.HasMany(b => b.CommunitySubscribers)
-            .WithMany(b => b.CommunitySubscriptions);
 
         builder.Property(b => b.Name)
             .IsRequired(true)
@@ -26,16 +20,10 @@ public sealed class CommunityEntityTypeConfiguration : IEntityTypeConfiguration<
         builder.Property(b => b.AvatarUrl)
             .IsRequired(false);
 
-        builder.HasOne(b => b.Owner)
-            .WithMany(b => b.CreatedCommunities);
-
-        builder.HasMany(b => b.CommunitySubscribers)
-            .WithMany(b => b.CommunitySubscriptions);
-
         builder.Property(b => b.CreatedAt)
-            .IsRequired(false);
+            .IsRequired(true);
 
         builder.Property(b => b.LastNameUpdatedAt)
-            .IsRequired(false);
+            .IsRequired(true);
     }
 }

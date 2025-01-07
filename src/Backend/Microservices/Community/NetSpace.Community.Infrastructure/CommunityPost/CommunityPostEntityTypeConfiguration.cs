@@ -16,12 +16,5 @@ public sealed class CommunityPostEntityTypeConfiguration : IEntityTypeConfigurat
             .IsRequired(true)
             .HasMaxLength(1024);
 
-        builder.HasOne(b => b.Community)
-            .WithMany(b => b.CommunityPosts)
-            .HasForeignKey(b => b.CommunityId);
-
-        builder.HasMany(b => b.UserComments)
-            .WithOne(b => b.CommunityPost)
-            .HasForeignKey(b => b.CommunityPostId);
     }
 }

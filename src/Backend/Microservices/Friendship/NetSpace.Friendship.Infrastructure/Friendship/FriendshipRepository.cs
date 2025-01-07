@@ -105,7 +105,22 @@ public sealed class FriendshipRepository(IGraphClient client) : IFriendshipRepos
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var result = await client.Cypher
+        var friendsCount = await FriendsCountById(from, cancellationToken);
+
+        if (friendsCount == 0)
+        {
+            var friends = await client.Cypher
+                .Match("(all:UserEntity)")
+                .Where("all.Surname = $fromSurname")
+                .WithParam("fromSurname", from.Surname)
+                .Return(all => all.As<UserEntity>())
+                .Limit(10)
+                .ResultsAsync;
+
+            return friends;
+        }
+
+        var possibleFriends = await client.Cypher
             .Match("(from:UserEntity{Id: $id})")
             .Match("(from)-[:FRIENDS_WITH*2]-(to)")
             .Where("NOT (from)-[:FRIEND_WITH]-(to)")
@@ -113,6 +128,6 @@ public sealed class FriendshipRepository(IGraphClient client) : IFriendshipRepos
             .Limit(10)
             .ResultsAsync;
 
-        return result;
+        return possibleFriends;
     }
 }

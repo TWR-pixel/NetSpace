@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using MapsterMapper;
 using NetSpace.Community.Application.Common.Exceptions;
+using NetSpace.Community.Application.Community.Caching;
 using NetSpace.Community.Domain.Community;
 using NetSpace.Community.UseCases.Common;
-using NetSpace.Community.UseCases.User;
 
 namespace NetSpace.Community.Application.Community.Commands.Create;
 
@@ -22,7 +22,7 @@ public sealed class CreateCommunityCommandValidator : AbstractValidator<CreateCo
 }
 
 public sealed class CreateCommunityCommandHandler(IUnitOfWork unitOfWork,
-                                                  IUserRepository userRepository,
+                                                  ICommunityDistributedCache cache,
                                                   IValidator<CreateCommunityCommand> validator,
                                                   IMapper mapper) : CommandHandlerBase<CreateCommunityCommand, CommunityResponse>(unitOfWork)
 {
@@ -30,13 +30,14 @@ public sealed class CreateCommunityCommandHandler(IUnitOfWork unitOfWork,
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        var userEntity = await userRepository.FindByIdAsync(request.OwnerId, cancellationToken)
+        var userEntity = await UnitOfWork.Users.FindByIdAsync(request.OwnerId, cancellationToken)
             ?? throw new UserNotFoundException(request.OwnerId);
 
         var communityEntity = mapper.Map<CommunityEntity>(request);
 
         var result = await UnitOfWork.Communities.AddAsync(communityEntity, cancellationToken);
         await UnitOfWork.SaveChangesAsync(cancellationToken);
+        await cache.AddAsync(communityEntity, cancellationToken);
 
         var response = mapper.Map<CommunityResponse>(result);
 

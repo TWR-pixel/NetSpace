@@ -1,4 +1,4 @@
-﻿using NetSpace.Community.Application.Common;
+﻿using NetSpace.Community.Application.Common.MediatR;
 
 namespace NetSpace.Community.Application;
 

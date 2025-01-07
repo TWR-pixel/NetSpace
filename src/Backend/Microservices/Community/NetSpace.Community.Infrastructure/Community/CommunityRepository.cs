@@ -35,12 +35,6 @@ public sealed class CommunityRepository(NetSpaceDbContext dbContext) : Repositor
         if (filter.IncludeOwner)
             query = query.Include(c => c.Owner);
 
-        if (filter.IncludeCommunityPosts)
-            query = query.Include(c => c.CommunityPosts);
-
-        if (filter.IncludeCommunitySubscribers)
-            query = query.Include(c => c.CommunitySubscribers);
-
         query = sort.OrderByAscending switch
         {
             "Id" => query.OrderBy(u => u.Id),
@@ -70,5 +64,14 @@ public sealed class CommunityRepository(NetSpaceDbContext dbContext) : Repositor
             .Take(pagination.PageSize);
 
         return await query.ToArrayAsync(cancellationToken);
+    }
+
+    public async Task<CommunityEntity?> GetByIdWithDetails(int id, CancellationToken cancellationToken = default)
+    {
+        var communityEntity = await DbContext.Communities
+            .Include(c => c.Owner)
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+
+        return communityEntity;
     }
 }

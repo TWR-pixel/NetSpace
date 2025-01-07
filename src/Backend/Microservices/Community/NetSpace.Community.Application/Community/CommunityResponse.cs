@@ -1,4 +1,4 @@
-﻿using NetSpace.Community.Application.Common;
+﻿using NetSpace.Community.Application.Common.MediatR;
 using NetSpace.Community.Application.CommunityPost;
 using NetSpace.Community.Application.User;
 
@@ -17,6 +17,6 @@ public sealed record CommunityResponse : ResponseBase
     public DateTime CreatedAt { get; set; }
     public DateTime LastNameUpdatedAt { get; set; }
 
-    public IEnumerable<CommunityPostResponse> CommunityPosts { get; set; } = new List<CommunityPostResponse>();
     public IEnumerable<UserResponse> CommunitySubscribers { get; set; } = new List<UserResponse>();
+    public IEnumerable<CommunityPostResponse> CommunityPosts { get; set; } = new List<CommunityPostResponse>();
 }

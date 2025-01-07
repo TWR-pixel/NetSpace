@@ -1,6 +1,5 @@
 ﻿using Mapster;
 using NetSpace.Common.Messages.User;
-using NetSpace.User.Application.User.Commands.Create;
 using NetSpace.User.Application.User.Commands.Delete;
 using NetSpace.User.Application.User.Commands.PartiallyUpdate;
 using NetSpace.User.Application.User.Commands.Update;
@@ -12,8 +11,6 @@ public sealed class RegisterUserMapper : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<CreateUserCommand, UserEntity>()
-            .RequireDestinationMemberSource(true);
 
         config.NewConfig<IEnumerable<UserEntity>, IEnumerable<UserResponse>>()
             .RequireDestinationMemberSource(true);

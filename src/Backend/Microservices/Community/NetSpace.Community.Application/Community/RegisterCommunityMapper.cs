@@ -10,19 +10,15 @@ public class RegisterCommunityMapper : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<CreateCommunityCommand, CommunityEntity>()
-            .RequireDestinationMemberSource(false);
-
-        config.NewConfig<CommunityEntity, CommunityResponse>()
-            .RequireDestinationMemberSource(false);
-
+        config.NewConfig<CreateCommunityCommand, CommunityEntity>();
+        config.NewConfig<CommunityEntity, CommunityResponse>();
         config.NewConfig<UpdateCommunityCommand, CommunityEntity>()
-            .RequireDestinationMemberSource(false);
+            .Ignore(p => p.Id);
 
         config.NewConfig<PartiallyUpdateCommunityCommand, CommunityEntity>()
-            .IgnoreNullValues(true);
+            .IgnoreNullValues(true)
+            .Ignore(p => p.Id);
 
-        config.NewConfig<IEnumerable<CommunityEntity>, IEnumerable<CommunityResponse>>()
-            .RequireDestinationMemberSource(false);
+        config.NewConfig<IEnumerable<CommunityEntity>, IEnumerable<CommunityResponse>>();
     }
 }

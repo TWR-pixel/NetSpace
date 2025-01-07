@@ -1,5 +1,4 @@
-﻿using NetSpace.Community.Domain.CommunityPost;
-using NetSpace.Community.Domain.User;
+﻿using NetSpace.Community.Domain.User;
 
 namespace NetSpace.Community.Domain.Community;
 
@@ -15,7 +14,4 @@ public sealed class CommunityEntity : IEntity<int>
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime LastNameUpdatedAt { get; set; } = DateTime.UtcNow;
-
-    public IEnumerable<UserEntity> CommunitySubscribers { get; set; } = new List<UserEntity>();
-    public IEnumerable<CommunityPostEntity> CommunityPosts { get; set; } = new List<CommunityPostEntity>();
 }

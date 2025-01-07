@@ -9,13 +9,15 @@ public sealed class RegisterCommunityPostMapper : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<CreateCommunityPostCommand, CommunityPostEntity>()
-            .RequireDestinationMemberSource(true);
+        config.NewConfig<CreateCommunityPostCommand, CommunityPostEntity>();
+        config.NewConfig<CommunityPostEntity, CommunityPostResponse>();
+        config.NewConfig<UpdateCommunityPostCommand, CommunityPostEntity>()
+            .Ignore(c => c.Id);
 
-        config.NewConfig<CommunityPostEntity, CommunityPostResponse>()
-            .RequireDestinationMemberSource(true);
+        config.NewConfig<PartiallyUpdateCommunityPostCommand, CommunityPostEntity>()
+            .Ignore(c => c.Id)
+            .IgnoreNullValues(true);
 
-        config.NewConfig<IEnumerable<CommunityPostEntity>, IEnumerable<CommunityResponse>>()
-            .RequireDestinationMemberSource(true);
+        config.NewConfig<IEnumerable<CommunityPostEntity>, IEnumerable<CommunityResponse>>();
     }
 }

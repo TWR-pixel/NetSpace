@@ -22,21 +22,6 @@ namespace NetSpace.Community.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("CommunityEntityUserEntity", b =>
-                {
-                    b.Property<Guid>("CommunitySubscribersId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("CommunitySubscriptionsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CommunitySubscribersId", "CommunitySubscriptionsId");
-
-                    b.HasIndex("CommunitySubscriptionsId");
-
-                    b.ToTable("CommunityEntityUserEntity");
-                });
-
             modelBuilder.Entity("NetSpace.Community.Domain.Community.CommunityEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -52,14 +37,16 @@ namespace NetSpace.Community.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
 
                     b.Property<DateTime>("LastNameUpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
@@ -81,14 +68,22 @@ namespace NetSpace.Community.Infrastructure.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
 
                     b.Property<int>("CommunityId")
                         .HasColumnType("integer");
 
+                    b.Property<long>("Dislikes")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Likes")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -107,7 +102,8 @@ namespace NetSpace.Community.Infrastructure.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)");
 
                     b.Property<int>("CommunityPostId")
                         .HasColumnType("integer");
@@ -122,6 +118,32 @@ namespace NetSpace.Community.Infrastructure.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("CommunityPostUserComments");
+                });
+
+            modelBuilder.Entity("NetSpace.Community.Domain.CommunitySubscription.CommunitySubscriptionEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommunityId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("SubscriberId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("SubscribingStatus")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommunityId");
+
+                    b.HasIndex("SubscriberId");
+
+                    b.ToTable("CommunitySubscriptions");
                 });
 
             modelBuilder.Entity("NetSpace.Community.Domain.User.UserEntity", b =>
@@ -197,25 +219,10 @@ namespace NetSpace.Community.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CommunityEntityUserEntity", b =>
-                {
-                    b.HasOne("NetSpace.Community.Domain.User.UserEntity", null)
-                        .WithMany()
-                        .HasForeignKey("CommunitySubscribersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("NetSpace.Community.Domain.Community.CommunityEntity", null)
-                        .WithMany()
-                        .HasForeignKey("CommunitySubscriptionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("NetSpace.Community.Domain.Community.CommunityEntity", b =>
                 {
                     b.HasOne("NetSpace.Community.Domain.User.UserEntity", "Owner")
-                        .WithMany("CreatedCommunities")
+                        .WithMany()
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -226,7 +233,7 @@ namespace NetSpace.Community.Infrastructure.Migrations
             modelBuilder.Entity("NetSpace.Community.Domain.CommunityPost.CommunityPostEntity", b =>
                 {
                     b.HasOne("NetSpace.Community.Domain.Community.CommunityEntity", "Community")
-                        .WithMany("CommunityPosts")
+                        .WithMany()
                         .HasForeignKey("CommunityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -237,13 +244,13 @@ namespace NetSpace.Community.Infrastructure.Migrations
             modelBuilder.Entity("NetSpace.Community.Domain.CommunityPostUserComment.CommunityPostUserCommentEntity", b =>
                 {
                     b.HasOne("NetSpace.Community.Domain.CommunityPost.CommunityPostEntity", "CommunityPost")
-                        .WithMany("UserComments")
+                        .WithMany()
                         .HasForeignKey("CommunityPostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("NetSpace.Community.Domain.User.UserEntity", "Owner")
-                        .WithMany("CommunityPostUserComments")
+                        .WithMany()
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -253,21 +260,23 @@ namespace NetSpace.Community.Infrastructure.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("NetSpace.Community.Domain.Community.CommunityEntity", b =>
+            modelBuilder.Entity("NetSpace.Community.Domain.CommunitySubscription.CommunitySubscriptionEntity", b =>
                 {
-                    b.Navigation("CommunityPosts");
-                });
+                    b.HasOne("NetSpace.Community.Domain.Community.CommunityEntity", "Community")
+                        .WithMany()
+                        .HasForeignKey("CommunityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("NetSpace.Community.Domain.CommunityPost.CommunityPostEntity", b =>
-                {
-                    b.Navigation("UserComments");
-                });
+                    b.HasOne("NetSpace.Community.Domain.User.UserEntity", "Subscriber")
+                        .WithMany()
+                        .HasForeignKey("SubscriberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("NetSpace.Community.Domain.User.UserEntity", b =>
-                {
-                    b.Navigation("CommunityPostUserComments");
+                    b.Navigation("Community");
 
-                    b.Navigation("CreatedCommunities");
+                    b.Navigation("Subscriber");
                 });
 #pragma warning restore 612, 618
         }

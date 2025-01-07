@@ -53,4 +53,13 @@ public sealed class CommunityPostUserCommentRepository(NetSpaceDbContext dbConte
 
         return await query.ToArrayAsync(cancellationToken);
     }
+
+    public async Task<CommunityPostUserCommentEntity?> GetByIdWithDetails(int id, CancellationToken cancellationToken = default)
+    {
+        var comment = await DbContext.CommunityPostUserComments
+            .Include(c => c.Owner)
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+
+        return comment;
+    }
 }

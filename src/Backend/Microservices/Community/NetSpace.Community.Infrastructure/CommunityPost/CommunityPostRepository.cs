@@ -7,6 +7,7 @@ namespace NetSpace.Community.Infrastructure.CommunityPost;
 
 public sealed class CommunityPostRepository(NetSpaceDbContext dbContext) : RepositoryBase<CommunityPostEntity, int>(dbContext), ICommunityPostRepository
 {
+
     public async Task<IEnumerable<CommunityPostEntity>> FilterAsync(CommunityPostFilterOptions filter, PaginationOptions pagination, SortOptions sort, CancellationToken cancellationToken = default)
     {
         var query = DbContext.CommunityPosts.AsQueryable();
@@ -49,5 +50,15 @@ public sealed class CommunityPostRepository(NetSpaceDbContext dbContext) : Repos
             .Take(pagination.PageSize);
 
         return await query.ToArrayAsync(cancellationToken);
+    }
+
+    public async Task<CommunityPostEntity?> GetByIdWithDetails(int id, CancellationToken cancellationToken = default)
+    {
+        var communityPostEntity = await DbContext.CommunityPosts
+            .Include(c => c.Community)
+                .ThenInclude(c => c.Owner)
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+
+        return communityPostEntity;
     }
 }

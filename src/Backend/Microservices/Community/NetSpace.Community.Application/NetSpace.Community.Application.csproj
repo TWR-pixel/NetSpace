@@ -23,9 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CommunityPostUserComment\Commands\" />
-    <Folder Include="CommunityPostUserComment\Queries\" />
-    <Folder Include="CommunityPost\Exceptions\" />
     <Folder Include="User\Exceptions\" />
   </ItemGroup>
 
