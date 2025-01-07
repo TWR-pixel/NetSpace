@@ -12,7 +12,7 @@ using NetSpace.User.Application.User;
 using NetSpace.User.Application.User.Commands.Delete;
 using NetSpace.User.Application.User.Exceptions;
 
-namespace NetSpace.Tests.Unit.Application.User.Commands;
+namespace NetSpace.Tests.Unit.Application.User.Commands.Delete;
 
 public sealed class DeleteUserByIdCommandTests
 {

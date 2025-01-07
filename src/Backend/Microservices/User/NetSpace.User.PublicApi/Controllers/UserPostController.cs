@@ -36,7 +36,7 @@ public class UserPostController(IMediator mediator) : ApiControllerBase(mediator
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<UserPostResponse>>> GetLatest([FromQuery] PaginationOptions pagination, CancellationToken cancellationToken)
     {
-        var query = new GetLatestUsePostsQuery { Pagination = pagination };
+        var query = new GetLatestUserPostsQuery { Pagination = pagination };
 
         var result = await Mediator.Send(query, cancellationToken);
 

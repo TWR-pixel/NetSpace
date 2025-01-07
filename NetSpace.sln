@@ -101,6 +101,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Application", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Application\NetSpace.Tests.Unit.Application.csproj", "{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.PublicApi", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.PublicApi\NetSpace.Tests.Unit.PublicApi.csproj", "{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -227,6 +229,10 @@ Global
 		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -276,5 +282,6 @@ Global
 		{929E32B3-E651-47AA-9F72-B113C5153184} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
 		{A4F88F6A-E30D-4A31-8409-F7B1073F4A05} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
 		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
+		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
 	EndGlobalSection
 EndGlobal

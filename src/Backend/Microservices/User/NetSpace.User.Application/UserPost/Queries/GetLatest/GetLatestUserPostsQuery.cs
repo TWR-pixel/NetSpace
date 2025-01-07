@@ -1,18 +1,17 @@
 ﻿using MapsterMapper;
-using NetSpace.User.Application.UserPost;
 using NetSpace.User.UseCases.Common;
 
-namespace NetSpace.User.Application.User.Queries.GetLatests;
+namespace NetSpace.User.Application.UserPost.Queries.GetLatest;
 
-public sealed record GetLatestUsePostsQuery : QueryBase<IEnumerable<UserPostResponse>>
+public sealed record GetLatestUserPostsQuery : QueryBase<IEnumerable<UserPostResponse>>
 {
     public PaginationOptions Pagination { get; set; } = new PaginationOptions();
 }
 
 public sealed class GetLatestUserPostsQueryHandler(IReadonlyUnitOfWork unitOfWork, IUserPostDistributedCacheStorage cache, IMapper mapper)
-    : QueryHandlerBase<GetLatestUsePostsQuery, IEnumerable<UserPostResponse>>(unitOfWork)
+    : QueryHandlerBase<GetLatestUserPostsQuery, IEnumerable<UserPostResponse>>(unitOfWork)
 {
-    public override async Task<IEnumerable<UserPostResponse>> Handle(GetLatestUsePostsQuery request, CancellationToken cancellationToken)
+    public override async Task<IEnumerable<UserPostResponse>> Handle(GetLatestUserPostsQuery request, CancellationToken cancellationToken)
     {
         var cached = await cache.GetLatest(cancellationToken);
 

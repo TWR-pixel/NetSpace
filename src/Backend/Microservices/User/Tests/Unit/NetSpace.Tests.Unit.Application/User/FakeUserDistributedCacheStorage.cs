@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using NetSpace.Tests.Unit.Application.Caching;
+using NetSpace.Tests.Unit.Initializer.Caching;
 using NetSpace.User.Application.User;
 using NetSpace.User.Domain.User;
 

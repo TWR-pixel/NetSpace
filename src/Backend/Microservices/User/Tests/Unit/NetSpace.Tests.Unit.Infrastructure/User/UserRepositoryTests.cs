@@ -1,6 +1,6 @@
 ﻿using NetSpace.Tests.Unit.Initializer;
 
-namespace NetSpace.Tests.Unit.Infrastructure;
+namespace NetSpace.Tests.Unit.Infrastructure.User;
 
 public class UserRepositoryTests
 {
