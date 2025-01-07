@@ -1,7 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetSpace.User.Domain.User;
+using NetSpace.User.Domain.UserPost;
+using NetSpace.User.Domain.UserPostUserComment;
 using NetSpace.User.Infrastructure;
 using NetSpace.User.Infrastructure.User;
+using NetSpace.User.Infrastructure.UserPost;
+using NetSpace.User.Infrastructure.UserPostUserComment;
 
 namespace NetSpace.Tests.Unit.Initializer;
 
@@ -18,13 +22,6 @@ public static class TestInitializer
         return db;
     }
 
-    public static UserRepository CreateInMemoryUserRepo()
-    {
-        var repo = new UserRepository(CreateInMemoryDb());
-
-        return repo;
-    }
-
     public static List<UserEntity> Create3Users()
     {
         var users = new List<UserEntity>
@@ -37,14 +34,48 @@ public static class TestInitializer
         return users;
     }
 
-    public static async Task<UserRepository> AddRangeAndSaveChangesToRepo3Users()
+    public static List<UserPostEntity> Creat3UserPosts(IEnumerable<UserEntity> users)
     {
-        var repo = CreateInMemoryUserRepo();
-        var testUsers = Create3Users();
+        var userPosts = new List<UserPostEntity>
+        {
+            new(){Body = "TestBody", Title = "TestTitle", User = users.First()},
+            new(){Body = "TestBody", Title = "TestTitle", User = users.Last()},
+            new(){Body = "TestBody", Title = "TestTitle", User = users.Last()}
+        };
 
-        await repo.AddRangeAsync(testUsers);
-        await repo.SaveChangesAsync();
-
-        return repo;
+        return userPosts;
     }
+
+    public static List<UserPostUserCommentEntity> Create3UserPostUserComments(IEnumerable<UserPostEntity> userPosts, IEnumerable<UserEntity> users)
+    {
+        var userComments = new List<UserPostUserCommentEntity>
+        {
+            new() { Body = "TestBody", Owner = users.First() },
+            new() { Body = "TestBody", Owner = users.Last() },
+            new() { Body = "TestBody", Owner = users.Last() }
+        };
+
+        return userComments;
+    }
+
+    public static async Task<UnitOfWork> CreateUnitOfWorkAsync()
+    {
+        var dbContext = CreateInMemoryDb();
+        var userRepo = new UserRepository(dbContext);
+        var userPostUserCommentRepo = new UserPostUserCommentRepository(dbContext);
+        var UserPostRepo = new UserPostRepository(dbContext);
+
+        var testUsers = Create3Users();
+        var testPosts = Creat3UserPosts(testUsers);
+        var testPostComments = Create3UserPostUserComments(testPosts, testUsers);
+
+        var uof = new UnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo, dbContext);
+
+        //await uof.Users.AddRangeAsync(testUsers);
+        //await uof.UserPosts.AddRangeAsync(testPosts);
+        //await uof.UserPostUserComments.AddRangeAsync(testPostComments);
+
+        return uof;
+    }
+
 }

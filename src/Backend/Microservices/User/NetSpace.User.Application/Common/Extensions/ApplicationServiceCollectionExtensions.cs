@@ -19,7 +19,6 @@ public static class ApplicationServiceCollectionExtensions
         services.AddValidatorsFromAssembly(typeof(UserResponse).Assembly);
 
         var config = new TypeAdapterConfig();
-
         var registers = config.Scan(Assembly.GetAssembly(typeof(ResponseBase)) ?? Assembly.GetExecutingAssembly());
         config.Apply(registers);
 

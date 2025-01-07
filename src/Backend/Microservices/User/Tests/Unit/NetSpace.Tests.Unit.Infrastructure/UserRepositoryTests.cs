@@ -8,12 +8,12 @@ public class UserRepositoryTests
     public async Task SaveChangesAsync_ShouldReturn3()
     {
         //Arrange
-        var repo = TestInitializer.CreateInMemoryUserRepo();
+        var uof = await TestInitializer.CreateUnitOfWorkAsync();
         var entities = TestInitializer.Create3Users();
-        await repo.AddRangeAsync(entities);
+        await uof.Users.AddRangeAsync(entities);
 
         //Act
-        var result = await repo.SaveChangesAsync(CancellationToken.None);
+        var result = await uof.SaveChangesAsync(CancellationToken.None);
 
         //Assert
         Assert.NotEqual(0, result);
@@ -24,7 +24,7 @@ public class UserRepositoryTests
     public async Task SaveChanges_ShouldNotThrowException()
     {
         //Arrange
-        var repo = await TestInitializer.AddRangeAndSaveChangesToRepo3Users();
+        var repo = await TestInitializer.CreateUnitOfWorkAsync();
 
         //Act, Assert
         AssertHelper.DoesntThrow(async () => await repo.SaveChangesAsync());
@@ -33,9 +33,11 @@ public class UserRepositoryTests
     [Fact]
     public async Task CountAsync_ShouldReturn3Users()
     {
-        var repo = await TestInitializer.AddRangeAndSaveChangesToRepo3Users();
+        var uof = await TestInitializer.CreateUnitOfWorkAsync();
+        await uof.Users.AddRangeAsync(TestInitializer.Create3Users());
+        await uof.SaveChangesAsync();
 
-        var result = await repo.CountAsync();
+        var result = await uof.Users.CountAsync();
 
         Assert.NotEqual(0, result);
         Assert.Equal(3, result);
@@ -45,16 +47,16 @@ public class UserRepositoryTests
     public async Task DeleteAsync_ShouldRemoveFirstUser()
     {
         //Arrange
-        var repo = TestInitializer.CreateInMemoryUserRepo();
+        var uof = await TestInitializer.CreateUnitOfWorkAsync();
         var entities = TestInitializer.Create3Users();
-        await repo.AddRangeAsync(entities);
-        await repo.SaveChangesAsync();
+        await uof.Users.AddRangeAsync(entities);
+        await uof.SaveChangesAsync();
 
         //Act
-        await repo.DeleteAsync(entities.First());
-        await repo.SaveChangesAsync();
+        await uof.Users.DeleteAsync(entities.First());
+        await uof.SaveChangesAsync();
 
-        var countAfterDeleting = await repo.CountAsync();
+        var countAfterDeleting = await uof.Users.CountAsync();
 
         //Assert
         Assert.Equal(2, countAfterDeleting);
@@ -65,16 +67,16 @@ public class UserRepositoryTests
     public async Task DeleteRangeAsync_ShouldRemoveAllUsers()
     {
         //Arrange
-        var repo = TestInitializer.CreateInMemoryUserRepo();
+        var repo = await TestInitializer.CreateUnitOfWorkAsync();
         var entities = TestInitializer.Create3Users();
-        await repo.AddRangeAsync(entities);
+        await repo.Users.AddRangeAsync(entities);
         await repo.SaveChangesAsync();
 
         //Act
-        await repo.DeleteRangeAsync(entities);
+        await repo.Users.DeleteRangeAsync(entities);
         await repo.SaveChangesAsync();
 
-        var countAfterDeleting = await repo.CountAsync();
+        var countAfterDeleting = await repo.Users.CountAsync();
 
         //Assert
         Assert.Equal(0, countAfterDeleting);
@@ -85,14 +87,14 @@ public class UserRepositoryTests
     public async Task FindByIdAsync_ShouldReturnUserWithExistingId()
     {
         //Arrange
-        var repo = TestInitializer.CreateInMemoryUserRepo();
+        var repo = await TestInitializer.CreateUnitOfWorkAsync();
         var entities = TestInitializer.Create3Users();
-        await repo.AddRangeAsync(entities);
+        await repo.Users.AddRangeAsync(entities);
         await repo.SaveChangesAsync();
         var firstEntityId = entities.First().Id;
 
         //Act
-        var result = await repo.FindByIdAsync(entities.First().Id);
+        var result = await repo.Users.FindByIdAsync(entities.First().Id);
 
         Assert.NotNull(result);
         Assert.Equal(firstEntityId, result.Id);
@@ -102,13 +104,13 @@ public class UserRepositoryTests
     public async Task GetAllAsync_ShouldReturnAllAddedUsers()
     {
         //Arrange
-        var repo = TestInitializer.CreateInMemoryUserRepo();
+        var repo = await TestInitializer.CreateUnitOfWorkAsync();
         var entities = TestInitializer.Create3Users();
-        await repo.AddRangeAsync(entities);
+        await repo.Users.AddRangeAsync(entities);
         await repo.SaveChangesAsync();
 
         //Act
-        var result = await repo.GetAllAsync();
+        var result = await repo.Users.GetAllAsync();
 
         Assert.NotNull(result);
         Assert.NotEmpty(result);
@@ -119,18 +121,18 @@ public class UserRepositoryTests
     public async Task UpdateAsync_ShouldSetNewUserName()
     {
         //Arrange
-        var repo = TestInitializer.CreateInMemoryUserRepo();
+        var repo = await TestInitializer.CreateUnitOfWorkAsync();
         var entities = TestInitializer.Create3Users();
-        await repo.AddRangeAsync(entities);
+        await repo.Users.AddRangeAsync(entities);
         await repo.SaveChangesAsync();
-        var userForUpdate = await repo.FindByIdAsync(entities.First().Id);
+        var userForUpdate = await repo.Users.FindByIdAsync(entities.First().Id);
         userForUpdate!.Name = "newName";
 
         //Act
-        await repo.UpdateAsync(userForUpdate);
+        await repo.Users.UpdateAsync(userForUpdate);
         await repo.SaveChangesAsync();
 
-        var updateUserFromDb = await repo.FindByIdAsync(userForUpdate.Id);
+        var updateUserFromDb = await repo.Users.FindByIdAsync(userForUpdate.Id);
 
         Assert.Equal(updateUserFromDb!.Name, userForUpdate.Name);
     }
@@ -139,21 +141,21 @@ public class UserRepositoryTests
     public async Task UpdateRangeAsync_ShouldSetNewUserNames()
     {
         //Arrange
-        var repo = TestInitializer.CreateInMemoryUserRepo();
+        var repo = await TestInitializer.CreateUnitOfWorkAsync();
         var entities = TestInitializer.Create3Users();
-        await repo.AddRangeAsync(entities);
+        await repo.Users.AddRangeAsync(entities);
         await repo.SaveChangesAsync();
-        var userForUpdate1 = await repo.FindByIdAsync(entities.First().Id);
-        var userForUpdate2 = await repo.FindByIdAsync(entities.Skip(1).First().Id);
+        var userForUpdate1 = await repo.Users.FindByIdAsync(entities.First().Id);
+        var userForUpdate2 = await repo.Users.FindByIdAsync(entities.Skip(1).First().Id);
         userForUpdate1!.Name = "newName1";
         userForUpdate2!.Name = "newName2";
 
         //Act
-        await repo.UpdateRangeAsync([userForUpdate1, userForUpdate2]);
+        await repo.Users.UpdateRangeAsync([userForUpdate1, userForUpdate2]);
         await repo.SaveChangesAsync();
 
-        var updatedUserFromDb1 = await repo.FindByIdAsync(userForUpdate1.Id);
-        var updatedUserFromDb2 = await repo.FindByIdAsync(userForUpdate2.Id);
+        var updatedUserFromDb1 = await repo.Users.FindByIdAsync(userForUpdate1.Id);
+        var updatedUserFromDb2 = await repo.Users.FindByIdAsync(userForUpdate2.Id);
 
         Assert.Equal(updatedUserFromDb1!.Name, userForUpdate1.Name);
         Assert.Equal(updatedUserFromDb2!.Name, userForUpdate2.Name);

@@ -95,6 +95,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Intergration.Infrastructure", "src\Backend\Microservices\Friendship\Tests\Integration\NetSpace.Tests.Intergration.Infrastructure\NetSpace.Tests.Intergration.Infrastructure.csproj", "{D750B905-FD95-41C8-863D-2E8003EEC1FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Initializer", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Initializer\NetSpace.Tests.Unit.Initializer.csproj", "{929E32B3-E651-47AA-9F72-B113C5153184}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Infrastructure", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Infrastructure\NetSpace.Tests.Unit.Infrastructure.csproj", "{A4F88F6A-E30D-4A31-8409-F7B1073F4A05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Application", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Application\NetSpace.Tests.Unit.Application.csproj", "{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -209,6 +215,18 @@ Global
 		{D750B905-FD95-41C8-863D-2E8003EEC1FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D750B905-FD95-41C8-863D-2E8003EEC1FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D750B905-FD95-41C8-863D-2E8003EEC1FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{929E32B3-E651-47AA-9F72-B113C5153184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{929E32B3-E651-47AA-9F72-B113C5153184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{929E32B3-E651-47AA-9F72-B113C5153184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{929E32B3-E651-47AA-9F72-B113C5153184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4F88F6A-E30D-4A31-8409-F7B1073F4A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4F88F6A-E30D-4A31-8409-F7B1073F4A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4F88F6A-E30D-4A31-8409-F7B1073F4A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4F88F6A-E30D-4A31-8409-F7B1073F4A05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -255,5 +273,8 @@ Global
 		{A94BB3E9-5C77-4CF7-BA9F-C09F0C013A4C} = {587A7C24-6D0D-4110-A492-D82C56741ABD}
 		{22FFC38B-0C54-4D28-88BA-D9AC6D909435} = {A94BB3E9-5C77-4CF7-BA9F-C09F0C013A4C}
 		{D750B905-FD95-41C8-863D-2E8003EEC1FC} = {22FFC38B-0C54-4D28-88BA-D9AC6D909435}
+		{929E32B3-E651-47AA-9F72-B113C5153184} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
+		{A4F88F6A-E30D-4A31-8409-F7B1073F4A05} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
+		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
 	EndGlobalSection
 EndGlobal
