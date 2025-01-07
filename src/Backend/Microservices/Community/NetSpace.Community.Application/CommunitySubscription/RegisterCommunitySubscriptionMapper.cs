@@ -16,6 +16,8 @@ public sealed class RegisterCommunitySubscriptionMapper : IRegister
         config.NewConfig<PartiallyUpdateCommunitySbuscriptionCommand, CommunitySubscriptionEntity>()
             .Ignore(c => c.Id)
             .IgnoreNullValues(true);
+
+        config.NewConfig<IEnumerable<CommunitySubscriptionEntity>, IEnumerable<CommunitySubscriptionResponse>>();
     }
 
 }

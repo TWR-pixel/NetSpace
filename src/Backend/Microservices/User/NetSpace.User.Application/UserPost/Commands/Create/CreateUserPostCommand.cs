@@ -18,7 +18,19 @@ public sealed class CreateUserPostCommandValidator : AbstractValidator<CreateUse
 {
     public CreateUserPostCommandValidator()
     {
+        RuleFor(c => c.Title)
+            .NotNull()
+            .NotEmpty()
+            .MaximumLength(256);
 
+        RuleFor(c => c.Body)
+            .NotNull()
+            .NotEmpty()
+            .MaximumLength(2048);
+
+        RuleFor(c => c.OwnerId)
+            .NotNull()
+            .NotEmpty();
     }
 }
 

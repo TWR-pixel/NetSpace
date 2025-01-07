@@ -2,7 +2,6 @@
 using MapsterMapper;
 using NetSpace.Community.Application.Common.Exceptions;
 using NetSpace.Community.Application.CommunityPost.Exceptions;
-using NetSpace.Community.Application.CommunityPostUserComment.Caching;
 using NetSpace.Community.Domain.CommunityPostUserComment;
 using NetSpace.Community.UseCases.Common;
 
@@ -20,14 +19,24 @@ public sealed class CreateCommunityPostUserCommentCommandValidator : AbstractVal
 {
     public CreateCommunityPostUserCommentCommandValidator()
     {
+        RuleFor(c => c.Body)
+            .NotEmpty()
+            .NotNull()
+            .MaximumLength(1024);
 
+        RuleFor(c => c.OwnerId)
+            .NotNull()
+            .NotEmpty();
+
+        RuleFor(c => c.CommunityPostId)
+            .NotNull()
+            .NotEmpty();
     }
 }
 
-public sealed class CommunityPostUserCommentCommandHandler(IUnitOfWork unitOfWork,
-                                                           ICommunityPostUserCommentDistributedCache cache,
-                                                           IMapper mapper,
-                                                           IValidator<CreateCommunityPostUserCommentCommand> commandValidator) : CommandHandlerBase<CreateCommunityPostUserCommentCommand, CommunityPostUserCommentResponse>(unitOfWork)
+public sealed class CreateCommunityPostUserCommentCommandHandler(IUnitOfWork unitOfWork,
+                                                                 IMapper mapper,
+                                                                 IValidator<CreateCommunityPostUserCommentCommand> commandValidator) : CommandHandlerBase<CreateCommunityPostUserCommentCommand, CommunityPostUserCommentResponse>(unitOfWork)
 {
     public override async Task<CommunityPostUserCommentResponse> Handle(CreateCommunityPostUserCommentCommand request, CancellationToken cancellationToken)
     {
@@ -43,8 +52,6 @@ public sealed class CommunityPostUserCommentCommandHandler(IUnitOfWork unitOfWor
 
         await UnitOfWork.CommunityPostUserComments.AddAsync(commentEntity, cancellationToken);
         await UnitOfWork.SaveChangesAsync(cancellationToken);
-
-        await cache.AddAsync(commentEntity, cancellationToken);
 
         return mapper.Map<CommunityPostUserCommentResponse>(commentEntity);
     }

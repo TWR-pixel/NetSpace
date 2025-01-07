@@ -13,5 +13,7 @@ public sealed class CommunitySubscriptionEntity : IEntity<int>
     public CommunityEntity Community { get; set; }
     public int CommunityId { get; set; }
 
+    public DateTime SubscribedAt { get; set; } = DateTime.UtcNow;
+
     public SubscribingStatus SubscribingStatus { get; set; } = SubscribingStatus.WaitForConfirmation;
 }

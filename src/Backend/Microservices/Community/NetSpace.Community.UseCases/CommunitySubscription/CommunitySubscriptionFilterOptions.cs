@@ -1,4 +1,6 @@
-﻿namespace NetSpace.Community.UseCases.CommunitySubscription;
+﻿using NetSpace.Community.Domain.CommunitySubscription;
+
+namespace NetSpace.Community.UseCases.CommunitySubscription;
 
 public sealed class CommunitySubscriptionFilterOptions
 {
@@ -8,4 +10,8 @@ public sealed class CommunitySubscriptionFilterOptions
 
     public int? CommunityId { get; set; }
     public bool IncludeCommunity { get; set; } = false;
+
+    public DateTime? SubscribedAt { get; set; }
+
+    public SubscribingStatus? SubscribingStatus { get; set; }
 }

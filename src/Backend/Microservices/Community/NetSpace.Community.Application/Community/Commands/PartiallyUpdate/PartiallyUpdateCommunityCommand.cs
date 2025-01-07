@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using MapsterMapper;
-using NetSpace.Community.Application.Community.Caching;
 using NetSpace.Community.Application.Community.Exceptions;
 using NetSpace.Community.UseCases.Common;
 
@@ -11,7 +10,6 @@ public sealed record PartiallyUpdateCommunityCommand : CommandBase<CommunityResp
     public required int Id { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
-    public string? AvatarUrl { get; set; }
 
     public Guid? OwnerId { get; set; }
 
@@ -21,23 +19,37 @@ public sealed class PartiallyUpdateCommunityCommandValidator : AbstractValidator
 {
     public PartiallyUpdateCommunityCommandValidator()
     {
+        RuleFor(c => c.Name)
+            .NotEmpty()
+            .NotNull()
+            .MaximumLength(256)
+            .When(c => c.Name is not null);
 
+        RuleFor(c => c.Description)
+            .MaximumLength(512)
+            .When(c => c.Description is not null);
+
+        RuleFor(c => c.OwnerId)
+            .NotNull()
+            .NotEmpty()
+            .When(c => c.Name is not null);
     }
 }
 
 public sealed class PartiallyUpdateCommunityCommandHandler(IUnitOfWork unitOfWork,
-                                                           ICommunityDistributedCache cache,
-                                                           IMapper mapper) : CommandHandlerBase<PartiallyUpdateCommunityCommand, CommunityResponse>(unitOfWork)
+                                                           IMapper mapper,
+                                                           IValidator<PartiallyUpdateCommunityCommand> commandValidator) : CommandHandlerBase<PartiallyUpdateCommunityCommand, CommunityResponse>(unitOfWork)
 {
     public override async Task<CommunityResponse> Handle(PartiallyUpdateCommunityCommand request, CancellationToken cancellationToken)
     {
+        await commandValidator.ValidateAndThrowAsync(request, cancellationToken);
+
         var communityEntity = await UnitOfWork.Communities.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new CommunityNotFoundException(request.Id);
 
         mapper.Map(request, communityEntity);
 
         await UnitOfWork.SaveChangesAsync(cancellationToken);
-        await cache.UpdateByIdAsync(communityEntity, communityEntity.Id, cancellationToken);
 
         return mapper.Map<CommunityResponse>(communityEntity);
     }

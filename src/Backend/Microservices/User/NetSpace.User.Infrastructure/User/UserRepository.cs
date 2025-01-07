@@ -70,16 +70,6 @@ public sealed class UserRepository(NetSpaceDbContext dbContext) : RepositoryBase
         if (!string.IsNullOrWhiteSpace(filter.SchoolName))
             query = query.Where(u => u.SchoolName == filter.SchoolName);
 
-        if (filter.IncludePosts)
-            query = query.Include(u => u.UserPosts);
-
-        if (filter.IncludeComments)
-            query = query.Include(u => u.UserPostUserComments);
-
-        query = query
-            .Skip((pagination.PageCount - 1) * pagination.PageSize)
-            .Take(pagination.PageSize);
-
         query = sort.OrderByAscending switch
         {
             "Id" => query.OrderBy(u => u.Id),
@@ -100,7 +90,7 @@ public sealed class UserRepository(NetSpaceDbContext dbContext) : RepositoryBase
             "PersonalSite" => query.OrderBy(u => u.PersonalSite),
             "Gender" => query.OrderBy(u => u.Gender),
             "SchoolName" => query.OrderBy(u => u.SchoolName),
-            _ => query.OrderBy(u => u.Id)
+            _ => query
         };
 
         query = sort.OrderByDescending switch
@@ -123,8 +113,12 @@ public sealed class UserRepository(NetSpaceDbContext dbContext) : RepositoryBase
             "PersonalSite" => query.OrderByDescending(u => u.PersonalSite),
             "Gender" => query.OrderByDescending(u => u.Gender),
             "SchoolName" => query.OrderByDescending(u => u.SchoolName),
-            _ => query.OrderBy(u => u.Id)
+            _ => query
         };
+
+        query = query
+            .Skip((pagination.PageCount - 1) * pagination.PageSize)
+            .Take(pagination.PageSize);
 
         return await query.ToListAsync(cancellationToken);
     }

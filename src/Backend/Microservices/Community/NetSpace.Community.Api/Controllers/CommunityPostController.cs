@@ -16,9 +16,9 @@ public sealed class CommunityPostController(IMediator mediator) : ApiControllerB
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<CommunityPostResponse>>> Get([FromQuery] CommunityPostFilterOptions filter,
-                                                                        [FromQuery] PaginationOptions pagination,
-                                                                        [FromQuery] SortOptions sort,
-                                                                        CancellationToken cancellationToken)
+                                                                            [FromQuery] PaginationOptions pagination,
+                                                                            [FromQuery] SortOptions sort,
+                                                                            CancellationToken cancellationToken)
     {
         var request = new GetCommunityPostQuery { Filter = filter, Pagination = pagination, Sort = sort };
 

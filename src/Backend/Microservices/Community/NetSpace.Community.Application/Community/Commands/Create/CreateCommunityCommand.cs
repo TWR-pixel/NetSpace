@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using MapsterMapper;
 using NetSpace.Community.Application.Common.Exceptions;
-using NetSpace.Community.Application.Community.Caching;
 using NetSpace.Community.Domain.Community;
 using NetSpace.Community.UseCases.Common;
 
@@ -11,18 +10,28 @@ public sealed record CreateCommunityCommand : CommandBase<CommunityResponse>
 {
     public required string Name { get; set; }
     public string? Description { get; set; }
-    public string? AvatarUrl { get; set; }
-
+    
     public required Guid OwnerId { get; set; }
 }
 
 public sealed class CreateCommunityCommandValidator : AbstractValidator<CreateCommunityCommand>
 {
+    public CreateCommunityCommandValidator()
+    {
+        RuleFor(c => c.Name)
+            .NotEmpty()
+            .NotNull()
+            .MaximumLength(256);
 
+        RuleFor(c => c.Description)
+            .MaximumLength(512);
+
+        RuleFor(c => c.OwnerId)
+            .NotNull();
+    }
 }
 
 public sealed class CreateCommunityCommandHandler(IUnitOfWork unitOfWork,
-                                                  ICommunityDistributedCache cache,
                                                   IValidator<CreateCommunityCommand> validator,
                                                   IMapper mapper) : CommandHandlerBase<CreateCommunityCommand, CommunityResponse>(unitOfWork)
 {

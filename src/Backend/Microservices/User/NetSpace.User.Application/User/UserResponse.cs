@@ -28,7 +28,4 @@ public sealed record UserResponse : ResponseBase
     public Gender Gender { get; set; } = Gender.NotSet;
 
     public string SchoolName { get; set; } = string.Empty;
-
-    public IEnumerable<UserPostResponse> UserPosts { get; set; } = new List<UserPostResponse>();
-    public IEnumerable<UserPostUserCommentResponse> userPostUserComments { get; set; } = new List<UserPostUserCommentResponse>();
 }

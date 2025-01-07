@@ -27,6 +27,4 @@ public sealed class UserEntity : IEntity<Guid>
 
     public string SchoolName { get; set; } = string.Empty;
 
-    public IEnumerable<UserPostEntity> UserPosts { get; set; } = new List<UserPostEntity>();
-    public IEnumerable<UserPostUserCommentEntity> UserPostUserComments { get; set; } = new List<UserPostUserCommentEntity>();
 }

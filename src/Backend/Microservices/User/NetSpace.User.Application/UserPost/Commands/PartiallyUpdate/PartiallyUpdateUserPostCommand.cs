@@ -16,7 +16,17 @@ public sealed class PartiallyUpdateUserPostCommandValidator : AbstractValidator<
 {
     public PartiallyUpdateUserPostCommandValidator()
     {
+        RuleFor(c => c.Title)
+            .NotNull()
+            .NotEmpty()
+            .MaximumLength(256)
+            .When(c => c.Title is not null);
 
+        RuleFor(c => c.Body)
+            .NotNull()
+            .NotEmpty()
+            .MaximumLength(2048)
+            .When(c => c.Title is not null);
     }
 }
 

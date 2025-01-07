@@ -25,7 +25,4 @@ public sealed class UserFilterOptions
     public Gender? Gender { get; set; }
 
     public string? SchoolName { get; set; }
-
-    public bool IncludeComments { get; set; } = false;
-    public bool IncludePosts { get; set; } = false;
 }

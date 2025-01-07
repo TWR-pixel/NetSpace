@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NetSpace.User.Application.User.Queries.GetLatests;
 using NetSpace.User.Application.UserPost;
 using NetSpace.User.Application.UserPost.Commands.Create;
 using NetSpace.User.Application.UserPost.Commands.Delete;
@@ -26,6 +27,18 @@ public class UserPostController(IMediator mediator) : ApiControllerBase(mediator
         var request = new GetUserPostQuery { Filter = filter, Pagination = pagination, Sort = sort };
 
         var result = await Mediator.Send(request, cancellationToken);
+
+        return Ok(result);
+    }
+
+    [HttpGet("latests")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<UserPostResponse>>> GetLatest([FromQuery] PaginationOptions pagination, CancellationToken cancellationToken)
+    {
+        var query = new GetLatestUsePostsQuery { Pagination = pagination };
+
+        var result = await Mediator.Send(query, cancellationToken);
 
         return Ok(result);
     }

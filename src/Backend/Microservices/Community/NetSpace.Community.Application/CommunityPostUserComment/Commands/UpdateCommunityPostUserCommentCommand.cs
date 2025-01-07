@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using MapsterMapper;
-using NetSpace.Community.Application.CommunityPostUserComment.Caching;
 using NetSpace.Community.Application.CommunityPostUserComment.Exceptions;
 using NetSpace.Community.UseCases.Common;
 
@@ -10,21 +9,21 @@ public sealed record UpdateCommunityPostUserCommentCommand : CommandBase<Communi
 {
     public required int Id { get; set; }
     public required string Body { get; set; }
-
-    public required Guid OwnerId { get; set; }
-    public required int CommunityPostId { get; set; }
 }
 
 public sealed class UpdateCommunityPostUserCommentCommandValidator : AbstractValidator<UpdateCommunityPostUserCommentCommand>
 {
     public UpdateCommunityPostUserCommentCommandValidator()
     {
+        RuleFor(c => c.Body)
+            .NotEmpty()
+            .NotNull()
+            .MaximumLength(1024);
 
     }
 }
 
 public sealed class UpdateCommunityPostUserCommentCommandHandler(IUnitOfWork unitOfWork,
-                                                                 ICommunityPostUserCommentDistributedCache cache,
                                                                  IMapper mapper,
                                                                  IValidator<UpdateCommunityPostUserCommentCommand> commandValidator) : CommandHandlerBase<UpdateCommunityPostUserCommentCommand, CommunityPostUserCommentResponse>(unitOfWork)
 {
@@ -38,9 +37,7 @@ public sealed class UpdateCommunityPostUserCommentCommandHandler(IUnitOfWork uni
         mapper.Map(request, commentEntity);
 
         await UnitOfWork.SaveChangesAsync(cancellationToken);
-        await cache.UpdateByIdAsync(commentEntity, commentEntity.Id, cancellationToken);
-
-
+        
         return mapper.Map<CommunityPostUserCommentResponse>(commentEntity);
     }
 }

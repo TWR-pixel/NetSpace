@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using MapsterMapper;
 using NetSpace.Community.Application.Community.Exceptions;
-using NetSpace.Community.Application.CommunityPost.Caching;
 using NetSpace.Community.Domain.CommunityPost;
 using NetSpace.Community.UseCases.Common;
 
@@ -19,12 +18,23 @@ public sealed class CreateCommunityPostCommandValidator : AbstractValidator<Crea
 {
     public CreateCommunityPostCommandValidator()
     {
+        RuleFor(c => c.Title)
+            .NotEmpty()
+            .NotNull()
+            .MaximumLength(256);
 
+        RuleFor(c => c.Body)
+            .NotEmpty()
+            .NotNull()
+            .MaximumLength(12096);
+
+        RuleFor(c => c.CommunityId)
+            .NotEmpty()
+            .NotNull();
     }
 }
 
 public sealed class CreateCommunityPostCommandHandler(IUnitOfWork unitOfWork,
-                                                      ICommunityPostDistributedCache cache,
                                                       IMapper mapper,
                                                       IValidator<CreateCommunityPostCommand> commandValidator) : CommandHandlerBase<CreateCommunityPostCommand, CommunityPostResponse>(unitOfWork)
 {
@@ -39,8 +49,6 @@ public sealed class CreateCommunityPostCommandHandler(IUnitOfWork unitOfWork,
 
         await UnitOfWork.CommunityPosts.AddAsync(communityPostEntity, cancellationToken);
         await UnitOfWork.SaveChangesAsync(cancellationToken);
-
-        await cache.AddAsync(communityPostEntity, cancellationToken);
 
         return mapper.Map<CommunityPostResponse>(communityPostEntity);
     }

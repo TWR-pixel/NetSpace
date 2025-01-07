@@ -1,7 +1,6 @@
-﻿
+﻿using FluentValidation;
 using MapsterMapper;
 using NetSpace.Community.Application.Community.Exceptions;
-using NetSpace.Community.Application.CommunityPost.Caching;
 using NetSpace.Community.Application.CommunityPost.Exceptions;
 using NetSpace.Community.UseCases.Common;
 
@@ -17,10 +16,34 @@ public sealed record UpdateCommunityPostCommand : CommandBase<CommunityPostRespo
 
 }
 
-public sealed class UpdateCommunityPostCommandHandler(IUnitOfWork unitOfWork, ICommunityPostDistributedCache cache, IMapper mapper) : CommandHandlerBase<UpdateCommunityPostCommand, CommunityPostResponse>(unitOfWork)
+public sealed class UpdateCommunityPostCommandValidator : AbstractValidator<UpdateCommunityPostCommand>
+{
+    public UpdateCommunityPostCommandValidator()
+    {
+        RuleFor(c => c.Title)
+            .NotEmpty()
+            .NotNull()
+            .MaximumLength(256);
+
+        RuleFor(c => c.Body)
+            .NotEmpty()
+            .NotNull()
+            .MaximumLength(12096);
+
+        RuleFor(c => c.CommunityId)
+            .NotEmpty()
+            .NotNull();
+    }
+}
+
+public sealed class UpdateCommunityPostCommandHandler(IUnitOfWork unitOfWork,
+                                                      IMapper mapper,
+                                                      IValidator<UpdateCommunityPostCommand> commandValidator) : CommandHandlerBase<UpdateCommunityPostCommand, CommunityPostResponse>(unitOfWork)
 {
     public override async Task<CommunityPostResponse> Handle(UpdateCommunityPostCommand request, CancellationToken cancellationToken)
     {
+        await commandValidator.ValidateAndThrowAsync(request, cancellationToken);
+
         var communityPostEntity = await UnitOfWork.CommunityPosts.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new CommunityPostNotFoundException(request.Id);
 
@@ -28,8 +51,6 @@ public sealed class UpdateCommunityPostCommandHandler(IUnitOfWork unitOfWork, IC
             ?? throw new CommunityNotFoundException(request.CommunityId);
 
         mapper.Map(request, communityPostEntity);
-
-        await cache.UpdateByIdAsync(communityPostEntity, communityPostEntity.Id, cancellationToken);
 
         return mapper.Map<CommunityPostResponse>(communityPostEntity);
     }

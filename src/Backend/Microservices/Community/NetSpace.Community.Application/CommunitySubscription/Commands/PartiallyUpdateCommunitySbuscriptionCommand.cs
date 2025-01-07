@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using MapsterMapper;
-using NetSpace.Community.Application.CommunitySubscription.Caching;
 using NetSpace.Community.Application.CommunitySubscription.Exceptions;
 using NetSpace.Community.Domain.CommunitySubscription;
 using NetSpace.Community.UseCases.Common;
@@ -9,7 +8,7 @@ namespace NetSpace.Community.Application.CommunitySubscription.Commands;
 
 public sealed record PartiallyUpdateCommunitySbuscriptionCommand : CommandBase<CommunitySubscriptionResponse>
 {
-    public int Id { get; set; }
+    public required int Id { get; set; }
 
     public Guid? SubscriberId { get; set; }
     public int? CommunityId { get; set; }
@@ -17,16 +16,7 @@ public sealed record PartiallyUpdateCommunitySbuscriptionCommand : CommandBase<C
     public SubscribingStatus? SubscribingStatus { get; set; }
 }
 
-public sealed class PartiallyUpdateCommunitySbuscriptionCommandValidator : AbstractValidator<PartiallyUpdateCommunitySbuscriptionCommand>
-{
-    public PartiallyUpdateCommunitySbuscriptionCommandValidator()
-    {
-
-    }
-}
-
 public sealed class PartiallyUpdateCommunitySbuscriptionCommandHandler(IUnitOfWork unitOfWork,
-                                                                       ICommunitySubscriptionDistributedCache cache,
                                                                        IMapper mapper,
                                                                        IValidator<PartiallyUpdateCommunitySbuscriptionCommand> commandValidator) : CommandHandlerBase<PartiallyUpdateCommunitySbuscriptionCommand, CommunitySubscriptionResponse>(unitOfWork)
 {

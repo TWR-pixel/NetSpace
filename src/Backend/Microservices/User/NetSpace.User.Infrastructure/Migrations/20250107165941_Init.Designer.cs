@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NetSpace.User.Infrastructure.Migrations
 {
     [DbContext(typeof(NetSpaceDbContext))]
-    [Migration("20250102124420_Database-updated")]
-    partial class Databaseupdated
+    [Migration("20250107165941_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,30 +32,30 @@ namespace NetSpace.User.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("About")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
 
                     b.Property<string>("AvatarUrl")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CurrentCity")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(55)
+                        .HasColumnType("character varying(55)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<byte>("Gender")
                         .HasColumnType("smallint");
 
                     b.Property<string>("Hometown")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int>("Language")
                         .HasColumnType("integer");
@@ -64,41 +64,49 @@ namespace NetSpace.User.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int>("MaritalStatus")
                         .HasColumnType("integer");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Nickname")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("PersonalSite")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("SchoolName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Nickname")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("NetSpace.User.Domain.User.UserPostEntity", b =>
+            modelBuilder.Entity("NetSpace.User.Domain.UserPost.UserPostEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -108,11 +116,16 @@ namespace NetSpace.User.Infrastructure.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -124,7 +137,7 @@ namespace NetSpace.User.Infrastructure.Migrations
                     b.ToTable("UserPosts");
                 });
 
-            modelBuilder.Entity("NetSpace.User.Domain.User.UserPostUserCommentEntity", b =>
+            modelBuilder.Entity("NetSpace.User.Domain.UserPostUserComment.UserPostUserCommentEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,7 +147,8 @@ namespace NetSpace.User.Infrastructure.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -154,7 +168,7 @@ namespace NetSpace.User.Infrastructure.Migrations
                     b.ToTable("UserPostUserComments");
                 });
 
-            modelBuilder.Entity("NetSpace.User.Domain.User.UserPostEntity", b =>
+            modelBuilder.Entity("NetSpace.User.Domain.UserPost.UserPostEntity", b =>
                 {
                     b.HasOne("NetSpace.User.Domain.User.UserEntity", "User")
                         .WithMany("UserPosts")
@@ -165,7 +179,7 @@ namespace NetSpace.User.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("NetSpace.User.Domain.User.UserPostUserCommentEntity", b =>
+            modelBuilder.Entity("NetSpace.User.Domain.UserPostUserComment.UserPostUserCommentEntity", b =>
                 {
                     b.HasOne("NetSpace.User.Domain.User.UserEntity", "Owner")
                         .WithMany("UserPostUserComments")
@@ -173,7 +187,7 @@ namespace NetSpace.User.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NetSpace.User.Domain.User.UserPostEntity", "UserPost")
+                    b.HasOne("NetSpace.User.Domain.UserPost.UserPostEntity", "UserPost")
                         .WithMany("UserComments")
                         .HasForeignKey("UserPostId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -191,7 +205,7 @@ namespace NetSpace.User.Infrastructure.Migrations
                     b.Navigation("UserPosts");
                 });
 
-            modelBuilder.Entity("NetSpace.User.Domain.User.UserPostEntity", b =>
+            modelBuilder.Entity("NetSpace.User.Domain.UserPost.UserPostEntity", b =>
                 {
                     b.Navigation("UserComments");
                 });

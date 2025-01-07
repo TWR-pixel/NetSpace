@@ -9,7 +9,6 @@ namespace NetSpace.Community.Application.CommunityPostUserComment.Commands;
 public sealed record PartiallyUpdateCommunityPostUserCommentCommand : CommandBase<CommunityPostUserCommentResponse>
 {
     public required int Id { get; set; }
-    public string? Title { get; set; }
     public string? Body { get; set; }
 }
 
@@ -17,16 +16,25 @@ public sealed class PartiallyUpdateCommunityPostUserCommentCommandValidator : Ab
 {
     public PartiallyUpdateCommunityPostUserCommentCommandValidator()
     {
-
+        RuleFor(c => c.Body)
+            .NotEmpty()
+            .NotNull()
+            .MaximumLength(1024)
+            .When(c => c.Body is not null);
     }
 }
 
 
-public sealed class PartiallyUpdateCommunityPostUserCommentCommandHandler(IUnitOfWork unitOfWork, ICommunityPostUserCommentDistributedCache cache, IMapper mapper) 
+public sealed class PartiallyUpdateCommunityPostUserCommentCommandHandler(IUnitOfWork unitOfWork,
+                                                                          ICommunityPostUserCommentDistributedCache cache,
+                                                                          IMapper mapper,
+                                                                          IValidator<PartiallyUpdateCommunityPostUserCommentCommand> commandValidatork)
     : CommandHandlerBase<PartiallyUpdateCommunityPostUserCommentCommand, CommunityPostUserCommentResponse>(unitOfWork)
 {
     public override async Task<CommunityPostUserCommentResponse> Handle(PartiallyUpdateCommunityPostUserCommentCommand request, CancellationToken cancellationToken)
     {
+        await commandValidatork.ValidateAndThrowAsync(request, cancellationToken);
+
         var commentEntity = await UnitOfWork.CommunityPostUserComments.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new CommunityPostNotFoundException(request.Id);
 

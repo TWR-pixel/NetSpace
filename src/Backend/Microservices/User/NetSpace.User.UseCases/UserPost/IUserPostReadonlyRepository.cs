@@ -11,4 +11,7 @@ public interface IUserPostReadonlyRepository : IReadonlyRepository<UserPostEntit
                                                          PaginationOptions paginationk,
                                                          SortOptions sort,
                                                          CancellationToken cancellationToken = default);
+
+    public Task<UserPostEntity?> GetByIdWithDetails(int id, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<UserPostEntity>> GetLatests(PaginationOptions pagination, CancellationToken cancellationToken = default);
 }

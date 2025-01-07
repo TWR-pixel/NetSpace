@@ -30,8 +30,4 @@
     <ProjectReference Include="..\NetSpace.Community.Infrastructure\NetSpace.Community.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CommunitySubscriptions\" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using MapsterMapper;
+﻿using MapsterMapper;
 using NetSpace.Community.Application.CommunityPostUserComment.Caching;
 using NetSpace.Community.Application.CommunityPostUserComment.Exceptions;
 using NetSpace.Community.UseCases.Common;
@@ -11,23 +10,12 @@ public sealed record DeleteCommunityPostUserCommentCommand : CommandBase<Communi
     public required int Id { get; set; }
 }
 
-public sealed class DeleteCommunityPostUserCommentCommandValidator : AbstractValidator<DeleteCommunityPostUserCommentCommand>
-{
-    public DeleteCommunityPostUserCommentCommandValidator()
-    {
-
-    }
-}
-
 public sealed class DeleteCommunityPostUserCommentCommandHandler(IUnitOfWork unitOfWork,
                                                                  ICommunityPostUserCommentDistributedCache cache,
-                                                                 IMapper mapper,
-                                                                 IValidator<DeleteCommunityPostUserCommentCommand> commandValidator) : CommandHandlerBase<DeleteCommunityPostUserCommentCommand, CommunityPostUserCommentResponse>(unitOfWork)
+                                                                 IMapper mapper) : CommandHandlerBase<DeleteCommunityPostUserCommentCommand, CommunityPostUserCommentResponse>(unitOfWork)
 {
     public override async Task<CommunityPostUserCommentResponse> Handle(DeleteCommunityPostUserCommentCommand request, CancellationToken cancellationToken)
     {
-        await commandValidator.ValidateAndThrowAsync(request, cancellationToken);
-
         var commentEntity = await UnitOfWork.CommunityPostUserComments.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new CommunityPostUserCommentNotFoundException(request.Id);
 

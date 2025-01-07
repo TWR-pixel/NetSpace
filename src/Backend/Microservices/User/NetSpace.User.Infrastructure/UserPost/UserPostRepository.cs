@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using NetSpace.User.Domain.UserPost;
 using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.UserPost;
@@ -7,7 +8,10 @@ namespace NetSpace.User.Infrastructure.UserPost;
 
 public sealed class UserPostRepository(NetSpaceDbContext dbContext) : RepositoryBase<UserPostEntity, int>(dbContext), IUserPostRepository, IUserPostReadonlyRepository
 {
-    public async Task<IEnumerable<UserPostEntity>> FilterAsync(UserPostFilterOptions filter, PaginationOptions pagination, SortOptions sort, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<UserPostEntity>> FilterAsync(UserPostFilterOptions filter,
+                                                               PaginationOptions pagination,
+                                                               SortOptions sort,
+                                                               CancellationToken cancellationToken = default)
     {
         var query = DbContext.UserPosts.AsQueryable();
 
@@ -24,9 +28,8 @@ public sealed class UserPostRepository(NetSpaceDbContext dbContext) : Repository
             query = query
                 .Where(u => u.UserId == filter.UserId);
 
-        query = query
-            .Skip((pagination.PageCount - 1) * pagination.PageSize)
-            .Take(pagination.PageSize);
+        if (filter.IncludeUser)
+            query = query.Include(u => u.User);
 
         query = sort.OrderByAscending switch
         {
@@ -46,6 +49,30 @@ public sealed class UserPostRepository(NetSpaceDbContext dbContext) : Repository
             _ => query
         };
 
+        query = query
+            .Skip((pagination.PageCount - 1) * pagination.PageSize)
+            .Take(pagination.PageSize);
+
         return await query.ToListAsync(cancellationToken);
+    }
+
+    public async Task<UserPostEntity?> GetByIdWithDetails(int id, CancellationToken cancellationToken = default)
+    {
+        var result = await DbContext.UserPosts
+            .Include(u => u.User)
+            .FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+
+        return result;
+    }
+
+    public async Task<IEnumerable<UserPostEntity>> GetLatests(PaginationOptions pagination, CancellationToken cancellationToken = default)
+    {
+        var result = await DbContext.UserPosts
+            .OrderBy(u => u.CreatedAt)
+            .Skip((pagination.PageCount - 1) * pagination.PageSize)
+            .Take(pagination.PageSize)
+            .ToArrayAsync(cancellationToken);
+
+        return result;
     }
 }

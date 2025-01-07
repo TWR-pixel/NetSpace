@@ -1,9 +1,7 @@
 ﻿using FluentValidation;
 using Mapster;
 using MapsterMapper;
-using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using NetSpace.Identity.Application.User.Consumers;
 using System.Reflection;
 
 namespace NetSpace.Identity.Application.Common.Extensions;

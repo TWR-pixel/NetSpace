@@ -15,5 +15,7 @@ public sealed record CommunitySubscriptionResponse : ResponseBase
     public CommunityResponse? Community { get; set; }
     public int CommunityId { get; set; }
 
+    public DateTime SubscribedAt { get; set; } = DateTime.UtcNow;
+
     public SubscribingStatus SubscribingStatus { get; set; } = SubscribingStatus.WaitForConfirmation;
 }

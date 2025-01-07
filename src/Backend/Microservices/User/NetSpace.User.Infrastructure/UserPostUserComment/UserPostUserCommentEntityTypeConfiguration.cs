@@ -11,15 +11,5 @@ public sealed class UserPostUserCommentEntityTypeConfiguration : IEntityTypeConf
         builder.Property(b => b.Body)
             .IsRequired(true)
             .HasMaxLength(512);
-
-        builder
-            .HasOne(b => b.Owner)
-            .WithMany(b => b.UserPostUserComments)
-            .HasForeignKey(b => b.UserId);
-
-        builder
-            .HasOne(b => b.UserPost)
-            .WithMany(b => b.UserComments)
-            .HasForeignKey(b => b.UserPostId);
     }
 }

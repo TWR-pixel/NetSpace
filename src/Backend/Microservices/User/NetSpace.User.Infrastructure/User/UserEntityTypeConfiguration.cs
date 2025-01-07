@@ -58,13 +58,5 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<UserE
         builder.Property(b => b.SchoolName)
             .IsRequired(false)
             .HasMaxLength(50);
-
-        builder.HasMany(b => b.UserPosts)
-            .WithOne(b => b.User)
-            .HasForeignKey(b => b.UserId);
-
-        builder.HasMany(b => b.UserPostUserComments)
-            .WithOne(b => b.Owner)
-            .HasForeignKey(b => b.UserId);
     }
 }
