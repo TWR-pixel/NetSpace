@@ -1,6 +1,8 @@
 ﻿using Mapster;
 using NetSpace.Community.Application.CommunityPostUserComment.Commands;
+using NetSpace.Community.Application.CommunitySubscription;
 using NetSpace.Community.Domain.CommunityPostUserComment;
+using NetSpace.Community.Domain.CommunitySubscription;
 
 namespace NetSpace.Community.Application.CommunityPostUserComment;
 
@@ -18,5 +20,8 @@ public sealed class RegisterCommunityPostUserCommentMapper : IRegister
             .IgnoreNullValues(true);
 
         config.NewConfig<IEnumerable<CommunityPostUserCommentEntity>, IEnumerable<CommunityPostUserCommentResponse>>();
+
+        config.NewConfig<CommunitySubscriptionEntity, CommunitySubscriptionResponse>();
+        config.NewConfig<IEnumerable<CommunitySubscriptionEntity>, IEnumerable<CommunitySubscriptionResponse>>();
     }
 }
