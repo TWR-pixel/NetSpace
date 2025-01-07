@@ -9,4 +9,6 @@ public interface ICommunitySubscriptionReadonlyRepository : IReadonlyRepository<
                                                                  PaginationOptions pagination,
                                                                  SortOptions sort,
                                                                  CancellationToken cancellationToken = default);
+
+    public Task<CommunitySubscriptionEntity> GetWithDetails(int id, CancellationToken cancellationToken = default);
 }

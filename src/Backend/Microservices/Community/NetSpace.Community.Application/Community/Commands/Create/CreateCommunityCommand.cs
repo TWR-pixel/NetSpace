@@ -37,7 +37,6 @@ public sealed class CreateCommunityCommandHandler(IUnitOfWork unitOfWork,
 
         var result = await UnitOfWork.Communities.AddAsync(communityEntity, cancellationToken);
         await UnitOfWork.SaveChangesAsync(cancellationToken);
-        await cache.AddAsync(communityEntity, cancellationToken);
 
         var response = mapper.Map<CommunityResponse>(result);
 

@@ -5,7 +5,7 @@ using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Domain.User;
 using NetSpace.Identity.UseCases.User;
 
-namespace NetSpace.Identity.Application.User.Commands.Create;
+namespace NetSpace.Identity.Application.User.Commands;
 
 public sealed record CreateUserCommand : RequestBase<UserResponse>
 {

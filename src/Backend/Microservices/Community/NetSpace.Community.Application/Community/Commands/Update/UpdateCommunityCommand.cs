@@ -27,7 +27,6 @@ public sealed class UpdateCommunityCommandHandler(IUnitOfWork unitOfWork,
         mapper.Map(request, communityEntity);
 
         await UnitOfWork.SaveChangesAsync(cancellationToken);
-        await cache.UpdateByIdAsync(communityEntity, communityEntity.Id, cancellationToken);
 
         return mapper.Map<CommunityResponse>(communityEntity);
     }

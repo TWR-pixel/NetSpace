@@ -2,7 +2,6 @@
 
 namespace NetSpace.Identity.Domain.User;
 
-[method: SetsRequiredMembers]
 public sealed class UserEntity : IdentityUser, IEntity<string>
 {
     public required string Nickname { get; set; }

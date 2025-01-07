@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using NetSpace.Identity.Application.Common.Extensions;
+using NetSpace.Identity.Infrastructure.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,23 +11,25 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication();
+builder.Services.AddApplicationLayer();
 
-var authenticationBuilder = builder.Services.AddAuthentication(options =>
+var connectionString = builder.Configuration.GetConnectionString("PostgreSql");
+builder.Services.AddInfrastructure(connectionString);
+
+builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-});
-
-authenticationBuilder
- .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
  {
      options.Cookie.Name = "oidc";
      options.Cookie.SameSite = SameSiteMode.None;
      options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
      options.Cookie.IsEssential = true;
  })
- .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
- {
+.AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+{
      options.NonceCookie.SecurePolicy = CookieSecurePolicy.Always;
      options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
      options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -48,6 +52,7 @@ authenticationBuilder
      options.Scope.Add("email");
      options.Scope.Add("phone");
      options.Scope.Add("profile");
+     options.Scope.Add("userinfo");
 
      options.Events = new OpenIdConnectEvents
      {
@@ -66,7 +71,7 @@ authenticationBuilder
              return Task.FromResult(0);
          },
      };
- });
+});
 
 var app = builder.Build();
 

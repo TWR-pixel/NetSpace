@@ -37,6 +37,6 @@ public sealed class RegisterUserRequestHandler(IUserRepository userRepository, I
         await userRepository.AddAsync(newUserEntity, request.Password, cancellationToken);
         await publishEndpoint.Publish(mapper.Map<UserCreatedMessage>(newUserEntity), cancellationToken);
 
-        return new UserResponse();
+        return mapper.Map<UserResponse>(newUserEntity);
     }
 }

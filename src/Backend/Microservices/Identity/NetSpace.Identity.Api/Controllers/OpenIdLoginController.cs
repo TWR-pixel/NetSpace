@@ -2,62 +2,34 @@
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using NetSpace.Identity.Domain.User;
+using MediatR;
+using NetSpace.Identity.Application.User.Commands;
+using NetSpace.Identity.Application.User;
+using NetSpace.Identity.Application.User.Exceptions;
 
 namespace NetSpace.Identity.Api.Controllers;
 
 [ApiController]
 [Route("/api/openId-login/")]
-public class OpenIdLoginController() : ControllerBase
+public class OpenIdLoginController(IMediator mediator) : ApiControllerBase(mediator)
 {
-
-    //[HttpGet("google-callback")]
-    ////[Authorize]
-    //public async Task<ActionResult> GoogleCallback(CancellationToken cancellationToken)
-    //{
-    //    var user = this.HttpContext.User;
-
-    //    if (user?.Identity != null && user.Identity.IsAuthenticated)
-    //    {
-    //        return this.Ok(new UserModel
-    //        {
-    //            IsAuthenticated = true,
-    //            Name = user.FindFirst("name")?.Value,
-    //            EmailAddress = user.FindFirst(c => c.Type == ClaimTypes.Email)?.Value,
-    //            Phone = user.FindFirst(c => c.Type == "phone")?.Value
-    //        });
-    //    }
-
-    //    return this.Ok(new UserModel
-    //    {
-    //        IsAuthenticated = false,
-    //    });
-    //}
-
     [Authorize]
     [HttpGet("login")]
-    public async Task<ActionResult> AuthorizeAsync()
+    public async Task<ActionResult<UserResponse>> GoogleLoginAsync(CancellationToken cancellationToken)
     {
-        var user = this.HttpContext.User;
-
-        if (user?.Identity != null && user.Identity.IsAuthenticated)
+        try
         {
-            return this.Ok(new UserModel
-            {
-                IsAuthenticated = true,
-                Name = user.FindFirst("name")?.Value,
-                EmailAddress = user.FindFirst(c => c.Type == ClaimTypes.Email)?.Value,
-                Phone = user.FindFirst(c => c.Type == "phone")?.Value
-            });
+            var request = new GoogleExternalLoginCommand { User = User };
+
+            var result = await Mediator.Send(request, cancellationToken);
+
+            return CreatedAtAction(nameof(GoogleLoginAsync), result);
         }
-
-        return this.Ok(new UserModel
+        catch (UserAlreadyExistsException alreadyExists)
         {
-            IsAuthenticated = false,
-        });
+            return Conflict(alreadyExists.Message);
+        }
     }
 
     [HttpGet("logout")]
@@ -67,6 +39,7 @@ public class OpenIdLoginController() : ControllerBase
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+            HttpContext.Response.Cookies.Delete("oidc");
             return;
         }
     }

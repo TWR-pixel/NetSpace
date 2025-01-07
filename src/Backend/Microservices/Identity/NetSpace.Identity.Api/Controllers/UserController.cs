@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.Identity.Application.User;
-using NetSpace.Identity.Application.User.Commands.Create;
+using NetSpace.Identity.Application.User.Commands;
 
 namespace NetSpace.Identity.Api.Controllers;
 

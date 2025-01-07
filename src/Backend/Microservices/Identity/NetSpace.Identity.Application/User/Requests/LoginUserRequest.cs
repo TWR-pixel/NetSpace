@@ -11,10 +11,12 @@ public sealed class LoginUserRequestHandler(IUserRepository userRepository) : Re
 {
     public override async Task<UserResponse> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {
-        var userFromDb = await userRepository.FindByEmailAsync(request.Email);
+        throw new NotImplementedException();
 
-        var response = new UserResponse();
+        //var userFromDb = await userRepository.FindByEmailAsync(request.Email);
+        //throw new NotImplementedException();
+        //var response = new UserResponse { }
 
-        return response;
+        //return response;
     }
 }
