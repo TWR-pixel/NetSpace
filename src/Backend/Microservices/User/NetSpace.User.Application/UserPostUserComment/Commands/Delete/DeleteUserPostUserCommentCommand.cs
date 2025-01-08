@@ -9,7 +9,7 @@ public sealed record DeleteUserPostUserCommentCommand : CommandBase<UserPostUser
     public required int Id { get; set; }
 }
 
-public sealed class DeleteUserPostUserCommentCommandHandler(IUnitOfWork unitOfWork,IMapper mapper) 
+public sealed class DeleteUserPostUserCommentCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : CommandHandlerBase<DeleteUserPostUserCommentCommand, UserPostUserCommentResponse>(unitOfWork)
 {
     public override async Task<UserPostUserCommentResponse> Handle(DeleteUserPostUserCommentCommand request, CancellationToken cancellationToken)

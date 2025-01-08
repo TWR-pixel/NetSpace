@@ -8,6 +8,6 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<UserE
 {
     public void Configure(EntityTypeBuilder<UserEntity> builder)
     {
-        
+
     }
 }

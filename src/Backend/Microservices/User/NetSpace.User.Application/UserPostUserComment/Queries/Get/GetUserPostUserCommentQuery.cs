@@ -11,7 +11,7 @@ public sealed record GetUserPostUserCommentQuery : QueryBase<IEnumerable<UserPos
     public SortOptions Sort { get; set; } = new();
 }
 
-public sealed class GetUserPostUserCommentRequestHandler(IReadonlyUnitOfWork unitOfWork, IMapper mapper) 
+public sealed class GetUserPostUserCommentRequestHandler(IReadonlyUnitOfWork unitOfWork, IMapper mapper)
     : QueryHandlerBase<GetUserPostUserCommentQuery, IEnumerable<UserPostUserCommentResponse>>(unitOfWork)
 {
     public override async Task<IEnumerable<UserPostUserCommentResponse>> Handle(GetUserPostUserCommentQuery request, CancellationToken cancellationToken)

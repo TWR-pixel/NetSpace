@@ -37,7 +37,7 @@ public sealed class UpdateCommunityPostUserCommentCommandHandler(IUnitOfWork uni
         mapper.Map(request, commentEntity);
 
         await UnitOfWork.SaveChangesAsync(cancellationToken);
-        
+
         return mapper.Map<CommunityPostUserCommentResponse>(commentEntity);
     }
 }

@@ -80,7 +80,7 @@ public sealed class UpdateUserCommandTests
         var testUsers = TestInitializer.Create3Users();
         var uof = await TestInitializer.CreateUnitOfWorkAsync();
         await uof.Users.AddRangeAsync(testUsers);
-        await uof.SaveChangesAsync(); 
+        await uof.SaveChangesAsync();
         var command = new UpdateUserCommand { Id = Guid.NewGuid(), Name = "newName", Nickname = "newNickname", Surname = "newSurname" };
         var memCache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
         var testCache = new FakeUserDistributedCacheStorage(memCache);

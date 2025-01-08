@@ -8,6 +8,6 @@ public sealed class CommunitySubscriptionEntityTypeConfiguration : IEntityTypeCo
 {
     public void Configure(EntityTypeBuilder<CommunitySubscriptionEntity> builder)
     {
-        
+
     }
 }

@@ -35,7 +35,8 @@ public sealed class FriendshipController(IMediator mediator) : ApiControllerBase
     {
         var result = await Mediator.Send(request, cancellationToken);
 
-        return Ok(result);    }
+        return Ok(result);
+    }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

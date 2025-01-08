@@ -13,7 +13,7 @@ public sealed record UpdateCommunitySubscriptionCommand : CommandBase<CommunityS
     public required Guid SubscriberId { get; set; }
     public required int CommunityId { get; set; }
 
-    public SubscribingStatus SubscribingStatus { get; set; } 
+    public SubscribingStatus SubscribingStatus { get; set; }
 }
 
 public sealed class UpdateCommunitySbuscriptionCommandValidator : AbstractValidator<UpdateCommunitySubscriptionCommand>

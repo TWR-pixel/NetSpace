@@ -59,7 +59,7 @@ public sealed class UserRepository(IGraphClient client) : IUserRepository
     public async Task UpdateAsync(UserEntity entity, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        
+
         await client.Cypher
             .Match("(user:UserEntity {Id: $id})")
             .WithParam("id", entity.Id)

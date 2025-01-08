@@ -10,7 +10,7 @@ public sealed record DeleteUserPostByIdCommand : CommandBase<UserPostResponse>
     public required int Id { get; set; }
 }
 
-public sealed class DeleteUserPostByIdCommandHandler(IUnitOfWork unitOfWork,IMapper mapper, IPublishEndpoint publisher)
+public sealed class DeleteUserPostByIdCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IPublishEndpoint publisher)
     : CommandHandlerBase<DeleteUserPostByIdCommand, UserPostResponse>(unitOfWork)
 {
     public override async Task<UserPostResponse> Handle(DeleteUserPostByIdCommand request, CancellationToken cancellationToken)

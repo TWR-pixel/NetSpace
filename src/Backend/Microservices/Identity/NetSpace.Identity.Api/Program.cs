@@ -30,47 +30,47 @@ builder.Services.AddAuthentication(options =>
  })
 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
 {
-     options.NonceCookie.SecurePolicy = CookieSecurePolicy.Always;
-     options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
-     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-     options.GetClaimsFromUserInfoEndpoint = true;
-     options.AuthenticationMethod = OpenIdConnectRedirectBehavior.RedirectGet;
+    options.NonceCookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.GetClaimsFromUserInfoEndpoint = true;
+    options.AuthenticationMethod = OpenIdConnectRedirectBehavior.RedirectGet;
 
-     options.ResponseMode = OpenIdConnectResponseMode.FormPost;
+    options.ResponseMode = OpenIdConnectResponseMode.FormPost;
 
-     options.Authority = "https://accounts.google.com";
-     options.ClientId = builder.Configuration["Google:ClientId"];
-     options.ClientSecret = builder.Configuration["Google:Secret"];
+    options.Authority = "https://accounts.google.com";
+    options.ClientId = builder.Configuration["Google:ClientId"];
+    options.ClientSecret = builder.Configuration["Google:Secret"];
 
-     options.ResponseType = OpenIdConnectResponseType.Code;
-     options.UsePkce = true;
-     options.CallbackPath = builder.Configuration["Google:CallbackPath"];
-     options.SaveTokens = true;
-     options.GetClaimsFromUserInfoEndpoint = true;
+    options.ResponseType = OpenIdConnectResponseType.Code;
+    options.UsePkce = true;
+    options.CallbackPath = builder.Configuration["Google:CallbackPath"];
+    options.SaveTokens = true;
+    options.GetClaimsFromUserInfoEndpoint = true;
 
-     options.Scope.Add("openid");
-     options.Scope.Add("email");
-     options.Scope.Add("phone");
-     options.Scope.Add("profile");
-     options.Scope.Add("userinfo");
+    options.Scope.Add("openid");
+    options.Scope.Add("email");
+    options.Scope.Add("phone");
+    options.Scope.Add("profile");
+    options.Scope.Add("userinfo");
 
-     options.Events = new OpenIdConnectEvents
-     {
-         OnRedirectToIdentityProviderForSignOut = context =>
-         {
-             context.Response.Redirect(builder.Configuration["Google:RedirectOnSignOut"]);
-             context.HandleResponse();
+    options.Events = new OpenIdConnectEvents
+    {
+        OnRedirectToIdentityProviderForSignOut = context =>
+        {
+            context.Response.Redirect(builder.Configuration["Google:RedirectOnSignOut"]);
+            context.HandleResponse();
 
-             return Task.CompletedTask;
-         },
+            return Task.CompletedTask;
+        },
 
-         OnRemoteFailure = context =>
-         {
-             context.Response.Redirect("/error");
-             context.HandleResponse();
-             return Task.FromResult(0);
-         },
-     };
+        OnRemoteFailure = context =>
+        {
+            context.Response.Redirect("/error");
+            context.HandleResponse();
+            return Task.FromResult(0);
+        },
+    };
 });
 
 var app = builder.Build();

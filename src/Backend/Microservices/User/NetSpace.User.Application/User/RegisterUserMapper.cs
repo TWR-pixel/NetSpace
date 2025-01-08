@@ -18,7 +18,7 @@ public sealed class RegisterUserMapper : IRegister
             .Ignore(u => u.Id);
 
         config.NewConfig<DeleteUserByIdCommand, UserEntity>();
-        
+
         #region Common messages
 
         config.NewConfig<UserEntity, UserCreatedMessage>();

@@ -12,7 +12,7 @@ public sealed class UserEntity : IdentityUser, IEntity<string>
     public DateTime? BirthDate { get; set; }
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
-    
+
     public string Hometown { get; set; } = string.Empty;
     public Language Language { get; set; }
     public MaritalStatus MaritalStatus { get; set; }

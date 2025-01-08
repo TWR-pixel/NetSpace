@@ -54,7 +54,7 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<UserE
 
         builder.Property(b => b.PersonalSite)
             .IsRequired(false);
-        
+
         builder.Property(b => b.SchoolName)
             .IsRequired(false)
             .HasMaxLength(50);

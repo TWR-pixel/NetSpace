@@ -14,7 +14,7 @@ public sealed class CommunityPostDistributedCache(IDistributedCache cache) : Dis
 
         if (!string.IsNullOrWhiteSpace(cached))
         {
-            var entities = JsonSerializer.Deserialize <IEnumerable<CommunityPostEntity>>(cached);
+            var entities = JsonSerializer.Deserialize<IEnumerable<CommunityPostEntity>>(cached);
 
             return entities;
         }
