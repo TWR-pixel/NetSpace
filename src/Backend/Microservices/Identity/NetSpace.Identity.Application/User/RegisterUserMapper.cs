@@ -9,11 +9,11 @@ public sealed class RegisterUserMapper : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<RegisterUserRequest, UserEntity>();
+        config.NewConfig<JwtUserRegistrationRequest, UserEntity>();
 
         #region Common messages
 
-        config.NewConfig<RegisterUserRequest, UserCreatedMessage>();
+        config.NewConfig<JwtUserRegistrationRequest, UserCreatedMessage>();
         config.NewConfig<UserCreatedMessage, UserEntity>();
         config.NewConfig<UserUpdatedMessage, UserEntity>();
         config.NewConfig<UserDeletedMessage, UserEntity>();

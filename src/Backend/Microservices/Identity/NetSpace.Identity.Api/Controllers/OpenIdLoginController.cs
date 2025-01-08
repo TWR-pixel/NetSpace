@@ -15,7 +15,7 @@ namespace NetSpace.Identity.Api.Controllers;
 public class OpenIdLoginController(IMediator mediator) : ApiControllerBase(mediator)
 {
     [Authorize]
-    [HttpGet("login")]
+    [HttpGet("google-login")]
     public async Task<ActionResult<UserResponse>> GoogleLoginAsync(CancellationToken cancellationToken)
     {
         try
@@ -24,7 +24,7 @@ public class OpenIdLoginController(IMediator mediator) : ApiControllerBase(media
 
             var result = await Mediator.Send(request, cancellationToken);
 
-            return CreatedAtAction(nameof(GoogleLoginAsync), result);
+            return Ok(result);
         }
         catch (UserAlreadyExistsException alreadyExists)
         {
@@ -32,26 +32,20 @@ public class OpenIdLoginController(IMediator mediator) : ApiControllerBase(media
         }
     }
 
-    [HttpGet("logout")]
-    public async Task UnAuthorize()
+    [HttpGet("google-logout")]
+    public async Task<ActionResult> UnAuthorize()
     {
         if (User.Identity != null && User.Identity.IsAuthenticated)
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
             HttpContext.Response.Cookies.Delete("oidc");
-            return;
+            return Ok();
         }
+
+        return Ok();
     }
 
 
 
-}
-
-public class UserModel
-{
-    public bool IsAuthenticated { get; set; }
-    public string? Name { get; set; }
-    public string? EmailAddress { get; set; }
-    public string? Phone { get; set; }
 }

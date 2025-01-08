@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Identity.Application.User.Consumers;
@@ -20,11 +21,14 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddIdentityCore<UserEntity>(options =>
         {
             options.User.RequireUniqueEmail = true;
+            options.User.AllowedUserNameCharacters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_@";
         })
+            .AddRoles<IdentityRole>()
+        .AddTokenProvider<AuthenticatorTokenProvider<UserEntity>>("Default")
+        .AddRoleManager<RoleManager<IdentityRole>>()
         .AddEntityFrameworkStores<NetSpaceDbContext>();
 
         services.AddScoped<IUserRepository, UserRepository>();
-
 
         services.AddMassTransit(configure =>
         {

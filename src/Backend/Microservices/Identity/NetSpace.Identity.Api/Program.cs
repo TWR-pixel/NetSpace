@@ -1,20 +1,75 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using NetSpace.Identity.Application.Common.Extensions;
 using NetSpace.Identity.Infrastructure.Common.Extensions;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", builder =>
+    {
+        builder.AllowAnyOrigin();
+        builder.AllowAnyHeader();
+        builder.AllowAnyMethod();
+    });
+});
 
 builder.Services.AddOpenApi();
-builder.Services.AddSwaggerGen();
-builder.Services.AddAuthentication();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "NetSpace api",
+        Version = "v1"
+    });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please insert JWT with Bearer into field",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+   {
+     new OpenApiSecurityScheme
+     {
+       Reference = new OpenApiReference
+       {
+         Type = ReferenceType.SecurityScheme,
+         Id = "Bearer"
+       }
+      },
+      Array.Empty<string>()
+    }
+  });
+});
 builder.Services.AddApplicationLayer();
 
 var connectionString = builder.Configuration.GetConnectionString("PostgreSql");
 builder.Services.AddInfrastructure(connectionString);
+
+builder.Services.AddAuthentication()
+            .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = builder.Configuration["JwtAuth:ValidAudience"],
+                    ValidIssuer = builder.Configuration["JwtAuth:ValidIssuer"],
+                    ClockSkew = TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtAuth:Secret"]))
+                };
+            });
 
 builder.Services.AddAuthentication(options =>
 {
@@ -52,7 +107,6 @@ builder.Services.AddAuthentication(options =>
     options.Scope.Add("email");
     options.Scope.Add("phone");
     options.Scope.Add("profile");
-    options.Scope.Add("userinfo");
 
     options.Events = new OpenIdConnectEvents
     {
@@ -72,8 +126,10 @@ builder.Services.AddAuthentication(options =>
         },
     };
 });
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
+app.UseCors("AllowAllOrigins");
 
 if (app.Environment.IsDevelopment())
 {

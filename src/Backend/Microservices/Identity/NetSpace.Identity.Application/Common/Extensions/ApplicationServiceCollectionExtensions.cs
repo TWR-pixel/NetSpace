@@ -2,6 +2,7 @@
 using Mapster;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
+using NetSpace.Identity.Application.Common.Jwt;
 using System.Reflection;
 
 namespace NetSpace.Identity.Application.Common.Extensions;
@@ -18,6 +19,8 @@ public static class ApplicationServiceCollectionExtensions
         services.AddValidatorsFromAssembly(typeof(RequestBase<>).Assembly);
         services.AddMapsterAdapterConfig();
         services.AddScoped<IMapper, ServiceMapper>();
+
+        services.AddTransient<AccessTokenFactory>();
 
         return services;
     }

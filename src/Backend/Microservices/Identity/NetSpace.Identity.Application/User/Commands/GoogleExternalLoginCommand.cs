@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using NetSpace.Identity.Application.User.Exceptions;
+﻿using MapsterMapper;
+using Microsoft.AspNetCore.Identity;
 using NetSpace.Identity.Domain.User;
 using System.Security.Claims;
-using System.Security.Cryptography;
 
 namespace NetSpace.Identity.Application.User.Commands;
 
@@ -11,33 +10,47 @@ public sealed record GoogleExternalLoginCommand : RequestBase<UserResponse>
     public required ClaimsPrincipal User { get; set; }
 }
 
-public sealed class GoogleExternalLoginCommandHandler(UserManager<UserEntity> userManager) : RequestHandlerBase<GoogleExternalLoginCommand, UserResponse>
+public sealed class GoogleExternalLoginCommandHandler(UserManager<UserEntity> userManager, IMapper mapper) : RequestHandlerBase<GoogleExternalLoginCommand, UserResponse>
 {
     public async override Task<UserResponse> Handle(GoogleExternalLoginCommand request, CancellationToken cancellationToken)
     {
         var user = request.User;
 
-        if (user?.Identity != null && user.Identity.IsAuthenticated)
+        // ClaimTypes.Role. don't tuch this;
+        var userEmail = user.FindFirst(c => c.Type == ClaimTypes.Email)?.Value ?? throw new UnauthorizedAccessException();
+        var userName = user.FindFirst(c => c.Type == ClaimTypes.GivenName)?.Value;
+        var userSurname = user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value ?? "default";
+        var userNickname = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "default";
+        var emailVerified = bool.Parse(user.FindFirst(c => c.Type == "email_verified")?.Value ?? "false");
+
+        var userFromDb = await userManager.FindByEmailAsync(userEmail);
+
+        if (userFromDb is null)
         {
-            var userEmail = user.FindFirst(c => c.Type == ClaimTypes.Email)?.Value;
-            var userName = user.FindFirst("name")?.Value;
-            var userSurname = "";
-            var userNickname = RandomNumberGenerator.GetHexString(20);
-
-            var userEntity = await userManager.FindByEmailAsync(userEmail);
-
-            if (userEntity != null)
-                throw new UserAlreadyExistsException(userEmail);
-
-            return new UserResponse
+            var newUserEntity = new UserEntity
             {
+                Nickname = userNickname,
                 UserName = userName,
-                Email = userEmail,
                 Surname = userSurname,
-                Nickname = userNickname
+                Email = userEmail,
             };
+
+            if (emailVerified)
+            {
+                var userToken = await userManager.GenerateEmailConfirmationTokenAsync(newUserEntity);
+                await userManager.ConfirmEmailAsync(newUserEntity, userToken);
+            }
+
+            var result = await userManager.CreateAsync(newUserEntity);
+
+            return mapper.Map<UserResponse>(newUserEntity);
         }
 
-        throw new UnauthorizedAccessException();
+        userFromDb.UserName = userName;
+        userFromDb.Surname = userSurname;
+        userFromDb.Nickname = userNickname;
+        userFromDb.LastLoginAt = DateTime.UtcNow;
+
+        return mapper.Map<UserResponse>(userFromDb);
     }
 }

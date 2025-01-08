@@ -9,22 +9,6 @@ namespace NetSpace.Identity.Api.Controllers;
 [Route("/api/identity")]
 public class IdentityController(IMediator mediator) : ApiControllerBase(mediator)
 {
-    [HttpPost("register")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult> Register(CancellationToken cancellationToken)
-    {
-        return CreatedAtAction(nameof(Register), cancellationToken);
-    }
-
-    [HttpPost("login")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> Login(CancellationToken cancellationToken)
-    {
-        return Ok(cancellationToken);
-    }
-
     [HttpPatch("change-email")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

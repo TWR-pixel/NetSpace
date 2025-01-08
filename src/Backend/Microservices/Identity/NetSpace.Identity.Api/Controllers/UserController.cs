@@ -6,12 +6,15 @@ using NetSpace.Identity.Application.User.Commands;
 
 namespace NetSpace.Identity.Api.Controllers;
 
+[ApiController]
+[Route("/api/users")]
 public sealed class UserController(IMediator mediator) : ApiControllerBase(mediator)
 {
     [HttpPost]
-    [Authorize(Roles = "Admin")]
+    [Authorize (AuthenticationSchemes = "Bearer, OpenIdConnect")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult<UserResponse>> Create(CreateUserCommand command, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<UserResponse>> Create([FromBody] CreateUserCommand command, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(command, cancellationToken);
 

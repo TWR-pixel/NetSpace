@@ -38,6 +38,26 @@ public sealed class FriendshipController(IMediator mediator) : ApiControllerBase
         return Ok(result);
     }
 
+    [HttpGet("followers-count")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<IEnumerable<UserResponse>>> GetFollowersCount([FromQuery] GetAllUserFollowersCountRequest request, CancellationToken cancellationToken)
+    {
+        var result = await Mediator.Send(request, cancellationToken);
+
+        return Ok(result);
+    }
+
+    [HttpGet("friends-count")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<IEnumerable<UserResponse>>> GetFollowersCount([FromQuery] GetAllUserFriendsCountRequest request, CancellationToken cancellationToken)
+    {
+        var result = await Mediator.Send(request, cancellationToken);
+
+        return Ok(result);
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
