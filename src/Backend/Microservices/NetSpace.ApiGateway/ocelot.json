@@ -17,27 +17,27 @@
             "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS" ]
         }, // user microservice end
         { // identity microservice start
-            "DownstreamPathTemplate": "/api/identity/register",
+            "DownstreamPathTemplate": "/api/jwt-auth/register",
             "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7502
+                    "Port": 7058
                 }
             ],
-            "UpstreamPathTemplate": "/identity/register",
+            "UpstreamPathTemplate": "/jwt-auth/register",
             "UpstreamHttpMethod": [ "POST" ]
         },
         {
-            "DownstreamPathTemplate": "/api/identity/login",
+            "DownstreamPathTemplate": "/api/jwt-auth/login",
             "DownstreamScheme": "https",
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7502
+                    "Port": 7058
                 }
             ],
-            "UpstreamPathTemplate": "/identity/login",
+            "UpstreamPathTemplate": "/jwt-auth/login",
             "UpstreamHttpMethod": [ "POST" ]
         },
         {

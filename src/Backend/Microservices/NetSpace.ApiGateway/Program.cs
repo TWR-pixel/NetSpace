@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,14 +39,14 @@ builder.Services
          sharedOptions.DefaultScheme = "dynamic";
          sharedOptions.DefaultChallengeScheme = "dynamic";
      })
-     .AddPolicyScheme("dynamic", "Cookie or JWT", options =>
+     .AddPolicyScheme("dynamic", "OpenId by cookies or JWT", options =>
      {
          options.ForwardDefaultSelector = ctx =>
          {
              string? authHeader = ctx.Request.Headers.Authorization.FirstOrDefault();
 
              if (authHeader is null)
-                 return "Google";
+                 return OpenIdConnectDefaults.AuthenticationScheme;
 
              return JwtBearerDefaults.AuthenticationScheme;
          };
@@ -64,7 +65,7 @@ builder.Services
              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
          };
      })
-     .AddCookie("Google", options =>
+     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
      {
      })
     .AddOpenIdConnect(options =>
