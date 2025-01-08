@@ -12,7 +12,7 @@ public sealed record GetUsersQuery : QueryBase<IEnumerable<UserResponse>>
 }
 
 
-public sealed class GetUsersQueryHandler(IReadonlyUnitOfWork unitOfWork, IUserDistributedCacheStorage cache, IMapper mapper) : QueryHandlerBase<GetUsersQuery, IEnumerable<UserResponse>>(unitOfWork)
+public sealed class GetUsersQueryHandler(IReadonlyUnitOfWork unitOfWork, IMapper mapper) : QueryHandlerBase<GetUsersQuery, IEnumerable<UserResponse>>(unitOfWork)
 {
     public override async Task<IEnumerable<UserResponse>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {

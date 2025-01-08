@@ -22,4 +22,8 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\MessageBroker\" />
+  </ItemGroup>
+
 </Project>

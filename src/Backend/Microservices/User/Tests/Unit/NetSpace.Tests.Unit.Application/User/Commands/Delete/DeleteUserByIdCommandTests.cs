@@ -5,7 +5,6 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Moq;
-using NetSpace.Common.Messages.Email;
 using NetSpace.Common.Messages.User;
 using NetSpace.Tests.Unit.Initializer;
 using NetSpace.User.Application.User;
@@ -30,9 +29,6 @@ public sealed class DeleteUserByIdCommandTests
                 {
                     configure.UsingInMemory((bus, conf) =>
                     {
-                        conf.Publish<UserCreatedMessage>();
-                        conf.Publish<SendEmailMessage>();
-                        conf.Publish<UserDeletedMessage>();
                         conf.Publish<UserUpdatedMessage>();
                     });
                 })
@@ -73,10 +69,7 @@ public sealed class DeleteUserByIdCommandTests
                 {
                     configure.UsingInMemory((bus, conf) =>
                     {
-                        conf.Publish<UserCreatedMessage>();
-                        conf.Publish<SendEmailMessage>();
                         conf.Publish<UserDeletedMessage>();
-                        conf.Publish<UserUpdatedMessage>();
                     });
                 })
                 .BuildServiceProvider(true);

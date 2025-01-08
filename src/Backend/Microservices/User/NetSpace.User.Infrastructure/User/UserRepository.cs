@@ -120,6 +120,6 @@ public sealed class UserRepository(NetSpaceDbContext dbContext) : RepositoryBase
             .Skip((pagination.PageCount - 1) * pagination.PageSize)
             .Take(pagination.PageSize);
 
-        return await query.ToListAsync(cancellationToken);
+        return await query.ToArrayAsync(cancellationToken);
     }
 }

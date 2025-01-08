@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MapsterMapper;
-using MediatR;
+using MassTransit;
 using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.UseCases.Common;
@@ -45,8 +45,7 @@ public sealed class UpdateUserCommandValidator : AbstractValidator<UpdateUserCom
             .NotEmpty();
 
         RuleFor(r => r.LastName)
-            .MaximumLength(50)
-            .NotEmpty();
+            .MaximumLength(50);
 
         RuleFor(r => r.About)
             .MaximumLength(512);
@@ -65,7 +64,7 @@ public sealed class UpdateUserCommandValidator : AbstractValidator<UpdateUserCom
 public sealed class UpdateUserCommandHandler(IUnitOfWork unitOfWork,
                                              IValidator<UpdateUserCommand> requestValidator,
                                              IMapper mapper,
-                                             IPublisher publisher) : CommandHandlerBase<UpdateUserCommand, UserResponse>(unitOfWork)
+                                             IPublishEndpoint publisher) : CommandHandlerBase<UpdateUserCommand, UserResponse>(unitOfWork)
 {
     public override async Task<UserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {

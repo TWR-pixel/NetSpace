@@ -11,20 +11,14 @@ public sealed class RegisterUserMapper : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-
-        config.NewConfig<IEnumerable<UserEntity>, IEnumerable<UserResponse>>()
-            .RequireDestinationMemberSource(true);
-
-        config.NewConfig<UpdateUserCommand, UserEntity>()
-            .RequireDestinationMemberSource(true);
-
+        config.NewConfig<IEnumerable<UserEntity>, IEnumerable<UserResponse>>();
+        config.NewConfig<UpdateUserCommand, UserEntity>();
         config.NewConfig<PartiallyUpdateUserCommand, UserEntity>()
             .IgnoreNullValues(true)
             .Ignore(u => u.Id);
 
-        config.NewConfig<DeleteUserByIdCommand, UserEntity>()
-            .RequireDestinationMemberSource(true);
-
+        config.NewConfig<DeleteUserByIdCommand, UserEntity>();
+        
         #region Common messages
 
         config.NewConfig<UserEntity, UserCreatedMessage>();

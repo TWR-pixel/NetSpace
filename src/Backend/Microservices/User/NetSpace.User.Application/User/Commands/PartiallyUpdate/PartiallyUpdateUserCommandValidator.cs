@@ -21,12 +21,6 @@ public sealed class PartiallyUpdateUserCommandValidator : AbstractValidator<Part
             .NotEmpty()
             .When(r => r.Surname is not null);
 
-        //RuleFor(r => r.Email) move to identity
-        //    .MaximumLength(50)
-        //    .EmailAddress()
-        //    .Matches(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
-        //    .When(r => r.Email is not null);
-
         RuleFor(r => r.LastName)
             .MaximumLength(50)
             .NotEmpty()

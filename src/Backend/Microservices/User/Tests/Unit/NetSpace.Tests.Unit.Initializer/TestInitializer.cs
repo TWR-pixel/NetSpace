@@ -78,4 +78,48 @@ public static class TestInitializer
         return uof;
     }
 
+    public static async Task<ReadonlyUnitOfWork> CreateReadonlyUnitOfWorkAsync()
+    {
+        var dbContext = CreateInMemoryDb();
+
+        var userRepo = new UserRepository(dbContext);
+        var userPostUserCommentRepo = new UserPostUserCommentRepository(dbContext);
+        var UserPostRepo = new UserPostRepository(dbContext);
+
+        var testUsers = Create3Users();
+        var testPosts = Creat3UserPosts(testUsers);
+        var testPostComments = Create3UserPostUserComments(testPosts, testUsers);
+
+        var uof = new ReadonlyUnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo);
+
+        //await uof.Users.AddRangeAsync(testUsers);
+        //await uof.UserPosts.AddRangeAsync(testPosts);
+        //await uof.UserPostUserComments.AddRangeAsync(testPostComments);
+
+        return uof;
+    }
+
+    public static async Task<ReadonlyUnitOfWork> CreateReadonlyUnitOfWorkWithUserAsync()
+    {
+        var dbContext = CreateInMemoryDb();
+
+        await dbContext.Users.AddAsync(Create3Users().First());
+        await dbContext.SaveChangesAsync();
+
+        var userRepo = new UserRepository(dbContext);
+        var userPostUserCommentRepo = new UserPostUserCommentRepository(dbContext);
+        var UserPostRepo = new UserPostRepository(dbContext);
+
+        var testUsers = Create3Users();
+        var testPosts = Creat3UserPosts(testUsers);
+        var testPostComments = Create3UserPostUserComments(testPosts, testUsers);
+
+        var uof = new ReadonlyUnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo);
+
+        //await uof.Users.AddRangeAsync(testUsers);
+        //await uof.UserPosts.AddRangeAsync(testPosts);
+        //await uof.UserPostUserComments.AddRangeAsync(testPostComments);
+
+        return uof;
+    }
 }
