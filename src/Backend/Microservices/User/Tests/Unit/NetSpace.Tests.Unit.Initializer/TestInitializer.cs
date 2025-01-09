@@ -34,13 +34,13 @@ public static class TestInitializer
         return users;
     }
 
-    public static List<UserPostEntity> Creat3UserPosts(IEnumerable<UserEntity> users)
+    public static List<UserPostEntity> Create3UserPosts(IEnumerable<UserEntity> users)
     {
         var userPosts = new List<UserPostEntity>
         {
-            new(){Body = "TestBody", Title = "TestTitle", User = users.First()},
-            new(){Body = "TestBody", Title = "TestTitle", User = users.Last()},
-            new(){Body = "TestBody", Title = "TestTitle", User = users.Last()}
+            new(){Body = "TestBody", Title = "TestTitle1", User = users.First()},
+            new(){Body = "TestBody", Title = "TestTitle2", User = users.Last()},
+            new(){Body = "TestBody", Title = "TestTitle3", User = users.Last()}
         };
 
         return userPosts;
@@ -50,9 +50,9 @@ public static class TestInitializer
     {
         var userComments = new List<UserPostUserCommentEntity>
         {
-            new() { Body = "TestBody", Owner = users.First() },
-            new() { Body = "TestBody", Owner = users.Last() },
-            new() { Body = "TestBody", Owner = users.Last() }
+            new() { Body = "TestBody1", Owner = users.First() },
+            new() { Body = "TestBody2", Owner = users.Last() },
+            new() { Body = "TestBody3", Owner = users.Last() }
         };
 
         return userComments;
@@ -66,14 +66,10 @@ public static class TestInitializer
         var UserPostRepo = new UserPostRepository(dbContext);
 
         var testUsers = Create3Users();
-        var testPosts = Creat3UserPosts(testUsers);
+        var testPosts = Create3UserPosts(testUsers);
         var testPostComments = Create3UserPostUserComments(testPosts, testUsers);
 
         var uof = new UnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo, dbContext);
-
-        //await uof.Users.AddRangeAsync(testUsers);
-        //await uof.UserPosts.AddRangeAsync(testPosts);
-        //await uof.UserPostUserComments.AddRangeAsync(testPostComments);
 
         return uof;
     }
@@ -87,7 +83,7 @@ public static class TestInitializer
         var UserPostRepo = new UserPostRepository(dbContext);
 
         var testUsers = Create3Users();
-        var testPosts = Creat3UserPosts(testUsers);
+        var testPosts = Create3UserPosts(testUsers);
         var testPostComments = Create3UserPostUserComments(testPosts, testUsers);
 
         var uof = new ReadonlyUnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo);
@@ -99,26 +95,24 @@ public static class TestInitializer
         return uof;
     }
 
-    public static async Task<ReadonlyUnitOfWork> CreateReadonlyUnitOfWorkWithUserAsync()
+    public static async Task<ReadonlyUnitOfWork> CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync()
     {
         var dbContext = CreateInMemoryDb();
-
-        await dbContext.Users.AddAsync(Create3Users().First());
-        await dbContext.SaveChangesAsync();
 
         var userRepo = new UserRepository(dbContext);
         var userPostUserCommentRepo = new UserPostUserCommentRepository(dbContext);
         var UserPostRepo = new UserPostRepository(dbContext);
 
         var testUsers = Create3Users();
-        var testPosts = Creat3UserPosts(testUsers);
+        var testPosts = Create3UserPosts(testUsers);
         var testPostComments = Create3UserPostUserComments(testPosts, testUsers);
 
-        var uof = new ReadonlyUnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo);
+        await dbContext.Users.AddRangeAsync(testUsers);
+        await dbContext.UserPosts.AddRangeAsync(testPosts);
+        await dbContext.UserPostUserComments.AddRangeAsync(testPostComments);
+        await dbContext.SaveChangesAsync();
 
-        //await uof.Users.AddRangeAsync(testUsers);
-        //await uof.UserPosts.AddRangeAsync(testPosts);
-        //await uof.UserPostUserComments.AddRangeAsync(testPostComments);
+        var uof = new ReadonlyUnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo);
 
         return uof;
     }

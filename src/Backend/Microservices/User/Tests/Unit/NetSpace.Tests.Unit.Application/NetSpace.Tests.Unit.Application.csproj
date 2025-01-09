@@ -25,17 +25,4 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UserPostUserComment\Commands\Create\" />
-    <Folder Include="UserPostUserComment\Commands\Delete\" />
-    <Folder Include="UserPostUserComment\Commands\PartiallyUpdate\" />
-    <Folder Include="UserPostUserComment\Commands\Update\" />
-    <Folder Include="UserPostUserComment\Queries\Get\" />
-    <Folder Include="UserPost\Commands\Create\" />
-    <Folder Include="UserPost\Commands\Delete\" />
-    <Folder Include="UserPost\Commands\PartiallyUpdate\" />
-    <Folder Include="UserPost\Commands\Update\" />
-    <Folder Include="UserPost\Queries\Get\" />
-  </ItemGroup>
-
 </Project>

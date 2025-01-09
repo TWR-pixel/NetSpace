@@ -1,10 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.User.Application.User;
-using NetSpace.User.Application.User.Commands.Delete;
-using NetSpace.User.Application.User.Commands.PartiallyUpdate;
-using NetSpace.User.Application.User.Commands.Update;
-using NetSpace.User.Application.User.Queries.Get;
+using NetSpace.User.Application.User.Commands;
+using NetSpace.User.Application.User.Queries;
 using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.User;
 

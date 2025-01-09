@@ -1,11 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.User.Application.UserPostUserComment;
-using NetSpace.User.Application.UserPostUserComment.Commands.Create;
-using NetSpace.User.Application.UserPostUserComment.Commands.Delete;
-using NetSpace.User.Application.UserPostUserComment.Commands.PartiallyUpdate;
-using NetSpace.User.Application.UserPostUserComment.Commands.Update;
-using NetSpace.User.Application.UserPostUserComment.Queries.Get;
+using NetSpace.User.Application.UserPostUserComment.Commands;
+using NetSpace.User.Application.UserPostUserComment.Queries;
 using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.UserPostUserComment;
 
@@ -72,7 +69,7 @@ public sealed class UserPostUserCommentController(IMediator mediator) : ApiContr
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<UserPostUserCommentResponse>> Delete([FromBody] DeleteUserPostUserCommentCommand request, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserPostUserCommentResponse>> Delete([FromBody] DeleteUserPostUserCommentByIdCommand request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 

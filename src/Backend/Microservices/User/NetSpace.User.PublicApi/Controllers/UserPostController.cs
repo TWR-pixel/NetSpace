@@ -1,12 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.User.Application.UserPost;
-using NetSpace.User.Application.UserPost.Commands.Create;
-using NetSpace.User.Application.UserPost.Commands.Delete;
-using NetSpace.User.Application.UserPost.Commands.PartiallyUpdate;
-using NetSpace.User.Application.UserPost.Commands.Update;
-using NetSpace.User.Application.UserPost.Queries.Get;
-using NetSpace.User.Application.UserPost.Queries.GetLatest;
+using NetSpace.User.Application.UserPost.Commands;
+using NetSpace.User.Application.UserPost.Queries;
 using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.UserPost;
 
