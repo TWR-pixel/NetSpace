@@ -4,7 +4,7 @@ using NetSpace.Community.Application.Community.Caching;
 using NetSpace.Community.Application.Community.Exceptions;
 using NetSpace.Community.UseCases.Common;
 
-namespace NetSpace.Community.Application.Community.Queries.GetById;
+namespace NetSpace.Community.Application.Community.Queries;
 
 public sealed record GetCommunityByIdQuery : QueryBase<CommunityResponse>
 {

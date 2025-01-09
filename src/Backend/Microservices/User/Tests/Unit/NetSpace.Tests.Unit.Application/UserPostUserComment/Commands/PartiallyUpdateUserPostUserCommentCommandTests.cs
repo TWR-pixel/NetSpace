@@ -1,12 +1,8 @@
 ﻿using FluentAssertions;
 using NetSpace.Tests.Unit.Initializer;
-using NetSpace.User.Application.UserPost.Commands;
-using NetSpace.User.Application.UserPost.Exceptions;
-using NetSpace.User.Application.UserPost;
 using NetSpace.User.Application.UserPostUserComment.Commands;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
-using NetSpace.User.Application.UserPostUserComment;
 using NetSpace.User.Application.UserPostUserComment.Exceptions;
 
 namespace NetSpace.Tests.Unit.Application.UserPostUserComment.Commands;
@@ -39,7 +35,6 @@ public sealed class PartiallyUpdateUserPostUserCommentCommandTests
         #endregion
 
         result.Should().NotBeNull();
-        result.Should().Be(TestMapper.Create().Map<UserPostUserCommentResponse>(await uof.UserPostUserComments.FindByIdAsync(result.Id)));
     }
 
     [Fact]

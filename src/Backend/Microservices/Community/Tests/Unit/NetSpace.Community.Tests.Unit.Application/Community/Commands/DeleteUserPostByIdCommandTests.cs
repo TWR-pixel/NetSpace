@@ -1,14 +1,12 @@
-﻿using FluentAssertions;
-using NetSpace.Tests.Unit.Initializer;
-using NetSpace.User.Application.UserPost.Commands;
-using NetSpace.User.Application.UserPost.Exceptions;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 
-namespace NetSpace.Tests.Unit.Application.UserPost.Commands;
+namespace NetSpace.Community.Tests.Unit.Application.Community.Commands;
 
-public sealed class PartiallyUpdateUserPostCommandTests
+public sealed class DeleteUserPostByIdCommandTests
 {
     [Fact]
-    public async Task Should_ReturnUpdatedUserPostResponse()
+    public async Task Should_ReturnDeletedUserPostResponse()
     {
         #region Arrange
 
@@ -20,8 +18,10 @@ public sealed class PartiallyUpdateUserPostCommandTests
         await uof.Users.AddRangeAsync(testUsers);
         await uof.SaveChangesAsync();
 
-        var command = new PartiallyUpdateUserPostCommand { Id = 1, Body = "newBody", Title = "newTitle" };
-        var handler = new PartiallyUpdateUserPostCommandHandler(uof, new PartiallyUpdateUserPostCommandValidator(), TestMapper.Create());
+        var command = new DeleteUserPostByIdCommand { Id = 1 };
+        var memCache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
+        var testCache = new FakeUserPostDistributedCacheStorage(memCache);
+        var handler = new DeleteUserPostByIdCommandHandler(uof, TestMapper.Create(), testCache);
         #endregion
 
         #region Act
@@ -44,8 +44,10 @@ public sealed class PartiallyUpdateUserPostCommandTests
         await uof.Users.AddRangeAsync(testUsers);
         await uof.SaveChangesAsync();
 
-        var command = new PartiallyUpdateUserPostCommand { Id = 23, Body = "newBody", Title = "newTitle" };
-        var handler = new PartiallyUpdateUserPostCommandHandler(uof, new PartiallyUpdateUserPostCommandValidator(), TestMapper.Create());
+        var command = new DeleteUserPostByIdCommand { Id = 24 };
+        var memCache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
+        var testCache = new FakeUserPostDistributedCacheStorage(memCache);
+        var handler = new DeleteUserPostByIdCommandHandler(uof, TestMapper.Create(), testCache);
         #endregion
 
         #region Act

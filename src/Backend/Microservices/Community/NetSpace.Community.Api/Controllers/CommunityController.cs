@@ -1,12 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NetSpace.Community.Application.Community;
-using NetSpace.Community.Application.Community.Commands.Create;
-using NetSpace.Community.Application.Community.Commands.Delete;
-using NetSpace.Community.Application.Community.Commands.PartiallyUpdate;
-using NetSpace.Community.Application.Community.Commands.Update;
-using NetSpace.Community.Application.Community.Queries.Get;
-using NetSpace.Community.Application.Community.Queries.GetById;
+using NetSpace.Community.Application.Community.Commands;
+using NetSpace.Community.Application.Community.Queries;
 using NetSpace.Community.UseCases.Common;
 using NetSpace.Community.UseCases.Community;
 

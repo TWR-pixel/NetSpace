@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Community.Application.Community.Caching;
-using NetSpace.Community.Application.Community.Commands.Update;
+using NetSpace.Community.Application.Community.Commands;
 using NetSpace.Community.Application.CommunityPost.Caching;
 using NetSpace.Community.Application.CommunityPostUserComment.Caching;
 using NetSpace.Community.Application.CommunitySubscription.Caching;

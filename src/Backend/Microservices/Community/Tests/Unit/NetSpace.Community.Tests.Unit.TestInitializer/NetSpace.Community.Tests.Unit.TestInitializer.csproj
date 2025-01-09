@@ -18,10 +18,4 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CommunityPostUserComment\" />
-    <Folder Include="CommunityPost\" />
-    <Folder Include="CommunitySubscription\" />
-  </ItemGroup>
-
 </Project>

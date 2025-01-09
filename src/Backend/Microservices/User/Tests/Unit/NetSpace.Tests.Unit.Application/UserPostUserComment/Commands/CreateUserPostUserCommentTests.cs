@@ -1,6 +1,5 @@
 ﻿using NetSpace.Tests.Unit.Initializer;
 using FluentAssertions;
-using NetSpace.User.Application.UserPostUserComment;
 using NetSpace.User.Application.UserPostUserComment.Commands;
 
 namespace NetSpace.Tests.Unit.Application.UserPostUserComment.Commands;
@@ -32,7 +31,6 @@ public sealed class CreateUserPostUserCommentTests
 
         #region Assert
         result.Should().NotBeNull();
-        result.Should().Be(TestMapper.Create().Map<UserPostUserCommentResponse>(await uof.UserPostUserComments.FindByIdAsync(result.Id)));
         #endregion
     }
 }

@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using NetSpace.Tests.Unit.Initializer;
 using NetSpace.User.Application.UserPost.Exceptions;
-using NetSpace.User.Application.UserPost;
 using NetSpace.User.Application.UserPost.Commands;
 
 namespace NetSpace.Tests.Unit.Application.UserPost.Commands;
@@ -30,7 +29,6 @@ public sealed class UpdateUserPostCommandTests
         #endregion
 
         result.Should().NotBeNull();
-        result.Should().Be(TestMapper.Create().Map<UserPostResponse>(result));
     }
 
     [Fact]

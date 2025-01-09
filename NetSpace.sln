@@ -105,14 +105,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.PublicA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D93293F5-F99C-4773-93CA-A5CA3307B7D0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{1E0818F1-A6D7-49A6-8203-B66A8C357538}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Community.Tests.Unit.Application", "src\Backend\Microservices\Community\Tests\Unit\NetSpace.Community.Tests.Unit.Application\NetSpace.Community.Tests.Unit.Application.csproj", "{E322CA31-B8E2-430A-B992-19B408B198C3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Community.Tests.Unit.Infrastructure", "src\Backend\Microservices\Community\Tests\Unit\NetSpace.Community.Tests.Unit.Infrastructure\NetSpace.Community.Tests.Unit.Infrastructure.csproj", "{7BFCA1AA-1491-4DE1-BB9D-C99D2612A7B8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Community.Tests.Unit.PublicApi", "src\Backend\Microservices\Community\Tests\Unit\NetSpace.Community.Tests.Unit.PublicApi\NetSpace.Community.Tests.Unit.PublicApi.csproj", "{BEAFC87E-A0BA-40A5-B5A2-42EE535536C5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -243,18 +235,6 @@ Global
 		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E322CA31-B8E2-430A-B992-19B408B198C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E322CA31-B8E2-430A-B992-19B408B198C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E322CA31-B8E2-430A-B992-19B408B198C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E322CA31-B8E2-430A-B992-19B408B198C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7BFCA1AA-1491-4DE1-BB9D-C99D2612A7B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BFCA1AA-1491-4DE1-BB9D-C99D2612A7B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BFCA1AA-1491-4DE1-BB9D-C99D2612A7B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BFCA1AA-1491-4DE1-BB9D-C99D2612A7B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BEAFC87E-A0BA-40A5-B5A2-42EE535536C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BEAFC87E-A0BA-40A5-B5A2-42EE535536C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BEAFC87E-A0BA-40A5-B5A2-42EE535536C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BEAFC87E-A0BA-40A5-B5A2-42EE535536C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -306,9 +286,5 @@ Global
 		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
 		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
 		{D93293F5-F99C-4773-93CA-A5CA3307B7D0} = {6EDF22BB-0F3D-4DB0-A898-AD6DDF06D9DC}
-		{1E0818F1-A6D7-49A6-8203-B66A8C357538} = {D93293F5-F99C-4773-93CA-A5CA3307B7D0}
-		{E322CA31-B8E2-430A-B992-19B408B198C3} = {1E0818F1-A6D7-49A6-8203-B66A8C357538}
-		{7BFCA1AA-1491-4DE1-BB9D-C99D2612A7B8} = {1E0818F1-A6D7-49A6-8203-B66A8C357538}
-		{BEAFC87E-A0BA-40A5-B5A2-42EE535536C5} = {1E0818F1-A6D7-49A6-8203-B66A8C357538}
 	EndGlobalSection
 EndGlobal

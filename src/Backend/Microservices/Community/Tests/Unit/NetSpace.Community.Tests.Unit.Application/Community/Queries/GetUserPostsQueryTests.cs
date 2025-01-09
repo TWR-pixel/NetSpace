@@ -1,23 +1,16 @@
-﻿using FluentAssertions;
-using MassTransit.Testing;
-using NetSpace.Tests.Unit.Initializer;
-using NetSpace.User.Application.UserPostUserComment.Queries;
+﻿using MassTransit.Testing;
 
-namespace NetSpace.Tests.Unit.Application.UserPostUserComment.Queries;
+namespace NetSpace.Community.Tests.Unit.Application.Community.Queries;
 
-public sealed class GetUserPostUserCommentsQueryTests
+public sealed class GetUserPostsQueryTests
 {
     [Fact]
     public async Task Should_ReturnUserPostWithFilterByTitle()
     {
         #region Arrange
         var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync();
-        var query = new GetUserPostUserCommentQuery
-        {
-            Filter = new NetSpace.User.UseCases.UserPostUserComment.UserPostUserCommentFilterOptions
-            { Body = "TestBody1" }
-        };
-        var handler = new GetUserPostUserCommentRequestHandler(uof, TestMapper.Create());
+        var query = new GetUserPostQuery { Filter = new NetSpace.User.UseCases.UserPost.UserPostFilterOptions { Title = "TestTitle1" } };
+        var handler = new GetUserPostQueryHandler(uof, TestMapper.Create());
         #endregion
 
         #region Act
@@ -34,12 +27,8 @@ public sealed class GetUserPostUserCommentsQueryTests
     {
         #region Arrange
         var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync();
-        var query = new GetUserPostUserCommentQuery
-        {
-            Filter = new NetSpace.User.UseCases.UserPostUserComment.UserPostUserCommentFilterOptions
-            { Body = "TestBod231y1" }
-        };
-        var handler = new GetUserPostUserCommentRequestHandler(uof, TestMapper.Create());
+        var query = new GetUserPostQuery { Filter = new NetSpace.User.UseCases.UserPost.UserPostFilterOptions { Title = "TestTitle512" } };
+        var handler = new GetUserPostQueryHandler(uof, TestMapper.Create());
         #endregion
 
         #region Act

@@ -1,10 +1,7 @@
 ﻿using FluentAssertions;
-using MassTransit.Testing;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using NetSpace.Tests.Unit.Initializer;
-using NetSpace.User.Application.User;
-using NetSpace.User.Application.User.Exceptions;
 using NetSpace.User.Application.UserPost.Commands;
 using NetSpace.User.Application.UserPost.Exceptions;
 

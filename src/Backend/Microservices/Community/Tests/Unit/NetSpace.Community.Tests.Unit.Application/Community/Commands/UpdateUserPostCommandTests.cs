@@ -1,11 +1,6 @@
-﻿using FluentAssertions;
-using NetSpace.Tests.Unit.Initializer;
-using NetSpace.User.Application.UserPost.Commands;
-using NetSpace.User.Application.UserPost.Exceptions;
+﻿namespace NetSpace.Community.Tests.Unit.Application.Community.Commands;
 
-namespace NetSpace.Tests.Unit.Application.UserPost.Commands;
-
-public sealed class PartiallyUpdateUserPostCommandTests
+public sealed class UpdateUserPostCommandTests
 {
     [Fact]
     public async Task Should_ReturnUpdatedUserPostResponse()
@@ -20,8 +15,8 @@ public sealed class PartiallyUpdateUserPostCommandTests
         await uof.Users.AddRangeAsync(testUsers);
         await uof.SaveChangesAsync();
 
-        var command = new PartiallyUpdateUserPostCommand { Id = 1, Body = "newBody", Title = "newTitle" };
-        var handler = new PartiallyUpdateUserPostCommandHandler(uof, new PartiallyUpdateUserPostCommandValidator(), TestMapper.Create());
+        var command = new UpdateUserPostCommand { Id = 1, Body = "newBody", Title = "newTitle" };
+        var handler = new UpdateUserPostCommandHandler(uof, TestMapper.Create(), new UpdateUserPostCommandValidator());
         #endregion
 
         #region Act
@@ -44,8 +39,8 @@ public sealed class PartiallyUpdateUserPostCommandTests
         await uof.Users.AddRangeAsync(testUsers);
         await uof.SaveChangesAsync();
 
-        var command = new PartiallyUpdateUserPostCommand { Id = 23, Body = "newBody", Title = "newTitle" };
-        var handler = new PartiallyUpdateUserPostCommandHandler(uof, new PartiallyUpdateUserPostCommandValidator(), TestMapper.Create());
+        var command = new UpdateUserPostCommand { Id = 34, Body = "newBody", Title = "newTitle" };
+        var handler = new UpdateUserPostCommandHandler(uof, TestMapper.Create(), new UpdateUserPostCommandValidator());
         #endregion
 
         #region Act

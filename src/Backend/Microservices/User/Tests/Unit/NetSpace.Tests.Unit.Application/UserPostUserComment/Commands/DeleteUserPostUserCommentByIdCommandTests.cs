@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using NetSpace.Tests.Unit.Initializer;
-using NetSpace.User.Application.UserPostUserComment;
 using NetSpace.User.Application.UserPostUserComment.Commands;
 using NetSpace.User.Application.UserPostUserComment.Exceptions;
 

@@ -3,7 +3,7 @@ using NetSpace.Community.Application.Community.Caching;
 using NetSpace.Community.Application.Community.Exceptions;
 using NetSpace.Community.UseCases.Common;
 
-namespace NetSpace.Community.Application.Community.Commands.Delete;
+namespace NetSpace.Community.Application.Community.Commands;
 
 public sealed record DeleteCommunityCommand : CommandBase<CommunityResponse>
 {

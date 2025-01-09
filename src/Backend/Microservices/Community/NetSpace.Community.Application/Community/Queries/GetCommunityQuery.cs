@@ -2,7 +2,7 @@
 using NetSpace.Community.UseCases.Common;
 using NetSpace.Community.UseCases.Community;
 
-namespace NetSpace.Community.Application.Community.Queries.Get;
+namespace NetSpace.Community.Application.Community.Queries;
 
 public sealed record GetCommunityQuery : QueryBase<IEnumerable<CommunityResponse>?>
 {

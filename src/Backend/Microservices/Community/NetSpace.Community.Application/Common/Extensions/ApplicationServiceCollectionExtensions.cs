@@ -2,7 +2,7 @@
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Community.Application.Common.MediatR;
-using NetSpace.Community.Application.Community.Commands.Update;
+using NetSpace.Community.Application.Community.Commands;
 using System.Reflection;
 
 namespace NetSpace.Community.Application.Common.Extensions;

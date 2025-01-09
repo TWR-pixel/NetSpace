@@ -4,7 +4,7 @@ using NetSpace.Community.Application.Common.Exceptions;
 using NetSpace.Community.Domain.Community;
 using NetSpace.Community.UseCases.Common;
 
-namespace NetSpace.Community.Application.Community.Commands.Create;
+namespace NetSpace.Community.Application.Community.Commands;
 
 public sealed record CreateCommunityCommand : CommandBase<CommunityResponse>
 {

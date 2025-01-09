@@ -3,7 +3,7 @@ using MapsterMapper;
 using NetSpace.Community.Application.Community.Exceptions;
 using NetSpace.Community.UseCases.Common;
 
-namespace NetSpace.Community.Application.Community.Commands.PartiallyUpdate;
+namespace NetSpace.Community.Application.Community.Commands;
 
 public sealed record PartiallyUpdateCommunityCommand : CommandBase<CommunityResponse>
 {

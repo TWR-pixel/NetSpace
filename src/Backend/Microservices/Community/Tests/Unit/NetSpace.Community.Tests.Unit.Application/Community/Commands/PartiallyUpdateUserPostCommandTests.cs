@@ -1,9 +1,4 @@
-﻿using FluentAssertions;
-using NetSpace.Tests.Unit.Initializer;
-using NetSpace.User.Application.UserPost.Commands;
-using NetSpace.User.Application.UserPost.Exceptions;
-
-namespace NetSpace.Tests.Unit.Application.UserPost.Commands;
+﻿namespace NetSpace.Community.Tests.Unit.Application.Community.Commands;
 
 public sealed class PartiallyUpdateUserPostCommandTests
 {

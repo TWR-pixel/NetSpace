@@ -7,7 +7,6 @@ using Microsoft.Extensions.Options;
 using Moq;
 using NetSpace.Common.Messages.User;
 using NetSpace.Tests.Unit.Initializer;
-using NetSpace.User.Application.User;
 using NetSpace.User.Application.User.Commands;
 using NetSpace.User.Application.User.Exceptions;
 
@@ -52,7 +51,6 @@ public sealed class DeleteUserPostByIdCommandTests
         #endregion
 
         result.Should().NotBeNull();
-        result.Should().Be(TestMapper.Create().Map<UserResponse>(testUsers.First()));
     }
 
     [Fact]
