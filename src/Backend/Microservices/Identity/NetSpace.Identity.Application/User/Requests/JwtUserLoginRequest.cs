@@ -36,6 +36,8 @@ public sealed class LoginUserRequestHandler(UserManager<UserEntity> userManager,
 
         var token = tokenFactory.GenerateToken(authClaims);
 
+        user.LastLoginAt = DateTime.UtcNow;
+
         return token;
     }
 }

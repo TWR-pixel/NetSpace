@@ -32,7 +32,7 @@ public sealed class PartiallyUpdateCommunityCommandValidator : AbstractValidator
         RuleFor(c => c.OwnerId)
             .NotNull()
             .NotEmpty()
-            .When(c => c.Name is not null);
+            .When(c => c.OwnerId is not null);
     }
 }
 
@@ -46,6 +46,9 @@ public sealed class PartiallyUpdateCommunityCommandHandler(IUnitOfWork unitOfWor
 
         var communityEntity = await UnitOfWork.Communities.FindByIdAsync(request.Id, cancellationToken)
             ?? throw new CommunityNotFoundException(request.Id);
+
+        if (!string.IsNullOrWhiteSpace(request.Name))
+            communityEntity.LastNameUpdatedAt = DateTime.UtcNow;
 
         mapper.Map(request, communityEntity);
 

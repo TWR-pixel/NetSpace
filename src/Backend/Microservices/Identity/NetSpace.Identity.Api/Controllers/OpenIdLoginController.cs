@@ -18,9 +18,7 @@ public class OpenIdLoginController(IMediator mediator) : ApiControllerBase(media
     [HttpGet("google-login")]
     public async Task<ActionResult<UserResponse>> GoogleLoginAsync(CancellationToken cancellationToken)
     {
-        //var externalInfo = await userManager.GetExternalLoginInfoAsync();
-        //var auth = await userManager.GetExternalAuthenticationSchemesAsync();
-
+        var claims = User.Claims;
         try
         {
             var request = new GoogleExternalLoginCommand { User = User };

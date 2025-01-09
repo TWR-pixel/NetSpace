@@ -67,7 +67,7 @@ public sealed class UserPostRepository(NetSpaceDbContext dbContext) : Repository
     public async Task<IEnumerable<UserPostEntity>> GetLatest(PaginationOptions pagination, CancellationToken cancellationToken = default)
     {
         var result = await DbContext.UserPosts
-            .OrderBy(u => u.CreatedAt)
+            .OrderByDescending(u => u.CreatedAt)
             .Skip((pagination.PageCount - 1) * pagination.PageSize)
             .Take(pagination.PageSize)
             .ToArrayAsync(cancellationToken);

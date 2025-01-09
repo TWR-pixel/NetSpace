@@ -5,7 +5,9 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NetSpace.Identity.Application.Common.Extensions;
+using NetSpace.Identity.Application.User;
 using NetSpace.Identity.Infrastructure.Common.Extensions;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -126,7 +128,11 @@ builder.Services.AddAuthentication(options =>
         },
     };
 });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("RequiredAdminClaim", policy =>
+    {
+        policy.RequireClaim(ClaimTypes.Role, UserRoles.Admin);
+    });
 
 var app = builder.Build();
 app.UseCors("AllowAllOrigins");
