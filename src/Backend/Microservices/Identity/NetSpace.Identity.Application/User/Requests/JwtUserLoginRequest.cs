@@ -18,7 +18,7 @@ public sealed class LoginUserRequestHandler(UserManager<UserEntity> userManager,
     public override async Task<AccessTokenResponse> Handle(JwtUserLoginRequest request, CancellationToken cancellationToken)
     {
         var user = await userManager.FindByEmailAsync(request.Email) ?? throw new UserNotFoundException(request.Email);
-        
+
         if (!await userManager.CheckPasswordAsync(user, request.Password))
             throw new NotRightPasswordException(request.Password);
 

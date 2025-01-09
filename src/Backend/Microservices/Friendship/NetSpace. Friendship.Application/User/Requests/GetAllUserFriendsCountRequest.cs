@@ -7,7 +7,7 @@ namespace NetSpace.Friendship.Application.User.Requests;
 
 public sealed record GetAllUserFriendsCountRequest : RequestBase<long>
 {
-    public required Guid Id { get; set; } 
+    public required Guid Id { get; set; }
 }
 
 public sealed class GetAllUserFriendsCountRequestHandler(IFriendshipRepository friendshipRepository, IUserRepository userRepository) : RequestHandlerBase<GetAllUserFriendsCountRequest, long>

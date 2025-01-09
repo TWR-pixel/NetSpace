@@ -22,7 +22,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7058
+                    "Port": 7003
                 }
             ],
             "UpstreamPathTemplate": "/jwt-auth/register",
@@ -34,7 +34,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7058
+                    "Port": 7003
                 }
             ],
             "UpstreamPathTemplate": "/jwt-auth/login",
@@ -46,7 +46,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7058
+                    "Port": 7003
                 }
             ],
             "UpstreamPathTemplate": "/openId-login/google-login",
@@ -58,7 +58,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7058
+                    "Port": 7003
                 }
             ],
             "AuthenticationOptions": {
@@ -74,7 +74,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7058
+                    "Port": 7003
                 }
             ],
             "AuthenticationOptions": {
@@ -90,7 +90,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7058
+                    "Port": 7003
                 }
             ],
             "UpstreamPathTemplate": "/openId-login/google-logout",
@@ -102,7 +102,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7505
+                    "Port": 7506
                 }
             ],
             "AuthenticationOptions": {
@@ -118,7 +118,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7505
+                    "Port": 7506
                 }
             ],
             "AuthenticationOptions": {
@@ -134,7 +134,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7505
+                    "Port": 7506
                 }
             ],
             "AuthenticationOptions": {
@@ -150,7 +150,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7505
+                    "Port": 7506
                 }
             ],
             "AuthenticationOptions": {
@@ -166,7 +166,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7505
+                    "Port": 7504
                 }
             ],
             "AuthenticationOptions": {
@@ -182,7 +182,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7505
+                    "Port": 7504
                 }
             ],
             "AuthenticationOptions": {
@@ -198,7 +198,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7505
+                    "Port": 7504
                 }
             ],
             "AuthenticationOptions": {
@@ -214,7 +214,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7505
+                    "Port": 7504
                 }
             ],
             "AuthenticationOptions": {
@@ -230,7 +230,7 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 7505
+                    "Port": 7504
                 }
             ],
             "AuthenticationOptions": {

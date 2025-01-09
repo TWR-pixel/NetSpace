@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,7 +67,7 @@ builder.Services
      .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
      {
      })
-    .AddOpenIdConnect(options =>
+    .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
     {
         options.NonceCookie.SecurePolicy = CookieSecurePolicy.Always;
         options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
