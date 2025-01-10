@@ -5,6 +5,6 @@ using NetSpace.User.Infrastructure.Common.Cache;
 
 namespace NetSpace.User.Infrastructure.UserPostUserComment;
 
-public sealed class UserPostUSercommentDistrubutedCacheStorage(IDistributedCache cache) : DistributedCacheStorageBase<UserPostUserCommentEntity, int>(cache), IUserPostUsercommentDistrubutedCacheStorage
+public sealed class UserPostUserCommentDistrubutedCacheStorage(IDistributedCache cache) : DistributedCacheStorageBase<UserPostUserCommentEntity, int>(cache), IUserPostUsercommentDistrubutedCacheStorage
 {
 }

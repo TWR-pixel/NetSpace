@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace NetSpace.User.Infrastructure.UserPost;
 
-public abstract class UserPostDistributedCacheStorage(IDistributedCache cache) : DistributedCacheStorageBase<UserPostEntity, int>(cache), IUserPostDistributedCacheStorage
+public sealed class UserPostDistributedCacheStorage(IDistributedCache cache) : DistributedCacheStorageBase<UserPostEntity, int>(cache), IUserPostDistributedCacheStorage
 {
     public async Task<IEnumerable<UserPostEntity>?> GetLatest(CancellationToken cancellationToken = default)
     {

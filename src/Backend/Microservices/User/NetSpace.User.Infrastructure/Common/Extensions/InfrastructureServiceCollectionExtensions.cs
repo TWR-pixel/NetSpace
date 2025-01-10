@@ -32,8 +32,6 @@ public static class InfrastructureServiceCollectionExtensions
             });
         });
 
-        //services.AddScoped<IPublisher, RabbitMQPublisher>();
-
         services.AddStackExchangeRedisCache(configure =>
         {
             configure.InstanceName = config["Redis:InstanceName"];
@@ -51,7 +49,7 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddScoped<IUserDistributedCacheStorage, UserDistributedCacheStorage>();
         services.AddScoped<IUserPostDistributedCacheStorage, UserPostDistributedCacheStorage>();
-        services.AddScoped<IUserPostUsercommentDistrubutedCacheStorage, UserPostUSercommentDistrubutedCacheStorage>();
+        services.AddScoped<IUserPostUsercommentDistrubutedCacheStorage, UserPostUserCommentDistrubutedCacheStorage>();
 
         services.AddScoped<IUserReadonlyRepository, UserRepository>();
         services.AddScoped<IUserPostReadonlyRepository, UserPostRepository>();
