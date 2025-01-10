@@ -1,7 +1,10 @@
 using NetSpace.User.Application.Common.Extensions;
 using NetSpace.User.Infrastructure.Common.Extensions;
+using NetSpace.User.PublicApi.Common;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.ConfigureSerilog();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -13,6 +16,7 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructure(connectionString, builder.Configuration);
 
 var app = builder.Build();
+app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {

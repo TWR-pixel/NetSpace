@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MapsterMapper;
+using MassTransit;
+using Microsoft.AspNetCore.Identity;
+using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Application.Common.Jwt;
 using NetSpace.Identity.Application.User.Exceptions;
 using NetSpace.Identity.Domain.User;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace NetSpace.Identity.Application.User.Requests;
+namespace NetSpace.Identity.Application.User.Queries;
 
 public sealed record JwtUserRegistrationRequest : RequestBase<AccessTokenResponse>
 {
@@ -18,48 +21,38 @@ public sealed record JwtUserRegistrationRequest : RequestBase<AccessTokenRespons
     public string About { get; set; } = string.Empty;
 
     public DateTime? BirthDate { get; set; }
-    public Gender Gender { get; set; } = Gender.NotSet;
-    public Language Language { get; set; } = Language.NotSet;
-    public MaritalStatus MaritalStatus { get; set; } = MaritalStatus.NotSet;
+    public Domain.User.Gender Gender { get; set; } = Domain.User.Gender.NotSet;
+    public Domain.User.Language Language { get; set; } = Domain.User.Language.NotSet;
+    public Domain.User.MaritalStatus MaritalStatus { get; set; } = Domain.User.MaritalStatus.NotSet;
 }
 
 public sealed class JwtUserRegistrationRequestHandler(UserManager<UserEntity> userManager,
                                                       RoleManager<IdentityRole> roleManager,
-                                                      AccessTokenFactory tokenFactory) : RequestHandlerBase<JwtUserRegistrationRequest, AccessTokenResponse>
+                                                      AccessTokenFactory tokenFactory,
+                                                      IPublishEndpoint publisher,
+                                                      IMapper mapper) : RequestHandlerBase<JwtUserRegistrationRequest, AccessTokenResponse>
 {
     public override async Task<AccessTokenResponse> Handle(JwtUserRegistrationRequest request, CancellationToken cancellationToken)
     {
-        var userExists = await userManager.FindByEmailAsync(request.Email);
-        if (userExists != null)
+        var userEntity = await userManager.FindByEmailAsync(request.Email);
+        if (userEntity != null)
             throw new UserAlreadyExistsException(request.Email);
 
-        var user = new UserEntity()
-        {
-            Email = request.Email,
-            UserName = request.UserName,
-            Surname = request.Surname,
-            Nickname = request.Nickname,
-            LastName = request.LastName,
-            About = request.About,
-            BirthDate = request.BirthDate,
-            Gender = request.Gender,
-            Language = request.Language,
-            MaritalStatus = request.MaritalStatus
-        };
+        userEntity = mapper.Map<UserEntity>(request);
 
-        var createUserResult = await userManager.CreateAsync(user, request.Password);
+        var createUserResult = await userManager.CreateAsync(userEntity, request.Password);
         if (!createUserResult.Succeeded)
             throw new UnauthorizedAccessException(createUserResult.Errors.First().Description);
 
         if (!await roleManager.RoleExistsAsync(UserRoles.User))
             await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-        await userManager.AddToRoleAsync(user, UserRoles.User);
+        await userManager.AddToRoleAsync(userEntity, UserRoles.User);
 
-        var userRoles = await userManager.GetRolesAsync(user);
+        var userRoles = await userManager.GetRolesAsync(userEntity);
         var authClaims = new List<Claim>
             {
-               new(ClaimTypes.NameIdentifier, user.Id),
+               new(ClaimTypes.NameIdentifier, userEntity.Id),
                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
@@ -69,6 +62,8 @@ public sealed class JwtUserRegistrationRequestHandler(UserManager<UserEntity> us
         }
 
         var response = tokenFactory.GenerateToken(authClaims);
+
+        await publisher.Publish(mapper.Map<UserCreatedMessage>(userEntity), cancellationToken);
 
         return response;
     }

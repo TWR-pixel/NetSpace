@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Mvc;
-using NetSpace.Identity.Application.User.Requests;
+using NetSpace.Identity.Application.User.Queries;
 
 namespace NetSpace.Identity.Api.Controllers;
 
@@ -22,7 +22,7 @@ public sealed class JwtBearerAuthController(IMediator mediator) : ApiControllerB
     [HttpPost("login")]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<AccessTokenResponse>> LoginByJwt([FromBody] JwtUserLoginRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<AccessTokenResponse>> LoginByJwt([FromBody] JwtUserLoginQuery request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 

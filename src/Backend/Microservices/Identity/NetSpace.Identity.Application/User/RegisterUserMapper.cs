@@ -1,6 +1,6 @@
 ﻿using Mapster;
 using NetSpace.Common.Messages.User;
-using NetSpace.Identity.Application.User.Requests;
+using NetSpace.Identity.Application.User.Queries;
 using NetSpace.Identity.Domain.User;
 
 namespace NetSpace.Identity.Application.User;
@@ -13,11 +13,10 @@ public sealed class RegisterUserMapper : IRegister
 
         #region Common messages
 
-        config.NewConfig<JwtUserRegistrationRequest, UserCreatedMessage>();
-        config.NewConfig<UserCreatedMessage, UserEntity>();
         config.NewConfig<UserUpdatedMessage, UserEntity>();
         config.NewConfig<UserDeletedMessage, UserEntity>();
 
+        config.NewConfig<UserEntity, UserCreatedMessage>();
         #endregion
     }
 }

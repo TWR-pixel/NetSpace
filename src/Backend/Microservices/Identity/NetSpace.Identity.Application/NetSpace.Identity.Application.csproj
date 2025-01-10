@@ -22,8 +22,4 @@
     <ProjectReference Include="..\NetSpace.Identity.UseCases\NetSpace.Identity.UseCases.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="User\Queries\" />
-  </ItemGroup>
-
 </Project>

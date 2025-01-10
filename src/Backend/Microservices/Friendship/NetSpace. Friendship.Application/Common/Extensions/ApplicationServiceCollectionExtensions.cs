@@ -25,7 +25,7 @@ public static class ApplicationServiceCollectionExtensions
             {
                 cfg.ReceiveEndpoint(e =>
                 {
-                    e.ConfigureConsumer<UserDeletedConsumer>(context);
+                    e.ConfigureConsumers(context);
                 });
             });
         });

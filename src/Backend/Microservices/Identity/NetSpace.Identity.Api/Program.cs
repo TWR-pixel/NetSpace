@@ -9,10 +9,12 @@ using NetSpace.Identity.Api.Common;
 using NetSpace.Identity.Application.Common.Extensions;
 using NetSpace.Identity.Application.User;
 using NetSpace.Identity.Infrastructure.Common.Extensions;
+using Serilog;
 using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.ConfigureSerilog();
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
@@ -137,6 +139,8 @@ builder.Services.AddAuthorizationBuilder()
     });
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 app.UseCors("AllowAllOrigins");
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {

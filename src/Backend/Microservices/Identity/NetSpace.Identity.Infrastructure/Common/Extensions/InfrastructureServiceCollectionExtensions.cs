@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Application.User.Consumers;
 using NetSpace.Identity.Domain.User;
 using NetSpace.Identity.Infrastructure.User;
@@ -38,8 +39,11 @@ public static class InfrastructureServiceCollectionExtensions
             {
                 cfg.ReceiveEndpoint(e =>
                 {
-                    e.ConfigureConsumer<UserDeletedConsumer>(context);
+                    e.ConfigureConsumers(context);
                 });
+
+                cfg.Publish<UserCreatedMessage>();
+                cfg.Publish<UserUpdatedMessage>();
             });
         });
 

@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.HttpOverrides;
+using NetSpace.Community.Api.Common;
 using NetSpace.Community.Application.Common.Extensions;
 using NetSpace.Community.Infrastructure.Common.Extensions;
 using Prometheus;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.ConfigureSerilog();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
@@ -18,6 +21,8 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructure(connectionString, redisInstanceName, redisConnectionString);
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
