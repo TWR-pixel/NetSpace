@@ -6,7 +6,7 @@ EXPOSE 8081
 
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-ARG BUILD_CONFIGURATION=Release
+ARG BUILD_CONFIGURATION=Development
 WORKDIR /src
 COPY ["src/Backend/Microservices/Friendship/NetSpace.Friendship.Api/NetSpace.Friendship.Api.csproj", "src/Backend/Microservices/Friendship/NetSpace.Friendship.Api/"]
 RUN dotnet restore "./src/Backend/Microservices/Friendship/NetSpace.Friendship.Api/NetSpace.Friendship.Api.csproj"
@@ -15,7 +15,7 @@ WORKDIR "/src/src/Backend/Microservices/Friendship/NetSpace.Friendship.Api"
 RUN dotnet build "./NetSpace.Friendship.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
+ARG BUILD_CONFIGURATION=Development
 RUN dotnet publish "./NetSpace.Friendship.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final

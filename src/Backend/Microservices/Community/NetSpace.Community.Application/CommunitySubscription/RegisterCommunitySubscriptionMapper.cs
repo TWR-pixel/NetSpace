@@ -13,7 +13,7 @@ public sealed class RegisterCommunitySubscriptionMapper : IRegister
         config.NewConfig<UpdateCommunitySubscriptionCommand, CommunitySubscriptionEntity>()
             .Ignore(c => c.Id);
 
-        config.NewConfig<PartiallyUpdateCommunitySbuscriptionCommand, CommunitySubscriptionEntity>()
+        config.NewConfig<PartiallyUpdateCommunitySubuscriptionCommand, CommunitySubscriptionEntity>()
             .Ignore(c => c.Id)
             .IgnoreNullValues(true);
 

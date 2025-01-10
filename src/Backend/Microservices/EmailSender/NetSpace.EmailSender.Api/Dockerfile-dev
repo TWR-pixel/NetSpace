@@ -1,0 +1,24 @@
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+USER $APP_UID
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ARG BUILD_CONFIGURATION=Development
+WORKDIR /src
+COPY ["src/Backend/Microservices/EmailSender/NetSpace.EmailSender.Api/NetSpace.EmailSender.Api.csproj", "src/Backend/Microservices/EmailSender/NetSpace.EmailSender.Api/"]
+RUN dotnet restore "./src/Backend/Microservices/EmailSender/NetSpace.EmailSender.Api/NetSpace.EmailSender.Api.csproj"
+COPY . .
+WORKDIR "/src/src/Backend/Microservices/EmailSender/NetSpace.EmailSender.Api"
+RUN dotnet build "./NetSpace.EmailSender.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Development
+RUN dotnet publish "./NetSpace.EmailSender.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "NetSpace.EmailSender.Api.dll"]

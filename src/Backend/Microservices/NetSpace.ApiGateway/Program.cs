@@ -203,6 +203,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/check", () =>
+{
+    return "Ok";
+});
+
 await app.UseOcelot();
 
 app.Run();

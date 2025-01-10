@@ -6,7 +6,7 @@ using NetSpace.Community.UseCases.Common;
 
 namespace NetSpace.Community.Application.CommunitySubscription.Commands;
 
-public sealed record PartiallyUpdateCommunitySbuscriptionCommand : CommandBase<CommunitySubscriptionResponse>
+public sealed record PartiallyUpdateCommunitySubuscriptionCommand : CommandBase<CommunitySubscriptionResponse>
 {
     public required int Id { get; set; }
 
@@ -16,11 +16,19 @@ public sealed record PartiallyUpdateCommunitySbuscriptionCommand : CommandBase<C
     public SubscribingStatus? SubscribingStatus { get; set; }
 }
 
-public sealed class PartiallyUpdateCommunitySbuscriptionCommandHandler(IUnitOfWork unitOfWork,
-                                                                       IMapper mapper,
-                                                                       IValidator<PartiallyUpdateCommunitySbuscriptionCommand> commandValidator) : CommandHandlerBase<PartiallyUpdateCommunitySbuscriptionCommand, CommunitySubscriptionResponse>(unitOfWork)
+public sealed class PartiallyUpdateCommunitySubscriptionValidator : AbstractValidator<PartiallyUpdateCommunitySubuscriptionCommand>
 {
-    public override async Task<CommunitySubscriptionResponse> Handle(PartiallyUpdateCommunitySbuscriptionCommand request, CancellationToken cancellationToken)
+    public PartiallyUpdateCommunitySubscriptionValidator()
+    {
+
+    }
+}
+
+public sealed class PartiallyUpdateCommunitySubuscriptionCommandHandler(IUnitOfWork unitOfWork,
+                                                                       IMapper mapper,
+                                                                       IValidator<PartiallyUpdateCommunitySubuscriptionCommand> commandValidator) : CommandHandlerBase<PartiallyUpdateCommunitySubuscriptionCommand, CommunitySubscriptionResponse>(unitOfWork)
+{
+    public override async Task<CommunitySubscriptionResponse> Handle(PartiallyUpdateCommunitySubuscriptionCommand request, CancellationToken cancellationToken)
     {
         await commandValidator.ValidateAndThrowAsync(request, cancellationToken);
 

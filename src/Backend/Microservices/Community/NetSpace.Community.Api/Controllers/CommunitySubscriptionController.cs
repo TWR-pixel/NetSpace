@@ -65,7 +65,7 @@ public sealed class CommunitySubscriptionController(IMediator mediator) : ApiCon
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CommunitySubscriptionResponse>> Patch([FromBody] PartiallyUpdateCommunitySbuscriptionCommand command, CancellationToken cancellationToken)
+    public async Task<ActionResult<CommunitySubscriptionResponse>> Patch([FromBody] PartiallyUpdateCommunitySubuscriptionCommand command, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(command, cancellationToken);
 

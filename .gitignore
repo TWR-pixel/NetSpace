@@ -5,6 +5,7 @@
 
 #neo4j-db
 /src/neo4j_db
+/neo4j_db
 
 # User-specific files
 *.rsuser
