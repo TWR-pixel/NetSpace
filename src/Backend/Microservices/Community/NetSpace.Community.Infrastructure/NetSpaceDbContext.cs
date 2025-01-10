@@ -17,7 +17,7 @@ public sealed class NetSpaceDbContext : DbContext
 
     public NetSpaceDbContext(DbContextOptions<NetSpaceDbContext> options) : base(options)
     {
-
+        Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

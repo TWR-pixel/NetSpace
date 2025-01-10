@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using NetSpace.Community.Application.Common.Extensions;
 using NetSpace.Community.Infrastructure.Common.Extensions;
 using Prometheus;
@@ -17,6 +18,10 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructure(connectionString, redisInstanceName, redisConnectionString);
 
 var app = builder.Build();
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
 if (app.Environment.IsDevelopment())
 {

@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NetSpace.Identity.Api.Common;
 using NetSpace.Identity.Application.Common.Extensions;
 using NetSpace.Identity.Application.User;
 using NetSpace.Identity.Infrastructure.Common.Extensions;
@@ -39,18 +41,18 @@ builder.Services.AddSwaggerGen(c =>
         Type = SecuritySchemeType.ApiKey
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-   {
-     new OpenApiSecurityScheme
-     {
-       Reference = new OpenApiReference
-       {
-         Type = ReferenceType.SecurityScheme,
-         Id = "Bearer"
-       }
-      },
-      Array.Empty<string>()
+    {
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+            }
+        },
+        Array.Empty<string>()
     }
-  });
+    });
 });
 builder.Services.AddApplicationLayer();
 
@@ -69,7 +71,7 @@ builder.Services.AddAuthentication()
                     ValidAudience = builder.Configuration["JwtAuth:ValidAudience"],
                     ValidIssuer = builder.Configuration["JwtAuth:ValidIssuer"],
                     ClockSkew = TimeSpan.Zero,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtAuth:Secret"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtAuth:Secret"] ?? "default"))
                 };
             });
 
@@ -114,7 +116,7 @@ builder.Services.AddAuthentication(options =>
     {
         OnRedirectToIdentityProviderForSignOut = context =>
         {
-            context.Response.Redirect(builder.Configuration["Google:RedirectOnSignOut"]);
+            context.Response.Redirect(builder.Configuration["Google:RedirectOnSignOut"] ?? "default");
             context.HandleResponse();
 
             return Task.CompletedTask;
@@ -129,13 +131,17 @@ builder.Services.AddAuthentication(options =>
     };
 });
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("RequiredAdminClaim", policy =>
+    .AddPolicy(AuthConstants.AdminPolicy, policy =>
     {
         policy.RequireClaim(ClaimTypes.Role, UserRoles.Admin);
     });
 
 var app = builder.Build();
 app.UseCors("AllowAllOrigins");
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
 if (app.Environment.IsDevelopment())
 {

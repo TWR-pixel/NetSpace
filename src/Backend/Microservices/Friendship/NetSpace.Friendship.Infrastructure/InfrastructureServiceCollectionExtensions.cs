@@ -10,7 +10,7 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationSection neo4jConfigSection)
     {
-        var client = new BoltGraphClient(new Uri("bolt://localhost:7687"), "neo4j", "P@ssword");
+        var client = new BoltGraphClient(new Uri(neo4jConfigSection["Uri"] ?? "bolt://localhost:7687"), neo4jConfigSection["Username"], neo4jConfigSection["Password"]);
         client.ConnectAsync();
 
         services.AddSingleton<IGraphClient>(client);
