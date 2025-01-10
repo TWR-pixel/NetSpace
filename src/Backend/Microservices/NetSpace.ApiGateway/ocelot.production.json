@@ -1,0 +1,260 @@
+{
+    "Routes": [
+        { // user microservice start
+            "DownstreamPathTemplate": "/api/users",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2000
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/users",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/users/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2000
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/users/{id}",
+            "UpstreamHttpMethod": [ "GET" ]
+        }, // user microservice end
+        { // identity microservice start
+            "DownstreamPathTemplate": "/api/jwt-auth/register",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2001
+                }
+            ],
+            "UpstreamPathTemplate": "/jwt-auth/register",
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/jwt-auth/login",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2001
+                }
+            ],
+            "UpstreamPathTemplate": "/jwt-auth/login",
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/openId-login/google-login",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2001
+                }
+            ],
+            "UpstreamPathTemplate": "/openId-login/google-login",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/identity/change-email",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2001
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/identity/change-email",
+            "UpstreamHttpMethod": [ "PATCH" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/identity/change-password",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2001
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/identity/change-password",
+            "UpstreamHttpMethod": [ "PATCH" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/openId-login/google-logout",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2001
+                }
+            ],
+            "UpstreamPathTemplate": "/openId-login/google-logout",
+            "UpstreamHttpMethod": [ "GET" ]
+        }, // identity microservice end
+        { // community microservice start
+            "DownstreamPathTemplate": "/api/communities",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2004
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/communities",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/community-posts",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2004
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/community-posts",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/community-post-user-comments",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2004
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/community-posts-user-comments",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/community-subscriptions",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2004
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/community-subscriptions",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE" ]
+        }, // community microservice end
+        { // friendship microservice start
+            "DownstreamPathTemplate": "/api/friendships",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2002
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/friendships",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/friendships/followers",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2002
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/friendships/followers",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/friendships/possible-friends",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2002
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/friendships/possible-friends",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/friendships/followers-count",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2002
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/friendships-followers-count",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/friendships/friends-count",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 2002
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/friendships/friends-count",
+            "UpstreamHttpMethod": [ "GET" ]
+        } //friendship microservice end
+    ]
+}

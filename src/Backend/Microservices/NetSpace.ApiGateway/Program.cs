@@ -16,7 +16,8 @@ builder.ConfigureSerilog();
 
 builder.Configuration
     .SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("ocelot.json", false, true);
+    .AddJsonFile("ocelot.json", false, true)
+    .AddJsonFile("ocelot.production.json", false, true);
 
 
 builder.Services.AddControllers();
