@@ -24,7 +24,6 @@ builder.Services.AddControllers();
 builder.Services.AddOcelot();
 builder.Services.AddOpenApi();
 
-
 builder.Services
      .AddAuthentication(sharedOptions =>
      {

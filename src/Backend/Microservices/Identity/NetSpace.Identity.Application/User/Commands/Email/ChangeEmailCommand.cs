@@ -1,11 +1,13 @@
 ﻿
 using FluentValidation;
 using MapsterMapper;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
+using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Application.User.Exceptions;
 using NetSpace.Identity.Domain.User;
 
-namespace NetSpace.Identity.Application.User.Commands;
+namespace NetSpace.Identity.Application.User.Commands.Email;
 
 public sealed record ChangeEmailCommand : RequestBase<UserResponse>
 {
@@ -25,7 +27,7 @@ public sealed class ChangeEmailCommandValidator : AbstractValidator<ChangeEmailC
     }
 }
 
-public sealed class ChangeEmailCommandHandler(UserManager<UserEntity> userManager, IMapper mapper) : RequestHandlerBase<ChangeEmailCommand, UserResponse>
+public sealed class ChangeEmailCommandHandler(UserManager<UserEntity> userManager, IMapper mapper, IPublishEndpoint publisher) : RequestHandlerBase<ChangeEmailCommand, UserResponse>
 {
     public override async Task<UserResponse> Handle(ChangeEmailCommand request, CancellationToken cancellationToken)
     {
@@ -33,6 +35,7 @@ public sealed class ChangeEmailCommandHandler(UserManager<UserEntity> userManage
             ?? throw new UserNotFoundException(request.Id);
 
         await userManager.ChangeEmailAsync(userEntity, request.NewEmail, request.Token);
+        await publisher.Publish(mapper.Map<UserUpdatedMessage>(userEntity), cancellationToken);
 
         return mapper.Map<UserResponse>(userEntity);
     }

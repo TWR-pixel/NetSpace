@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Mvc;
+using NetSpace.Identity.Application.User.Commands;
 using NetSpace.Identity.Application.User.Queries;
 
 namespace NetSpace.Identity.Api.Controllers;
@@ -12,7 +13,7 @@ public sealed class JwtBearerAuthController(IMediator mediator) : ApiControllerB
     [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<AccessTokenResponse>> RegisterByJwt([FromBody] JwtUserRegistrationRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<AccessTokenResponse>> RegisterByJwt([FromBody] JwtUserRegistrationCommand request, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(request, cancellationToken);
 

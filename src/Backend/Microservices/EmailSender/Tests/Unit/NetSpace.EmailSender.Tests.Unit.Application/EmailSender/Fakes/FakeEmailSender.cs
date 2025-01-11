@@ -14,4 +14,9 @@ public sealed class FakeEmailSender : IEmailSender
     {
         throw new NotImplementedException();
     }
+
+    public Task SendAsync(string to, string subject, string body, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
 }

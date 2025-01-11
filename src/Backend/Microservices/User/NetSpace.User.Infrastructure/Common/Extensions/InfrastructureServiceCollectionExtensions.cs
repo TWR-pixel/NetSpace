@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Common.Messages.Email;
 using NetSpace.Common.Messages.User;
 using NetSpace.User.Application.User;
+using NetSpace.User.Application.User.Consumers;
 using NetSpace.User.Application.UserPost;
 using NetSpace.User.Application.UserPostUserComment;
 using NetSpace.User.Infrastructure.User;
@@ -23,12 +24,19 @@ public static class InfrastructureServiceCollectionExtensions
     {
         services.AddMassTransit(configure =>
         {
-            configure.UsingRabbitMq((busContext, factoryConfigurator) =>
+            configure.AddConsumers(typeof(UserCreatedConsumer).Assembly);
+
+            configure.UsingRabbitMq((context, configurator) =>
             {
-                factoryConfigurator.Publish<UserCreatedMessage>();
-                factoryConfigurator.Publish<SendEmailMessage>();
-                factoryConfigurator.Publish<UserDeletedMessage>();
-                factoryConfigurator.Publish<UserUpdatedMessage>();
+                configurator.ReceiveEndpoint(e =>
+                {
+                    configurator.ConfigureEndpoints(context);
+                });
+
+                configurator.Publish<UserCreatedMessage>();
+                configurator.Publish<SendEmailMessage>();
+                configurator.Publish<UserDeletedMessage>();
+                configurator.Publish<UserUpdatedMessage>();
             });
         });
 

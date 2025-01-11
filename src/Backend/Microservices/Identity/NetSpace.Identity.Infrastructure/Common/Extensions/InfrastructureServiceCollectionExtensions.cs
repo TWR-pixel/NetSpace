@@ -1,10 +1,12 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Application.User.Consumers;
 using NetSpace.Identity.Domain.User;
+using NetSpace.Identity.Infrastructure.Common.Email;
 using NetSpace.Identity.Infrastructure.User;
 using NetSpace.Identity.UseCases.User;
 
@@ -22,12 +24,16 @@ public static class InfrastructureServiceCollectionExtensions
         services.AddIdentityCore<UserEntity>(options =>
         {
             options.User.RequireUniqueEmail = true;
+            options.SignIn.RequireConfirmedEmail = true;
             options.User.AllowedUserNameCharacters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_@";
         })
             .AddRoles<IdentityRole>()
-        .AddTokenProvider<AuthenticatorTokenProvider<UserEntity>>("Default")
-        .AddRoleManager<RoleManager<IdentityRole>>()
-        .AddEntityFrameworkStores<NetSpaceDbContext>();
+            .AddDefaultTokenProviders()
+            .AddRoleManager<RoleManager<IdentityRole>>()
+            .AddEntityFrameworkStores<NetSpaceDbContext>();
+
+        services.AddScoped<IEmailSender<UserEntity>, UserEmailSender>();
+        services.AddScoped<IEmailSender, EmailSender>();
 
         services.AddScoped<IUserRepository, UserRepository>();
 
@@ -35,15 +41,15 @@ public static class InfrastructureServiceCollectionExtensions
         {
             configure.AddConsumers(typeof(UserDeletedConsumer).Assembly);
 
-            configure.UsingRabbitMq((context, cfg) =>
+            configure.UsingRabbitMq((context, configurator) =>
             {
-                cfg.ReceiveEndpoint(e =>
+                configurator.ReceiveEndpoint(e =>
                 {
-                    e.ConfigureConsumers(context);
+                    configurator.ConfigureEndpoints(context);
                 });
 
-                cfg.Publish<UserCreatedMessage>();
-                cfg.Publish<UserUpdatedMessage>();
+                configurator.Publish<UserCreatedMessage>();
+                configurator.Publish<UserUpdatedMessage>();
             });
         });
 

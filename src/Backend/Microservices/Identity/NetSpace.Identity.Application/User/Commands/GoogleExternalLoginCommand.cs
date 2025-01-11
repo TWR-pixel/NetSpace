@@ -1,5 +1,7 @@
 ﻿using MapsterMapper;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
+using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Domain.User;
 using System.Security.Claims;
 
@@ -10,7 +12,7 @@ public sealed record GoogleExternalLoginCommand : RequestBase<UserResponse>
     public required ClaimsPrincipal User { get; set; }
 }
 
-public sealed class GoogleExternalLoginCommandHandler(UserManager<UserEntity> userManager, IMapper mapper) : RequestHandlerBase<GoogleExternalLoginCommand, UserResponse>
+public sealed class GoogleExternalLoginCommandHandler(UserManager<UserEntity> userManager, IMapper mapper, IPublishEndpoint publisher) : RequestHandlerBase<GoogleExternalLoginCommand, UserResponse>
 {
     public async override Task<UserResponse> Handle(GoogleExternalLoginCommand request, CancellationToken cancellationToken)
     {
@@ -23,11 +25,11 @@ public sealed class GoogleExternalLoginCommandHandler(UserManager<UserEntity> us
         var userNickname = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "default";
         var emailVerified = bool.Parse(user.FindFirst(c => c.Type == "email_verified")?.Value ?? "false");
 
-        var userFromDb = await userManager.FindByEmailAsync(userEmail);
+        var userEntity = await userManager.FindByEmailAsync(userEmail);
 
-        if (userFromDb is null)
+        if (userEntity is null)
         {
-            var newUserEntity = new UserEntity
+            userEntity = new UserEntity
             {
                 Nickname = userNickname,
                 UserName = userName,
@@ -37,20 +39,22 @@ public sealed class GoogleExternalLoginCommandHandler(UserManager<UserEntity> us
 
             if (emailVerified)
             {
-                var userToken = await userManager.GenerateEmailConfirmationTokenAsync(newUserEntity);
-                await userManager.ConfirmEmailAsync(newUserEntity, userToken);
+                var userToken = await userManager.GenerateEmailConfirmationTokenAsync(userEntity);
+                await userManager.ConfirmEmailAsync(userEntity, userToken);
             }
 
-            var result = await userManager.CreateAsync(newUserEntity);
+            var result = await userManager.CreateAsync(userEntity);
 
-            return mapper.Map<UserResponse>(newUserEntity);
+            return mapper.Map<UserResponse>(userEntity);
         }
 
-        userFromDb.UserName = userName;
-        userFromDb.Surname = userSurname;
-        userFromDb.Nickname = userNickname;
-        userFromDb.LastLoginAt = DateTime.UtcNow;
+        userEntity.UserName = userName;
+        userEntity.Surname = userSurname;
+        userEntity.Nickname = userNickname;
+        userEntity.LastLoginAt = DateTime.UtcNow;
 
-        return mapper.Map<UserResponse>(userFromDb);
+        await publisher.Publish(mapper.Map<UserUpdatedMessage>(userEntity), cancellationToken);
+
+        return mapper.Map<UserResponse>(userEntity);
     }
 }

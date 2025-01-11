@@ -1,17 +1,14 @@
 ﻿using MassTransit;
-using Microsoft.Extensions.Options;
 using NetSpace.Common.Messages.Email;
 
 namespace NetSpace.EmailSender.Application.Consumers;
 
-public sealed class SendEmailMessageConsumer(IEmailSender emailSender, IOptions<EmailSenderOptions> options) : IConsumer<SendEmailMessage>
+public sealed class SendEmailMessageConsumer(IEmailSender emailSender) : IConsumer<SendEmailMessage>
 {
-    private readonly EmailSenderOptions value = options.Value;
-
     public async Task Consume(ConsumeContext<SendEmailMessage> context)
     {
         var msg = context.Message;
 
-        await emailSender.SendAsync();
+        await emailSender.SendAsync(msg.To, msg.Subject, msg.Body, context.CancellationToken);
     }
 }

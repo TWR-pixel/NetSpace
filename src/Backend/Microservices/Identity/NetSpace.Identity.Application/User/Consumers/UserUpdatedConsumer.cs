@@ -17,7 +17,7 @@ public sealed class UserUpdatedConsumer(UserManager<UserEntity> userManager, IMa
         if (userEntity == null)
             return;
 
-        userEntity = mapper.Map(msg, userEntity);
+        mapper.Map(msg, userEntity);
 
         await userManager.UpdateAsync(userEntity);
     }
