@@ -1,16 +1,19 @@
-﻿using MassTransit.Testing;
+﻿using FluentAssertions;
+using MassTransit.Testing;
+using NetSpace.Community.Application.Community.Queries;
+using NetSpace.Community.Tests.Unit.Initializer;
 
 namespace NetSpace.Community.Tests.Unit.Application.Community.Queries;
 
 public sealed class GetUserPostsQueryTests
 {
     [Fact]
-    public async Task Should_ReturnUserPostWithFilterByTitle()
+    public async Task Should_ReturnCommunityWithFilterByTitle()
     {
         #region Arrange
-        var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync();
-        var query = new GetUserPostQuery { Filter = new NetSpace.User.UseCases.UserPost.UserPostFilterOptions { Title = "TestTitle1" } };
-        var handler = new GetUserPostQueryHandler(uof, TestMapper.Create());
+        var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndCommunitiesTestDataAsync();
+        var query = new GetCommunityQuery { Filter = new UseCases.Community.CommunityFilterOptions { Id = 2 } };
+        var handler = new GetCommunityQueryHandler(uof, TestMapper.Create());
         #endregion
 
         #region Act
@@ -26,9 +29,9 @@ public sealed class GetUserPostsQueryTests
     public async Task Should_ReturnEmptyAndNullEnumerable()
     {
         #region Arrange
-        var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync();
-        var query = new GetUserPostQuery { Filter = new NetSpace.User.UseCases.UserPost.UserPostFilterOptions { Title = "TestTitle512" } };
-        var handler = new GetUserPostQueryHandler(uof, TestMapper.Create());
+        var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndCommunitiesTestDataAsync();
+        var query = new GetCommunityQuery { Filter = new UseCases.Community.CommunityFilterOptions { Id = 322 } };
+        var handler = new GetCommunityQueryHandler(uof, TestMapper.Create());
         #endregion
 
         #region Act

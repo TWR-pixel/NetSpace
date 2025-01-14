@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using NetSpace.Tests.Unit.Initializer;
 using NetSpace.User.Application.UserPost.Exceptions;
 using NetSpace.User.Application.UserPost.Commands;
+using NetSpace.User.Tests.Unit.Initializer;
 
-namespace NetSpace.Tests.Unit.Application.UserPost.Commands;
+namespace NetSpace.User.Tests.Unit.Application.UserPost.Commands;
 
 public sealed class UpdateUserPostCommandTests
 {
@@ -14,7 +14,7 @@ public sealed class UpdateUserPostCommandTests
 
         var testUsers = TestInitializer.Create3Users();
         var uof = await TestInitializer.CreateUnitOfWorkAsync();
-        await uof.UserPosts.AddAsync(new NetSpace.User.Domain.UserPost.UserPostEntity
+        await uof.UserPosts.AddAsync(new Domain.UserPost.UserPostEntity
         { Body = "Testbody", Title = "testTitle", User = testUsers[0], UserId = testUsers[0].Id });
 
         await uof.Users.AddRangeAsync(testUsers);
@@ -38,7 +38,7 @@ public sealed class UpdateUserPostCommandTests
 
         var testUsers = TestInitializer.Create3Users();
         var uof = await TestInitializer.CreateUnitOfWorkAsync();
-        await uof.UserPosts.AddAsync(new NetSpace.User.Domain.UserPost.UserPostEntity
+        await uof.UserPosts.AddAsync(new Domain.UserPost.UserPostEntity
         { Body = "Testbody", Title = "testTitle", User = testUsers[0], UserId = testUsers[0].Id });
 
         await uof.Users.AddRangeAsync(testUsers);

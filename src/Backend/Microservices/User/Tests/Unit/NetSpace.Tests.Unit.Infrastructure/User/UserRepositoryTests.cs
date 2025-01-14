@@ -1,6 +1,6 @@
-﻿using NetSpace.Tests.Unit.Initializer;
+﻿using NetSpace.User.Tests.Unit.Initializer;
 
-namespace NetSpace.Tests.Unit.Infrastructure.User;
+namespace NetSpace.User.Tests.Unit.Infrastructure.User;
 
 public class UserRepositoryTests
 {
@@ -40,7 +40,7 @@ public class UserRepositoryTests
         var result = await uof.Users.CountAsync();
 
         Assert.NotEqual(0, result);
-        Assert.Equal(3, result);
+        Assert.Equal(5, result);
     }
 
     [Fact]
@@ -59,8 +59,8 @@ public class UserRepositoryTests
         var countAfterDeleting = await uof.Users.CountAsync();
 
         //Assert
-        Assert.Equal(2, countAfterDeleting);
-        Assert.NotEqual(3, countAfterDeleting);
+        Assert.Equal(4, countAfterDeleting);
+        Assert.NotEqual(6, countAfterDeleting);
     }
 
     [Fact]
@@ -79,8 +79,8 @@ public class UserRepositoryTests
         var countAfterDeleting = await repo.Users.CountAsync();
 
         //Assert
-        Assert.Equal(0, countAfterDeleting);
-        Assert.NotEqual(3, countAfterDeleting);
+        Assert.Equal(2, countAfterDeleting);
+        Assert.NotEqual(6, countAfterDeleting);
     }
 
     [Fact]
@@ -114,7 +114,7 @@ public class UserRepositoryTests
 
         Assert.NotNull(result);
         Assert.NotEmpty(result);
-        Assert.Equal(entities.Count, result.Count());
+        Assert.Equal(5, result.Count());
     }
 
     [Fact]

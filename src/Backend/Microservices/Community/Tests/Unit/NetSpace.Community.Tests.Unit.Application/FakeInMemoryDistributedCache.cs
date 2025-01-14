@@ -2,9 +2,9 @@
 using NetSpace.Community.Application.Common.Caching;
 using NetSpace.Community.Domain;
 
-namespace NetSpace.Community.Tests.Unit.Initializer.Caching;
+namespace NetSpace.Community.Tests.Unit.Application;
 
-public class InMemoryDistributedCacheStorageBase<TEntity, TId>(IMemoryCache cache) : IDistributedCacheStorage<TEntity, TId>
+public class FakeInMemoryDistributedCache<TEntity, TId>(IMemoryCache cache) : IDistributedCacheStorage<TEntity, TId>
     where TEntity : class, IEntity<TId>
     where TId : notnull
 {

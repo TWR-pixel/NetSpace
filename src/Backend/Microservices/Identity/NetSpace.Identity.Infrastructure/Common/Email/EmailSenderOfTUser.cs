@@ -5,7 +5,7 @@ using NetSpace.Identity.Domain.User;
 
 namespace NetSpace.Identity.Infrastructure.Common.Email;
 
-public sealed class UserEmailSender(IPublishEndpoint publisher) : IEmailSender<UserEntity>
+public sealed class EmailSenderOfTUser(IPublishEndpoint publisher) : IEmailSender<UserEntity>
 {
     public async Task SendConfirmationLinkAsync(UserEntity user, string email, string confirmationLink)
     {

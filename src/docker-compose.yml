@@ -1,5 +1,21 @@
+networks:
+    postgresql-bridge:
+        driver: bridge
+    rabbitmq-bridge:
+        driver: bridge
+    redis-bridge:
+        driver: bridge
+    neo4j-bridge:
+        driver: bridge
+    api-gateway-bridge:
+        driver: bridge
+
+volumes:
+    postgresql-db: 
+
 services:
     rabbitmq:
+        container_name: rabbitmq
         image: rabbitmq:3.10.7-management
         environment:
             - RABBITMQ_DEFAULT_USER=guest
@@ -7,8 +23,9 @@ services:
         ports:
             - 5673:5673
             - 15672:15672
+        networks: 
+            - rabbitmq-bridge
     
-
     neo4j:
         container_name: neo4j
         image: neo4j:latest
@@ -26,20 +43,31 @@ services:
           - ./neo4j_db/logs:/logs
           - ./neo4j_db/import:/var/lib/neo4j/import
           - ./neo4j_db/plugins:/plugins
+        networks:
+            - neo4j-bridge
 
     postgresql:
+        container_name: postgresql
         image: postgres:latest
         environment:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: 123
         ports:
           - "5432:5432"
+        networks:
+            - postgresql-bridge
+        volumes:
+            - postgresql-db:/var/lib/postgresql/data
+
     redis:
         image: redis:latest
         ports:
           - "6379:6379"
+        networks:
+            - redis-bridge
 
     user-microservice:
+        container_name: user-microservice
         environment: 
             - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}user-microservice
@@ -48,6 +76,15 @@ services:
             dockerfile: ./src/Backend/Microservices/User/NetSpace.User.PublicApi/Dockerfile
         ports:
             - 2000:8080
+        networks:
+            - redis-bridge
+            - postgresql-bridge
+            - rabbitmq-bridge
+            - api-gateway-bridge
+        depends_on: 
+            - rabbitmq
+            - postgresql
+            - redis
     
     identity-microservice:
         environment: 
@@ -58,8 +95,18 @@ services:
             dockerfile: ./src/Backend/Microservices/Identity/NetSpace.Identity.PublicApi/Dockerfile
         ports:
             - 2001:8080    
+        networks:
+            - redis-bridge
+            - postgresql-bridge
+            - rabbitmq-bridge
+            - api-gateway-bridge
+        depends_on: 
+            - rabbitmq
+            - postgresql
+            - redis
 
     friendship-microservice:
+        container_name: friendship-microservice
         environment: 
             - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}friendship-microservice
@@ -68,8 +115,18 @@ services:
             dockerfile: ./src/Backend/Microservices/Friendship/NetSpace.Friendship.PublicApi/Dockerfile
         ports:
             - 2002:8080
+        networks:
+            - redis-bridge
+            - neo4j-bridge
+            - rabbitmq-bridge
+            - api-gateway-bridge
+        depends_on:
+            - rabbitmq
+            - neo4j
+            - redis
 
     email-microservice:
+        container_name: email-microservice
         environment: 
             - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}email-microservice
@@ -78,8 +135,13 @@ services:
             dockerfile: ./src/Backend/Microservices/EmailSender/NetSpace.EmailSender.PublicApi/Dockerfile
         ports:
             - 2003:8080
-            
+        networks:
+            - rabbitmq-bridge
+        depends_on:
+            - rabbitmq
+
     community-microservice:
+        container_name: community-microservice
         environment: 
             - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}community-microservice
@@ -88,8 +150,18 @@ services:
             dockerfile: ./src/Backend/Microservices/Community/NetSpace.Community.PublicApi/Dockerfile
         ports:
             - 2004:8080
+        networks:
+            - redis-bridge
+            - postgresql-bridge
+            - rabbitmq-bridge
+            - api-gateway-bridge
+        depends_on: 
+            - rabbitmq
+            - postgresql
+            - redis
 
     api-gateway:
+        container_name: api-gateway
         environment: 
             - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}api-gateway-microservice
@@ -98,3 +170,11 @@ services:
             dockerfile: ./src/Backend/Microservices/NetSpace.ApiGateway/Dockerfile
         ports:
             - 2005:8080
+        networks:
+            - api-gateway-bridge
+        depends_on:
+            - user-microservice
+            - identity-microservice
+            - friendship-microservice
+            - email-microservice
+            - community-microservice

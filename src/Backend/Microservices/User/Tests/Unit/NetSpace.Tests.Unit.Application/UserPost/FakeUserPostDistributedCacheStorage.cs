@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
-using NetSpace.Tests.Unit.Initializer.Caching;
 using NetSpace.User.Application.UserPost;
 using NetSpace.User.Domain.UserPost;
+using NetSpace.User.Tests.Unit.Initializer.Caching;
 using System.Text.Json;
 
-namespace NetSpace.Tests.Unit.Application.UserPost;
+namespace NetSpace.User.Tests.Unit.Application.UserPost;
 
 public sealed class FakeUserPostDistributedCacheStorage(IMemoryCache cache) : InMemoryDistributedCacheStorageBase<UserPostEntity, int>(cache), IUserPostDistributedCacheStorage
 {

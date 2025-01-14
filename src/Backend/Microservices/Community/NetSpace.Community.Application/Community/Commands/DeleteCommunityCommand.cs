@@ -10,7 +10,7 @@ public sealed record DeleteCommunityCommand : CommandBase<CommunityResponse>
     public required int Id { get; set; }
 }
 
-public sealed class DeleteCommunityRequestHandler(IUnitOfWork unitOfWork, IMapper mapper, ICommunityDistributedCache cache) : CommandHandlerBase<DeleteCommunityCommand, CommunityResponse>(unitOfWork)
+public sealed class DeleteCommunityCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ICommunityDistributedCache cache) : CommandHandlerBase<DeleteCommunityCommand, CommunityResponse>(unitOfWork)
 {
     public override async Task<CommunityResponse> Handle(DeleteCommunityCommand request, CancellationToken cancellationToken)
     {

@@ -4,11 +4,11 @@ using MassTransit.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NetSpace.Common.Messages.User;
-using NetSpace.Tests.Unit.Initializer;
 using NetSpace.User.Application.User.Commands;
 using NetSpace.User.Application.User.Exceptions;
+using NetSpace.User.Tests.Unit.Initializer;
 
-namespace NetSpace.Tests.Unit.Application.User.Commands;
+namespace NetSpace.User.Tests.Unit.Application.User.Commands;
 
 public sealed class UpdateUserCommandTests
 {

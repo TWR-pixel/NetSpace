@@ -94,17 +94,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Intergration.Infrastructure", "src\Backend\Microservices\Friendship\Tests\Integration\NetSpace.Tests.Intergration.Infrastructure\NetSpace.Tests.Intergration.Infrastructure.csproj", "{D750B905-FD95-41C8-863D-2E8003EEC1FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Initializer", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Initializer\NetSpace.Tests.Unit.Initializer.csproj", "{929E32B3-E651-47AA-9F72-B113C5153184}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.User.Tests.Unit.Initializer", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Initializer\NetSpace.User.Tests.Unit.Initializer.csproj", "{929E32B3-E651-47AA-9F72-B113C5153184}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Infrastructure", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Infrastructure\NetSpace.Tests.Unit.Infrastructure.csproj", "{A4F88F6A-E30D-4A31-8409-F7B1073F4A05}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.User.Tests.Unit.Infrastructure", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Infrastructure\NetSpace.User.Tests.Unit.Infrastructure.csproj", "{A4F88F6A-E30D-4A31-8409-F7B1073F4A05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.Application", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Application\NetSpace.Tests.Unit.Application.csproj", "{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.User.Tests.Unit.Application", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.Application\NetSpace.User.Tests.Unit.Application.csproj", "{93B3B3DD-D856-4F22-92B4-FA1C86E535B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Tests.Unit.PublicApi", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.PublicApi\NetSpace.Tests.Unit.PublicApi.csproj", "{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.User.Tests.Unit.PublicApi", "src\Backend\Microservices\User\Tests\Unit\NetSpace.Tests.Unit.PublicApi\NetSpace.User.Tests.Unit.PublicApi.csproj", "{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D93293F5-F99C-4773-93CA-A5CA3307B7D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{877394AE-0CC7-4C00-B49F-B5E9D36097C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{87384BB1-3146-4634-9924-2D8396CC2D32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Community.Tests.Unit.Initializer", "src\Backend\Microservices\Community\Tests\Unit\NetSpace.Community.Tests.Unit.TestInitializer\NetSpace.Community.Tests.Unit.Initializer.csproj", "{B89B2907-7CB5-494D-A9D0-A78BACB3F8CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Community.Tests.Unit.Infrastructure", "src\Backend\Microservices\Community\Tests\Unit\NetSpace.Community.Tests.Unit.Infrastructure\NetSpace.Community.Tests.Unit.Infrastructure.csproj", "{4469E788-3C3F-4749-95EF-439EEAF09E2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Community.Tests.Unit.Application", "src\Backend\Microservices\Community\Tests\Unit\NetSpace.Community.Tests.Unit.Application\NetSpace.Community.Tests.Unit.Application.csproj", "{3A013898-556D-4D0B-941C-B1213B355D19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -232,6 +240,18 @@ Global
 		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B89B2907-7CB5-494D-A9D0-A78BACB3F8CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B89B2907-7CB5-494D-A9D0-A78BACB3F8CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B89B2907-7CB5-494D-A9D0-A78BACB3F8CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B89B2907-7CB5-494D-A9D0-A78BACB3F8CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4469E788-3C3F-4749-95EF-439EEAF09E2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4469E788-3C3F-4749-95EF-439EEAF09E2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4469E788-3C3F-4749-95EF-439EEAF09E2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4469E788-3C3F-4749-95EF-439EEAF09E2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A013898-556D-4D0B-941C-B1213B355D19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A013898-556D-4D0B-941C-B1213B355D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A013898-556D-4D0B-941C-B1213B355D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A013898-556D-4D0B-941C-B1213B355D19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -282,5 +302,9 @@ Global
 		{93B3B3DD-D856-4F22-92B4-FA1C86E535B3} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
 		{7B9540F0-0FB6-41EA-B2B9-DB52B5AB1F20} = {2229FC1B-7BB9-40CA-9917-85E0BFB3736C}
 		{D93293F5-F99C-4773-93CA-A5CA3307B7D0} = {6EDF22BB-0F3D-4DB0-A898-AD6DDF06D9DC}
+		{87384BB1-3146-4634-9924-2D8396CC2D32} = {D93293F5-F99C-4773-93CA-A5CA3307B7D0}
+		{B89B2907-7CB5-494D-A9D0-A78BACB3F8CF} = {87384BB1-3146-4634-9924-2D8396CC2D32}
+		{4469E788-3C3F-4749-95EF-439EEAF09E2B} = {87384BB1-3146-4634-9924-2D8396CC2D32}
+		{3A013898-556D-4D0B-941C-B1213B355D19} = {87384BB1-3146-4634-9924-2D8396CC2D32}
 	EndGlobalSection
 EndGlobal

@@ -12,7 +12,10 @@ public sealed record GoogleExternalLoginCommand : RequestBase<UserResponse>
     public required ClaimsPrincipal User { get; set; }
 }
 
-public sealed class GoogleExternalLoginCommandHandler(UserManager<UserEntity> userManager, IMapper mapper, IPublishEndpoint publisher) : RequestHandlerBase<GoogleExternalLoginCommand, UserResponse>
+public sealed class GoogleExternalLoginCommandHandler(UserManager<UserEntity> userManager,
+                                                      RoleManager<IdentityRole> roleManager,
+                                                      IMapper mapper,
+                                                      IPublishEndpoint publisher) : RequestHandlerBase<GoogleExternalLoginCommand, UserResponse>
 {
     public async override Task<UserResponse> Handle(GoogleExternalLoginCommand request, CancellationToken cancellationToken)
     {
@@ -36,6 +39,7 @@ public sealed class GoogleExternalLoginCommandHandler(UserManager<UserEntity> us
                 Surname = userSurname,
                 Email = userEmail,
             };
+            var result = await userManager.CreateAsync(userEntity);
 
             if (emailVerified)
             {
@@ -43,7 +47,10 @@ public sealed class GoogleExternalLoginCommandHandler(UserManager<UserEntity> us
                 await userManager.ConfirmEmailAsync(userEntity, userToken);
             }
 
-            var result = await userManager.CreateAsync(userEntity);
+            if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+            await userManager.AddToRoleAsync(userEntity, UserRoles.User);
 
             return mapper.Map<UserResponse>(userEntity);
         }

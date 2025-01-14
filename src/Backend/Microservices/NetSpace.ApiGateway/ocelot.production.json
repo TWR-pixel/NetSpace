@@ -5,7 +5,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "user-microservice",
                     "Port": 2000
                 }
             ],
@@ -21,7 +21,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "user-microservice",
                     "Port": 2000
                 }
             ],
@@ -37,7 +37,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "identity-microservice",
                     "Port": 2001
                 }
             ],
@@ -46,10 +46,10 @@
         },
         {
             "DownstreamPathTemplate": "/api/jwt-auth/login",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "identity-microservice",
                     "Port": 2001
                 }
             ],
@@ -61,7 +61,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "identity-microservice",
                     "Port": 2001
                 }
             ],
@@ -73,7 +73,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "identity-microservice",
                     "Port": 2001
                 }
             ],
@@ -89,7 +89,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "identity-microservice",
                     "Port": 2001
                 }
             ],
@@ -105,7 +105,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "identity-microservice",
                     "Port": 2001
                 }
             ],
@@ -117,7 +117,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "community-microservice",
                     "Port": 2004
                 }
             ],
@@ -133,7 +133,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "community-microservice",
                     "Port": 2004
                 }
             ],
@@ -146,10 +146,10 @@
         },
         {
             "DownstreamPathTemplate": "/api/community-post-user-comments",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "community-microservice",
                     "Port": 2004
                 }
             ],
@@ -165,7 +165,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "community-microservice",
                     "Port": 2004
                 }
             ],
@@ -181,7 +181,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "friendship-microservice",
                     "Port": 2002
                 }
             ],
@@ -197,7 +197,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "friendship-microservice",
                     "Port": 2002
                 }
             ],
@@ -213,7 +213,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "friendship-microservice",
                     "Port": 2002
                 }
             ],
@@ -229,7 +229,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "friendship-microservice",
                     "Port": 2002
                 }
             ],
@@ -245,7 +245,7 @@
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
+                    "Host": "friendship-microservice",
                     "Port": 2002
                 }
             ],

@@ -1,4 +1,4 @@
-﻿namespace NetSpace.Tests.Unit.Initializer;
+﻿namespace NetSpace.User.Tests.Unit.Initializer;
 
 public static class AssertHelper
 {

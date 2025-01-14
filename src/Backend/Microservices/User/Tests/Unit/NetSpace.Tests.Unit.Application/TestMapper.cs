@@ -2,7 +2,7 @@
 using MapsterMapper;
 using NetSpace.User.Application.Common;
 
-namespace NetSpace.Tests.Unit.Application;
+namespace NetSpace.User.Tests.Unit.Application;
 
 public static class TestMapper
 {

@@ -13,6 +13,7 @@ namespace NetSpace.Identity.Api.Controllers;
 public class AdminController(IMediator mediator) : ApiControllerBase(mediator)
 {
     [HttpPost]
+    [Authorize(AuthenticationSchemes = AuthConstants.AuthenticationSchemes, Policy = AuthConstants.AdminPolicy)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserResponse>> Create([FromBody] CreateUserCommand command, CancellationToken cancellationToken)

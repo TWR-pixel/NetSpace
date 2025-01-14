@@ -2,10 +2,16 @@
 using NetSpace.Community.Domain.Community;
 using NetSpace.Community.Domain.CommunityPost;
 using NetSpace.Community.Domain.CommunityPostUserComment;
+using NetSpace.Community.Domain.CommunitySubscription;
 using NetSpace.Community.Domain.User;
 using NetSpace.Community.Infrastructure;
+using NetSpace.Community.Infrastructure.Community;
+using NetSpace.Community.Infrastructure.CommunityPost;
+using NetSpace.Community.Infrastructure.CommunityPostUserComment;
+using NetSpace.Community.Infrastructure.CommunitySubscription;
+using NetSpace.Community.Infrastructure.User;
 
-namespace NetSpace.Community.Tests.Unit.TestInitializer;
+namespace NetSpace.Community.Tests.Unit.Initializer;
 
 public static class TestInitializer
 {
@@ -36,7 +42,9 @@ public static class TestInitializer
     {
         var communities = new List<CommunityEntity>()
         {
-            new() {Name = "Name1", OwnerId = users[0].Id, Owner = users[0]}
+            new() {Name = "Name1", OwnerId = users[0].Id, Owner = users[0]},
+            new() {Name = "Name2", OwnerId = users[1].Id, Owner = users[1]},
+            new() {Name = "Name3", OwnerId = users[2].Id, Owner = users[2]}
         };
 
         return communities;
@@ -65,62 +73,71 @@ public static class TestInitializer
 
         return userComments;
     }
+    public static List<CommunitySubscriptionEntity> Create3CommunitySubscriptions(IEnumerable<CommunityEntity> communities, IEnumerable<UserEntity> users)
+    {
+        var subscriptions = new List<CommunitySubscriptionEntity>
+        {
+            new() { Community = communities.First() , Subscriber = users.First()},
+            new() { Community = communities.Last() , Subscriber = users.Last() },
+            new() { Community = communities.First() , Subscriber = users.First() }
+        };
 
-    public static async Task<UnitOfWork> CreateUnitOfWorkAsync()
+        return subscriptions;
+    }
+
+
+    public static async Task<UnitOfWork> CreateUnitOfWorkWithTestDataAsync()
     {
         var dbContext = CreateInMemoryDb();
         var userRepo = new UserRepository(dbContext);
-        var userPostUserCommentRepo = new UserPostUserCommentRepository(dbContext);
-        var UserPostRepo = new UserPostRepository(dbContext);
+        var communityRepo = new CommunityRepository(dbContext);
+        var communityPostsRepo = new CommunityPostRepository(dbContext);
+        var communityPostUserCommentRepository = new CommunityPostUserCommentRepository(dbContext);
+        var communitySubscriptionRepository = new CommunitySubscriptionRepository(dbContext);
 
         var testUsers = Create3Users();
-        var testPosts = Create3UserPosts(testUsers);
-        var testPostComments = Create3UserPostUserComments(testPosts, testUsers);
+        var testCommunities = Create3Communities(testUsers);
+        var testPostCommunities = Create3CommunityPosts(testCommunities);
+        var testPostComments = Create3CommunityPostsUserComments(testPostCommunities, testUsers);
+        var testSubscriptions = Create3CommunitySubscriptions(testCommunities, testUsers);
 
-        var uof = new UnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo, dbContext);
+
+        var uof = new UnitOfWork(userRepo, communityRepo, communityPostsRepo, communityPostUserCommentRepository, communitySubscriptionRepository, dbContext);
+
+        await uof.Users.AddRangeAsync(testUsers);
+        await uof.Communities.AddRangeAsync(testCommunities);
+        await uof.CommunityPosts.AddRangeAsync(testPostCommunities);
+        await uof.CommunityPostUserComments.AddRangeAsync(testPostComments);
+        await uof.CommunitySubscriptions.AddRangeAsync(testSubscriptions);
+        await uof.SaveChangesAsync();
 
         return uof;
     }
 
-    public static async Task<ReadonlyUnitOfWork> CreateReadonlyUnitOfWorkAsync()
+    public static async Task<ReadonlyUnitOfWork> CreateReadonlyUnitOfWorkWithUserAndCommunitiesTestDataAsync()
     {
         var dbContext = CreateInMemoryDb();
 
         var userRepo = new UserRepository(dbContext);
-        var userPostUserCommentRepo = new UserPostUserCommentRepository(dbContext);
-        var UserPostRepo = new UserPostRepository(dbContext);
+        var communityRepo = new CommunityRepository(dbContext);
+        var communityPostsRepo = new CommunityPostRepository(dbContext);
+        var communityPostUserCommentRepository = new CommunityPostUserCommentRepository(dbContext);
+        var communitySubscriptionRepository = new CommunitySubscriptionRepository(dbContext);
 
         var testUsers = Create3Users();
-        var testPosts = Create3UserPosts(testUsers);
-        var testPostComments = Create3UserPostUserComments(testPosts, testUsers);
-
-        var uof = new ReadonlyUnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo);
-
-        //await uof.Users.AddRangeAsync(testUsers);
-        //await uof.UserPosts.AddRangeAsync(testPosts);
-        //await uof.UserPostUserComments.AddRangeAsync(testPostComments);
-
-        return uof;
-    }
-
-    public static async Task<ReadonlyUnitOfWork> CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync()
-    {
-        var dbContext = CreateInMemoryDb();
-
-        var userRepo = new UserRepository(dbContext);
-        var userPostUserCommentRepo = new UserPostUserCommentRepository(dbContext);
-        var UserPostRepo = new UserPostRepository(dbContext);
-
-        var testUsers = Create3Users();
-        var testPosts = Create3UserPosts(testUsers);
-        var testPostComments = Create3UserPostUserComments(testPosts, testUsers);
+        var testCommunities = Create3Communities(testUsers);
+        var testPostCommunities = Create3CommunityPosts(testCommunities);
+        var testPostComments = Create3CommunityPostsUserComments(testPostCommunities, testUsers);
+        var testSubscriptions = Create3CommunitySubscriptions(testCommunities, testUsers);
 
         await dbContext.Users.AddRangeAsync(testUsers);
-        await dbContext.UserPosts.AddRangeAsync(testPosts);
-        await dbContext.UserPostUserComments.AddRangeAsync(testPostComments);
+        await dbContext.Communities.AddRangeAsync(testCommunities);
+        await dbContext.CommunityPosts.AddRangeAsync(testPostCommunities);
+        await dbContext.CommunityPostUserComments.AddRangeAsync(testPostComments);
+        await dbContext.CommunitySubscriptions.AddRangeAsync(testSubscriptions);
         await dbContext.SaveChangesAsync();
 
-        var uof = new ReadonlyUnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo);
+        var uof = new ReadonlyUnitOfWork(userRepo, communityRepo, communityPostsRepo, communityPostUserCommentRepository, communitySubscriptionRepository);
 
         return uof;
     }

@@ -1,4 +1,4 @@
-﻿namespace NetSpace.Tests.Unit.Application.User;
+﻿namespace NetSpace.User.Tests.Unit.Application.User;
 
 public sealed class UserMapperTests
 {

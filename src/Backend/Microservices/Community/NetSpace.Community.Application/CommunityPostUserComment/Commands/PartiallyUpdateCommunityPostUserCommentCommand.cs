@@ -41,7 +41,6 @@ public sealed class PartiallyUpdateCommunityPostUserCommentCommandHandler(IUnitO
         mapper.Map(request, commentEntity);
 
         await UnitOfWork.SaveChangesAsync(cancellationToken);
-        await cache.UpdateByIdAsync(commentEntity, commentEntity.Id, cancellationToken);
 
         return mapper.Map<CommunityPostUserCommentResponse>(commentEntity);
     }

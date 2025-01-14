@@ -9,5 +9,4 @@ public interface IDistributedCacheStorage<TEntity, TId>
     public Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
     public Task RemoveByIdAsync(TId id, CancellationToken cancellationToken = default);
     public Task<TEntity?> GetByIdAsync(TId id, CancellationToken cancellationToken = default);
-    public Task<TEntity?> UpdateByIdAsync(TEntity updatedEntity, TId id, CancellationToken cancellationToken = default);
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Application.User.Consumers;
@@ -14,11 +15,11 @@ namespace NetSpace.Identity.Infrastructure.Common.Extensions;
 
 public static class InfrastructureServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string? connectionString)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
         services.AddDbContext<NetSpaceDbContext>(options =>
         {
-            options.UseNpgsql(connectionString);
+            options.UseNpgsql(config.GetConnectionString("PostgreSql"));
         });
 
         services.AddIdentityCore<UserEntity>(options =>
@@ -32,17 +33,24 @@ public static class InfrastructureServiceCollectionExtensions
             .AddRoleManager<RoleManager<IdentityRole>>()
             .AddEntityFrameworkStores<NetSpaceDbContext>();
 
-        services.AddScoped<IEmailSender<UserEntity>, UserEmailSender>();
+        services.AddScoped<IEmailSender<UserEntity>, EmailSenderOfTUser>();
         services.AddScoped<IEmailSender, EmailSender>();
 
         services.AddScoped<IUserRepository, UserRepository>();
 
+        var rabbitMQOptions = config.GetSection("RabbitMQ");
         services.AddMassTransit(configure =>
         {
             configure.AddConsumers(typeof(UserDeletedConsumer).Assembly);
 
             configure.UsingRabbitMq((context, configurator) =>
             {
+                configurator.Host(rabbitMQOptions["Host"], h =>
+                {
+                    h.Username(rabbitMQOptions["UserName"] ?? "guest");
+                    h.Password(rabbitMQOptions["Password"] ?? "guest");
+                });
+
                 configurator.ReceiveEndpoint(e =>
                 {
                     configurator.ConfigureEndpoints(context);

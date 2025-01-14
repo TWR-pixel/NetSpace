@@ -1,4 +1,4 @@
-﻿namespace NetSpace.Tests.Unit.Application.UserPostUserComment;
+﻿namespace NetSpace.User.Tests.Unit.Application.UserPostUserComment;
 
 public sealed class UserPostUserCommentMapperTests
 {

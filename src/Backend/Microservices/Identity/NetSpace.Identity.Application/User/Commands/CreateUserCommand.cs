@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using MapsterMapper;
 using MassTransit;
+using Microsoft.AspNetCore.Identity;
 using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Domain.User;
-using NetSpace.Identity.UseCases.User;
 
 namespace NetSpace.Identity.Application.User.Commands;
 
@@ -69,7 +69,7 @@ public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCom
 }
 
 public sealed class CreateUserCommandHandler(IPublishEndpoint publisher,
-                                             IUserRepository userRepository,
+                                             UserManager<UserEntity> userManager,
                                              IMapper mapper,
                                              IValidator<CreateUserCommand> requestValidator) : RequestHandlerBase<CreateUserCommand, UserResponse>
 {
@@ -79,7 +79,7 @@ public sealed class CreateUserCommandHandler(IPublishEndpoint publisher,
 
         var userEntity = mapper.Map<UserEntity>(request);
 
-        await userRepository.AddAsync(userEntity, request.Password, cancellationToken);
+        await userManager.CreateAsync(userEntity, request.Password);
         await publisher.Publish(mapper.Map<UserCreatedMessage>(userEntity), cancellationToken);
 
         return mapper.Map<UserResponse>(userEntity);

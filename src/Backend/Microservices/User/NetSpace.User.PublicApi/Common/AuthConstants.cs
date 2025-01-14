@@ -1,4 +1,4 @@
-﻿namespace NetSpace.Identity.Api.Common;
+﻿namespace NetSpace.User.PublicApi.Common;
 
 public sealed class AuthConstants
 {

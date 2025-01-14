@@ -1,4 +1,4 @@
-﻿namespace NetSpace.Tests.Unit.Infrastructure.UserPostUserComment;
+﻿namespace NetSpace.User.Tests.Unit.Infrastructure.UserPostUserComment;
 
 public sealed class UserPostUserCommentRepositoryTests
 {

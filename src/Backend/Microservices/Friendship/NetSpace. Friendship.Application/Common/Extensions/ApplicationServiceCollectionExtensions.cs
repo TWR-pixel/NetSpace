@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using MapsterMapper;
 using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetSpace.Friendship.Application.User;
 using NetSpace.Friendship.Application.User.Consumers;
@@ -10,29 +11,36 @@ namespace NetSpace.Friendship.Application.Common.Extensions;
 
 public static class ApplicationServiceCollectionExtensions
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
     {
         services.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssembly(typeof(UserResponse).Assembly);
         });
-
+        var rabbitMQOptions = config.GetSection("RabbitMQ");
         services.AddMassTransit(configure =>
         {
             configure.AddConsumers(typeof(UserDeletedConsumer).Assembly);
 
-            configure.UsingRabbitMq((context, cfg) =>
+            configure.UsingRabbitMq((context, configurator) =>
             {
-                cfg.ReceiveEndpoint(e =>
+                configurator.Host(rabbitMQOptions["Host"], h =>
+                {
+                    h.Username(rabbitMQOptions["UserName"] ?? "guest");
+                    h.Password(rabbitMQOptions["Password"] ?? "guest");
+                });
+
+
+                configurator.ReceiveEndpoint(e =>
                 {
                     e.ConfigureConsumers(context);
                 });
             });
         });
 
-        var config = new TypeAdapterConfig();
-        var registers = config.Scan(Assembly.GetAssembly(typeof(ResponseBase)) ?? Assembly.GetExecutingAssembly());
-        config.Apply(registers);
+        var MapsterConfig = new TypeAdapterConfig();
+        var registers = MapsterConfig.Scan(Assembly.GetAssembly(typeof(ResponseBase)) ?? Assembly.GetExecutingAssembly());
+        MapsterConfig.Apply(registers);
 
         services.AddSingleton(config);
         services.AddSingleton<IMapper, ServiceMapper>();

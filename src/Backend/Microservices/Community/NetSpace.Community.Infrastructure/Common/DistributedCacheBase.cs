@@ -34,17 +34,4 @@ public abstract class DistributedCacheBase<TEntity, TId>(IDistributedCache cache
 
         return null;
     }
-
-    public async Task<TEntity?> UpdateByIdAsync(TEntity updatedEntity, TId id, CancellationToken cancellationToken = default)
-    {
-        var cached = await GetByIdAsync(id, cancellationToken);
-
-        if (cached is not null)
-        {
-            await RemoveByIdAsync(id, cancellationToken);
-            await AddAsync(updatedEntity, cancellationToken);
-        }
-
-        return null;
-    }
 }

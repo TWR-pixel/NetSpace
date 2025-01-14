@@ -15,10 +15,9 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("PostgreSql");
 
 var redisInstanceName = builder.Configuration["RedisInstanceName"] ?? "";
-var redisConnectionString = builder.Configuration.GetConnectionString("Redis") ?? "";
 
 builder.Services.AddApplicationLayer();
-builder.Services.AddInfrastructure(connectionString, redisInstanceName, redisConnectionString);
+builder.Services.AddInfrastructure(connectionString, redisInstanceName, builder.Configuration);
 
 var app = builder.Build();
 

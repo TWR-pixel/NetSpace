@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using MassTransit.Testing;
-using NetSpace.Tests.Unit.Initializer;
 using NetSpace.User.Application.UserPost.Queries;
+using NetSpace.User.Tests.Unit.Initializer;
 
-namespace NetSpace.Tests.Unit.Application.UserPost.Queries;
+namespace NetSpace.User.Tests.Unit.Application.UserPost.Queries;
 
 public sealed class GetUserPostsQueryTests
 {
@@ -12,7 +12,7 @@ public sealed class GetUserPostsQueryTests
     {
         #region Arrange
         var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync();
-        var query = new GetUserPostQuery { Filter = new NetSpace.User.UseCases.UserPost.UserPostFilterOptions { Title = "TestTitle1" } };
+        var query = new GetUserPostQuery { Filter = new UseCases.UserPost.UserPostFilterOptions { Title = "TestTitle1" } };
         var handler = new GetUserPostQueryHandler(uof, TestMapper.Create());
         #endregion
 
@@ -30,7 +30,7 @@ public sealed class GetUserPostsQueryTests
     {
         #region Arrange
         var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync();
-        var query = new GetUserPostQuery { Filter = new NetSpace.User.UseCases.UserPost.UserPostFilterOptions { Title = "TestTitle512" } };
+        var query = new GetUserPostQuery { Filter = new UseCases.UserPost.UserPostFilterOptions { Title = "TestTitle512" } };
         var handler = new GetUserPostQueryHandler(uof, TestMapper.Create());
         #endregion
 

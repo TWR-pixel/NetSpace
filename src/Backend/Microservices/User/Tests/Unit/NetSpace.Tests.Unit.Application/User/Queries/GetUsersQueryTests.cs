@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using MassTransit.Testing;
-using NetSpace.Tests.Unit.Initializer;
 using NetSpace.User.Application.User.Queries;
+using NetSpace.User.Tests.Unit.Initializer;
 
-namespace NetSpace.Tests.Unit.Application.User.Queries;
+namespace NetSpace.User.Tests.Unit.Application.User.Queries;
 
 public sealed class GetUsersQueryTests
 {
@@ -12,7 +12,7 @@ public sealed class GetUsersQueryTests
     {
         #region Arrange
         var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync();
-        var query = new GetUsersQuery { Filter = new NetSpace.User.UseCases.User.UserFilterOptions { Nickname = "nickname2" } };
+        var query = new GetUsersQuery { Filter = new UseCases.User.UserFilterOptions { Nickname = "nickname2" } };
         var handler = new GetUsersQueryHandler(uof, TestMapper.Create());
         #endregion
 
@@ -29,8 +29,8 @@ public sealed class GetUsersQueryTests
     public async Task Should_ReturnEmptyAndNullEnumerable()
     {
         #region Arrange
-        var uof = await TestInitializer.CreateReadonlyUnitOfWorkAsync();
-        var query = new GetUsersQuery { };
+        var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync();
+        var query = new GetUsersQuery { Filter = new UseCases.User.UserFilterOptions { Id = Guid.NewGuid() } };
         var handler = new GetUsersQueryHandler(uof, TestMapper.Create());
         #endregion
 

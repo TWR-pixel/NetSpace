@@ -2,7 +2,7 @@
 using NetSpace.User.Application.Common.Cache;
 using NetSpace.User.Domain;
 
-namespace NetSpace.Tests.Unit.Initializer.Caching;
+namespace NetSpace.User.Tests.Unit.Initializer.Caching;
 
 public class InMemoryDistributedCacheStorageBase<TEntity, TId>(IMemoryCache cache) : IDistributedCacheStorage<TEntity, TId>
     where TEntity : class, IEntity<TId>

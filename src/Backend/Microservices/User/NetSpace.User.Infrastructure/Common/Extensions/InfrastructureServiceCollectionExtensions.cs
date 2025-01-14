@@ -20,14 +20,21 @@ namespace NetSpace.User.Infrastructure.Common.Extensions;
 
 public static class InfrastructureServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string? connectionString, IConfiguration config)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
         services.AddMassTransit(configure =>
         {
             configure.AddConsumers(typeof(UserCreatedConsumer).Assembly);
 
+            var rabbitMQOptions = config.GetSection("RabbitMQ");
             configure.UsingRabbitMq((context, configurator) =>
             {
+                configurator.Host(rabbitMQOptions["Host"], h =>
+                {
+                    h.Username(rabbitMQOptions["UserName"] ?? "guest");
+                    h.Password(rabbitMQOptions["Password"] ?? "guest");
+                });
+
                 configurator.ReceiveEndpoint(e =>
                 {
                     configurator.ConfigureEndpoints(context);
@@ -48,7 +55,7 @@ public static class InfrastructureServiceCollectionExtensions
 
         services.AddDbContext<NetSpaceDbContext>(options =>
         {
-            options.UseNpgsql(connectionString);
+            options.UseNpgsql(config.GetConnectionString("PostgreSql"));
         });
 
         services.AddScoped<IUserRepository, UserRepository>();

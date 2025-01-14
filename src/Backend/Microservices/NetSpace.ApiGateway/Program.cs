@@ -19,7 +19,6 @@ builder.Configuration
     .AddJsonFile("ocelot.json", false, true)
     .AddJsonFile("ocelot.production.json", false, true);
 
-
 builder.Services.AddControllers();
 builder.Services.AddOcelot();
 builder.Services.AddOpenApi();
@@ -50,10 +49,10 @@ builder.Services
          {
              ValidateIssuer = true,
              ValidateAudience = true,
-             ValidAudience = builder.Configuration["JWT:ValidAudience"],
-             ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+             ValidAudience = builder.Configuration["JwtAuth:ValidAudience"],
+             ValidIssuer = builder.Configuration["JwtAuth:ValidIssuer"],
              ClockSkew = TimeSpan.Zero,
-             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtAuth:Secret"]))
          };
      })
      .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
@@ -128,6 +127,7 @@ app.MapGet("/check", () =>
 {
     return "Ok";
 });
+
 
 await app.UseOcelot();
 

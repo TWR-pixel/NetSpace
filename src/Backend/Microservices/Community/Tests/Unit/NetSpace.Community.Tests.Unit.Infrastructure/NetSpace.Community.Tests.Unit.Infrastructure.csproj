@@ -24,4 +24,8 @@
     <Folder Include="CommunitySubscription\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NetSpace.Community.Tests.Unit.TestInitializer\NetSpace.Community.Tests.Unit.Initializer.csproj" />
+  </ItemGroup>
+
 </Project>

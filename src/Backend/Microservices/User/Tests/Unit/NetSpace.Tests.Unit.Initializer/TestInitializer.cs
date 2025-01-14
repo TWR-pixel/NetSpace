@@ -7,7 +7,7 @@ using NetSpace.User.Infrastructure.User;
 using NetSpace.User.Infrastructure.UserPost;
 using NetSpace.User.Infrastructure.UserPostUserComment;
 
-namespace NetSpace.Tests.Unit.Initializer;
+namespace NetSpace.User.Tests.Unit.Initializer;
 
 public static class TestInitializer
 {
@@ -71,26 +71,10 @@ public static class TestInitializer
 
         var uof = new UnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo, dbContext);
 
-        return uof;
-    }
-
-    public static async Task<ReadonlyUnitOfWork> CreateReadonlyUnitOfWorkAsync()
-    {
-        var dbContext = CreateInMemoryDb();
-
-        var userRepo = new UserRepository(dbContext);
-        var userPostUserCommentRepo = new UserPostUserCommentRepository(dbContext);
-        var UserPostRepo = new UserPostRepository(dbContext);
-
-        var testUsers = Create3Users();
-        var testPosts = Create3UserPosts(testUsers);
-        var testPostComments = Create3UserPostUserComments(testPosts, testUsers);
-
-        var uof = new ReadonlyUnitOfWork(userRepo, UserPostRepo, userPostUserCommentRepo);
-
-        //await uof.Users.AddRangeAsync(testUsers);
-        //await uof.UserPosts.AddRangeAsync(testPosts);
-        //await uof.UserPostUserComments.AddRangeAsync(testPostComments);
+        await uof.UserPostUserComments.AddRangeAsync(testPostComments);
+        await uof.UserPostUserComments.AddRangeAsync(testPostComments);
+        await uof.UserPostUserComments.AddRangeAsync(testPostComments);
+        await uof.SaveChangesAsync();
 
         return uof;
     }

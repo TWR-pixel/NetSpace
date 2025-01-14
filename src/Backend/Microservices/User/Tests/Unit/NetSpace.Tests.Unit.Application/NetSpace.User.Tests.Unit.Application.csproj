@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\NetSpace.User.Application\NetSpace.User.Application.csproj" />
-    <ProjectReference Include="..\NetSpace.Tests.Unit.Initializer\NetSpace.Tests.Unit.Initializer.csproj" />
+    <ProjectReference Include="..\NetSpace.Tests.Unit.Initializer\NetSpace.User.Tests.Unit.Initializer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

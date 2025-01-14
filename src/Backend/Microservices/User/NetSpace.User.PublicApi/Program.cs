@@ -13,7 +13,9 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("PostgreSql");
 
 builder.Services.AddApplicationLayer();
-builder.Services.AddInfrastructure(connectionString, builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.ConfigureAuthorization();
 
 var app = builder.Build();
 app.UseSerilogRequestLogging();

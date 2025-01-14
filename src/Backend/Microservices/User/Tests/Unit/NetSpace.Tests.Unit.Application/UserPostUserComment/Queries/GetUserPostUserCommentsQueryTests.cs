@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using MassTransit.Testing;
-using NetSpace.Tests.Unit.Initializer;
 using NetSpace.User.Application.UserPostUserComment.Queries;
+using NetSpace.User.Tests.Unit.Initializer;
 
-namespace NetSpace.Tests.Unit.Application.UserPostUserComment.Queries;
+namespace NetSpace.User.Tests.Unit.Application.UserPostUserComment.Queries;
 
 public sealed class GetUserPostUserCommentsQueryTests
 {
@@ -14,7 +14,7 @@ public sealed class GetUserPostUserCommentsQueryTests
         var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync();
         var query = new GetUserPostUserCommentQuery
         {
-            Filter = new NetSpace.User.UseCases.UserPostUserComment.UserPostUserCommentFilterOptions
+            Filter = new UseCases.UserPostUserComment.UserPostUserCommentFilterOptions
             { Body = "TestBody1" }
         };
         var handler = new GetUserPostUserCommentRequestHandler(uof, TestMapper.Create());
@@ -36,7 +36,7 @@ public sealed class GetUserPostUserCommentsQueryTests
         var uof = await TestInitializer.CreateReadonlyUnitOfWorkWithUserAndUserPostsAndUserPostUserCommentsAsync();
         var query = new GetUserPostUserCommentQuery
         {
-            Filter = new NetSpace.User.UseCases.UserPostUserComment.UserPostUserCommentFilterOptions
+            Filter = new UseCases.UserPostUserComment.UserPostUserCommentFilterOptions
             { Body = "TestBod231y1" }
         };
         var handler = new GetUserPostUserCommentRequestHandler(uof, TestMapper.Create());
