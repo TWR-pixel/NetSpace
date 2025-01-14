@@ -4,7 +4,7 @@ namespace NetSpace.Common.Injector;
 
 /// <summary>
 /// Uses for registration services in <see cref="IServiceCollection"/>.
-/// Method for registration is <see cref="InjectorServiceCollectionExtensions.RegisterInjectServicesFromAssembly(IServiceCollection, System.Reflection.Assembly)"/>
+/// Method for registration is <see cref="InjectorServiceCollectionExtensions.RegisterInjectServicesFromAssembly(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Reflection.Assembly)(IServiceCollection, System.Reflection.Assembly)"/>
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 public sealed class InjectAttribute : Attribute
