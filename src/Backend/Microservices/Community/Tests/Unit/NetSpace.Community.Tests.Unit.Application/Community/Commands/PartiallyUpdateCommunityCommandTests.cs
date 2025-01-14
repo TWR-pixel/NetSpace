@@ -13,7 +13,7 @@ public sealed class PartiallyUpdateCommunityCommandTests
         #region Arrange
         var uof = await TestInitializer.CreateUnitOfWorkWithTestDataAsync();
         var command = new PartiallyUpdateCommunityCommand { Id = 2, Name = "newName" };
-        var handler = new PartiallyUpdateCommunityCommandHandler(uof, TestMapper.Create(),new PartiallyUpdateCommunityCommandValidator());
+        var handler = new PartiallyUpdateCommunityCommandHandler(uof, TestMapper.Create(), new PartiallyUpdateCommunityCommandValidator());
         #endregion
 
         #region Act

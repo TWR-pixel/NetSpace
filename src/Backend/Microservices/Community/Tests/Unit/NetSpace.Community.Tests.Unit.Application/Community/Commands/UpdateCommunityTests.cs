@@ -14,7 +14,7 @@ public sealed class UpdateCommunityTests
         var uof = await TestInitializer.CreateUnitOfWorkWithTestDataAsync();
         var users = await uof.Users.GetAllAsync();
         var ownerId = users!.First().Id;
-        var command = new UpdateCommunityCommand { Id = 2, Name = "newName", OwnerId = ownerId};
+        var command = new UpdateCommunityCommand { Id = 2, Name = "newName", OwnerId = ownerId };
         var handler = new UpdateCommunityCommandHandler(uof, TestMapper.Create(), new UpdateCommunityCommandValidator());
         #endregion
 

@@ -4,7 +4,7 @@ using NetSpace.Community.Domain.Community;
 
 namespace NetSpace.Community.Tests.Unit.Application.Community;
 
-public sealed class CommunityDistributedCache(IMemoryCache cache) 
+public sealed class CommunityDistributedCache(IMemoryCache cache)
     : FakeInMemoryDistributedCache<CommunityEntity, int>(cache), ICommunityDistributedCache
 {
 }
