@@ -1,10 +1,12 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
+using NetSpace.Common.Injector;
 using NetSpace.Common.Messages.Email;
 using NetSpace.Identity.Domain.User;
 
 namespace NetSpace.Identity.Infrastructure.Common.Email;
 
+[Inject(ImplementationFor = typeof(IEmailSender<UserEntity>))]
 public sealed class EmailSenderOfTUser(IPublishEndpoint publisher) : IEmailSender<UserEntity>
 {
     public async Task SendConfirmationLinkAsync(UserEntity user, string email, string confirmationLink)

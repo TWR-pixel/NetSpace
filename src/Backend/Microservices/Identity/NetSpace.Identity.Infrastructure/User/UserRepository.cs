@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NetSpace.Common.Injector;
 using NetSpace.Identity.Domain.User;
 using NetSpace.Identity.UseCases.User;
 
 namespace NetSpace.Identity.Infrastructure.User;
 
+[Inject(ImplementationFor = typeof(IUserRepository))]
 public sealed class UserRepository(NetSpaceDbContext dbContext, UserManager<UserEntity> userManager) : IUserRepository
 {
     public async Task<IdentityResult> AddAsync(UserEntity entity, string password, CancellationToken cancellationToken = default)

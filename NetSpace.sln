@@ -114,6 +114,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Community.Tests.Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Community.Tests.Unit.Application", "src\Backend\Microservices\Community\Tests\Unit\NetSpace.Community.Tests.Unit.Application\NetSpace.Community.Tests.Unit.Application.csproj", "{3A013898-556D-4D0B-941C-B1213B355D19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSpace.Common.Injector", "src\Backend\Microservices\Common\NetSpace.Common.Injector\NetSpace.Common.Injector.csproj", "{C1EF71D7-F501-4D5D-9E9A-4ABE74175649}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -252,6 +254,10 @@ Global
 		{3A013898-556D-4D0B-941C-B1213B355D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A013898-556D-4D0B-941C-B1213B355D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A013898-556D-4D0B-941C-B1213B355D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1EF71D7-F501-4D5D-9E9A-4ABE74175649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1EF71D7-F501-4D5D-9E9A-4ABE74175649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1EF71D7-F501-4D5D-9E9A-4ABE74175649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1EF71D7-F501-4D5D-9E9A-4ABE74175649}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -306,5 +312,6 @@ Global
 		{B89B2907-7CB5-494D-A9D0-A78BACB3F8CF} = {87384BB1-3146-4634-9924-2D8396CC2D32}
 		{4469E788-3C3F-4749-95EF-439EEAF09E2B} = {87384BB1-3146-4634-9924-2D8396CC2D32}
 		{3A013898-556D-4D0B-941C-B1213B355D19} = {87384BB1-3146-4634-9924-2D8396CC2D32}
+		{C1EF71D7-F501-4D5D-9E9A-4ABE74175649} = {8CBEDA0E-0DAB-4B22-BA0C-0FE3E9A8735F}
 	EndGlobalSection
 EndGlobal

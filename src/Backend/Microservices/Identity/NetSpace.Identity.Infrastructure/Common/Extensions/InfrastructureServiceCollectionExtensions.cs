@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetSpace.Common.Injector.Extensions;
 using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Application.User.Consumers;
 using NetSpace.Identity.Domain.User;
 using NetSpace.Identity.Infrastructure.Common.Email;
-using NetSpace.Identity.Infrastructure.User;
-using NetSpace.Identity.UseCases.User;
+using System.Reflection;
 
 namespace NetSpace.Identity.Infrastructure.Common.Extensions;
 
@@ -28,15 +28,15 @@ public static class InfrastructureServiceCollectionExtensions
             options.SignIn.RequireConfirmedEmail = true;
             options.User.AllowedUserNameCharacters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_@";
         })
-            .AddRoles<IdentityRole>()
-            .AddDefaultTokenProviders()
-            .AddRoleManager<RoleManager<IdentityRole>>()
-            .AddEntityFrameworkStores<NetSpaceDbContext>();
+        .AddRoles<IdentityRole>()
+        .AddDefaultTokenProviders()
+        .AddRoleManager<RoleManager<IdentityRole>>()
+        .AddEntityFrameworkStores<NetSpaceDbContext>();
 
-        services.AddScoped<IEmailSender<UserEntity>, EmailSenderOfTUser>();
-        services.AddScoped<IEmailSender, EmailSender>();
+        services.RegisterInjectServicesFromAssembly(typeof(NetSpaceDbContext).Assembly);
 
-        services.AddScoped<IUserRepository, UserRepository>();
+        //services.AddScoped<IEmailSender<UserEntity>, EmailSenderOfTUser>();
+        //services.AddScoped<IEmailSender, EmailSender>();
 
         var rabbitMQOptions = config.GetSection("RabbitMQ");
         services.AddMassTransit(configure =>
