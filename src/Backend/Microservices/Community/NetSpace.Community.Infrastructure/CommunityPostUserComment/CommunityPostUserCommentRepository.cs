@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetSpace.Common.Injector;
 using NetSpace.Community.Domain.CommunityPostUserComment;
 using NetSpace.Community.UseCases.Common;
 using NetSpace.Community.UseCases.CommunityPostUserComment;
 
 namespace NetSpace.Community.Infrastructure.CommunityPostUserComment;
 
+[Inject(ImplementationsFor = [typeof(ICommunityPostUserCommentRepository), typeof(ICommunityPostUserCommentReadonlyRepository)])]
 public sealed class CommunityPostUserCommentRepository(NetSpaceDbContext dbContext) : RepositoryBase<CommunityPostUserCommentEntity, int>(dbContext), ICommunityPostUserCommentRepository
 {
     public async Task<IEnumerable<CommunityPostUserCommentEntity>?> FilterAsync(CommunityPostUsercommentFilterOptions filter, PaginationOptions pagination, SortOptions sort, CancellationToken cancellationToken = default)

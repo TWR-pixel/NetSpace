@@ -6,7 +6,7 @@ using NetSpace.Identity.UseCases.User;
 
 namespace NetSpace.Identity.Infrastructure.User;
 
-[Inject(ImplementationFor = typeof(IUserRepository))]
+[Inject(ImplementationsFor = [typeof(IUserRepository)])]
 public sealed class UserRepository(NetSpaceDbContext dbContext, UserManager<UserEntity> userManager) : IUserRepository
 {
     public async Task<IdentityResult> AddAsync(UserEntity entity, string password, CancellationToken cancellationToken = default)

@@ -2,19 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NetSpace.Common.Injector.Extensions;
 using NetSpace.Common.Messages.Email;
 using NetSpace.Common.Messages.User;
-using NetSpace.User.Application.User;
 using NetSpace.User.Application.User.Consumers;
-using NetSpace.User.Application.UserPost;
-using NetSpace.User.Application.UserPostUserComment;
-using NetSpace.User.Infrastructure.User;
-using NetSpace.User.Infrastructure.UserPost;
-using NetSpace.User.Infrastructure.UserPostUserComment;
-using NetSpace.User.UseCases.Common;
-using NetSpace.User.UseCases.User;
-using NetSpace.User.UseCases.UserPost;
-using NetSpace.User.UseCases.UserPostUserComment;
 
 namespace NetSpace.User.Infrastructure.Common.Extensions;
 
@@ -58,20 +49,7 @@ public static class InfrastructureServiceCollectionExtensions
             options.UseNpgsql(config.GetConnectionString("PostgreSql"));
         });
 
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IUserPostRepository, UserPostRepository>();
-        services.AddScoped<IUserPostUserCommentRepository, UserPostUserCommentRepository>();
-
-        services.AddScoped<IUserDistributedCacheStorage, UserDistributedCacheStorage>();
-        services.AddScoped<IUserPostDistributedCacheStorage, UserPostDistributedCacheStorage>();
-        services.AddScoped<IUserPostUsercommentDistrubutedCacheStorage, UserPostUserCommentDistrubutedCacheStorage>();
-
-        services.AddScoped<IUserReadonlyRepository, UserRepository>();
-        services.AddScoped<IUserPostReadonlyRepository, UserPostRepository>();
-        services.AddScoped<IUserPostUserCommentReadonlyRepository, UserPostUserCommentRepository>();
-
-        services.AddScoped<IReadonlyUnitOfWork, ReadonlyUnitOfWork>();
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.RegisterInjectServicesFromAssembly(typeof(NetSpaceDbContext).Assembly);
 
         return services;
     }

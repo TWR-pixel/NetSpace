@@ -10,9 +10,9 @@ namespace NetSpace.Common.Injector;
 public sealed class InjectAttribute : Attribute
 {
     /// <summary>
-    /// The <see cref="Type"/> for which this class will be registered as implementing it
+    /// The types for which this class will be registered as implementing it
     /// </summary>
-    public Type? ImplementationFor { get; set; }
+    public Type[]? ImplementationsFor { get; set; }
 
     /// <summary>
     /// Service type registration for service implementation. Default is <see cref="RegisterServiceType.Scoped"/>

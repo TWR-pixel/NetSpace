@@ -95,7 +95,7 @@
             ],
             "UpstreamPathTemplate": "/openId-login/google-logout",
             "UpstreamHttpMethod": [ "GET" ]
-        },// identity microservice end
+        }, // identity microservice end
         { // community microservice start
             "DownstreamPathTemplate": "/api/communities",
             "DownstreamScheme": "https",

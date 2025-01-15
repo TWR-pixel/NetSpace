@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using NetSpace.Common.Injector;
 using NetSpace.Community.Application.CommunityPost.Caching;
 using NetSpace.Community.Domain.CommunityPost;
 using NetSpace.Community.Infrastructure.Common;
@@ -6,6 +7,7 @@ using System.Text.Json;
 
 namespace NetSpace.Community.Infrastructure.CommunityPost;
 
+[Inject(ImplementationsFor = [typeof(ICommunityPostDistributedCache)])]
 public sealed class CommunityPostDistributedCache(IDistributedCache cache) : DistributedCacheBase<CommunityPostEntity, int>(cache), ICommunityPostDistributedCache
 {
     public async Task<IEnumerable<CommunityPostEntity>?> GetLatest(CancellationToken cancellationToken)

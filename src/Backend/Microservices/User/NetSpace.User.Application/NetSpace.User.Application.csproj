@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\NetSpace.Common.Injector\NetSpace.Common.Injector.csproj" />
     <ProjectReference Include="..\..\Common\NetSpace.Common.Messages\NetSpace.Common.Messages.csproj" />
     <ProjectReference Include="..\NetSpace.User.UseCases\NetSpace.User.UseCases.csproj" />
   </ItemGroup>

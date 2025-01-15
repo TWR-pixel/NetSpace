@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetSpace.Common.Injector;
 using NetSpace.User.Domain.UserPost;
 using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.UserPost;
 
 namespace NetSpace.User.Infrastructure.UserPost;
 
+[Inject(ImplementationsFor = [typeof(IUserPostRepository), typeof(IUserPostReadonlyRepository)])]
 public sealed class UserPostRepository(NetSpaceDbContext dbContext) : RepositoryBase<UserPostEntity, int>(dbContext), IUserPostRepository, IUserPostReadonlyRepository
 {
     public async Task<IEnumerable<UserPostEntity>> FilterAsync(UserPostFilterOptions filter,
@@ -53,6 +55,16 @@ public sealed class UserPostRepository(NetSpaceDbContext dbContext) : Repository
             .Take(pagination.PageSize);
 
         return await query.ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<UserPostEntity>> GetAllByUserId(Guid userId, CancellationToken cancellationToken = default)
+    {
+        var userPosts = await DbContext.UserPosts
+            .Where(u => u.UserId == userId)
+            .Include(u => u.User)
+            .ToArrayAsync(cancellationToken);
+
+        return userPosts;
     }
 
     public async Task<UserPostEntity?> GetByIdWithDetails(int id, CancellationToken cancellationToken = default)

@@ -5,7 +5,7 @@ using NetSpace.Common.Messages.Email;
 
 namespace NetSpace.Identity.Infrastructure.Common.Email;
 
-[Inject(ImplementationFor = typeof(IEmailSender))]
+[Inject(ImplementationsFor = [typeof(IEmailSender)])]
 public sealed class EmailSender(IPublishEndpoint publisher) : IEmailSender
 {
     public async Task SendEmailAsync(string email, string subject, string htmlMessage)

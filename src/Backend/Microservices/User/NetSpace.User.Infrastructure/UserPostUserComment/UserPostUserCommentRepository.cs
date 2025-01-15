@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetSpace.Common.Injector;
 using NetSpace.User.Domain.UserPostUserComment;
 using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.UserPostUserComment;
 
 namespace NetSpace.User.Infrastructure.UserPostUserComment;
 
+[Inject(ImplementationsFor = [typeof(IUserPostUserCommentRepository), typeof(IUserPostUserCommentReadonlyRepository)])]
 public sealed class UserPostUserCommentRepository(NetSpaceDbContext dbContext)
     : RepositoryBase<UserPostUserCommentEntity, int>(dbContext), IUserPostUserCommentRepository, IUserPostUserCommentReadonlyRepository
 {

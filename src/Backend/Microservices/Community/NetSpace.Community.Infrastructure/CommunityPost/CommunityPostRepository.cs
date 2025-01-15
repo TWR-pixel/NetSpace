@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetSpace.Common.Injector;
 using NetSpace.Community.Domain.CommunityPost;
 using NetSpace.Community.UseCases.Common;
 using NetSpace.Community.UseCases.CommunityPost;
 
 namespace NetSpace.Community.Infrastructure.CommunityPost;
 
+[Inject(ImplementationsFor = [typeof(ICommunityPostRepository), typeof(ICommunityPostReadonlyRepository)])]
 public sealed class CommunityPostRepository(NetSpaceDbContext dbContext) : RepositoryBase<CommunityPostEntity, int>(dbContext), ICommunityPostRepository
 {
 

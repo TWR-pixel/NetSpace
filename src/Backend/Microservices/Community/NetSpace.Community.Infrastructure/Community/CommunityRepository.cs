@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetSpace.Common.Injector;
 using NetSpace.Community.Domain.Community;
 using NetSpace.Community.UseCases.Common;
 using NetSpace.Community.UseCases.Community;
 
 namespace NetSpace.Community.Infrastructure.Community;
 
+[Inject(ImplementationsFor = [typeof(ICommunityRepository), typeof(ICommunityReadonlyRepository)])]
 public sealed class CommunityRepository(NetSpaceDbContext dbContext) : RepositoryBase<CommunityEntity, int>(dbContext), ICommunityRepository
 {
     public async Task<IEnumerable<CommunityEntity>?> FilterAsync(CommunityFilterOptions filter,

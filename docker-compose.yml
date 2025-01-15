@@ -20,18 +20,18 @@ services:
         environment:
             - RABBITMQ_DEFAULT_USER=guest
             - RABBITMQ_DEFAULT_PASS=guest
-        ports:
-            - 5673:5673
-            - 15672:15672
+        expose:
+            - "5673"
+            - "15672"
         networks: 
             - rabbitmq-bridge
     
     neo4j:
         container_name: neo4j
         image: neo4j:latest
-        ports:
-          - 7474:7474
-          - 7687:7687
+        expose:
+          - "7474"
+          - "7687"
         environment:
           - NEO4J_AUTH=neo4j/P@ssword
           - NEO4J_apoc_export_file_enabled=true
@@ -51,9 +51,9 @@ services:
         image: postgres:latest
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 123
-        ports:
-          - "5432:5432"
+          POSTGRES_PASSWORD: "123"
+        expose:
+          - "5432"
         networks:
             - postgresql-bridge
         volumes:
@@ -61,8 +61,8 @@ services:
 
     redis:
         image: redis:latest
-        ports:
-          - "6379:6379"
+        expose:
+          - "6379"
         networks:
             - redis-bridge
 
@@ -74,8 +74,8 @@ services:
         build: 
             context: .
             dockerfile: ./src/Backend/Microservices/User/NetSpace.User.PublicApi/Dockerfile
-        ports:
-            - 2000:8080
+        expose:
+            - "8080"
         networks:
             - redis-bridge
             - postgresql-bridge
@@ -92,9 +92,9 @@ services:
         image: ${DOCKER_REGISTRY}identity-microservice
         build: 
             context: .
-            dockerfile: ./src/Backend/Microservices/Identity/NetSpace.Identity.PublicApi/Dockerfile
-        ports:
-            - 2001:8080    
+            dockerfile: ./src/Backend/Microservices/Identity/NetSpace.Identity.Api/Dockerfile
+        expose:
+            - "8080"   
         networks:
             - redis-bridge
             - postgresql-bridge
@@ -112,9 +112,9 @@ services:
         image: ${DOCKER_REGISTRY}friendship-microservice
         build: 
             context: .
-            dockerfile: ./src/Backend/Microservices/Friendship/NetSpace.Friendship.PublicApi/Dockerfile
-        ports:
-            - 2002:8080
+            dockerfile: ./src/Backend/Microservices/Friendship/NetSpace.Friendship.Api/Dockerfile
+        expose:
+            - "8080"
         networks:
             - redis-bridge
             - neo4j-bridge
@@ -132,9 +132,9 @@ services:
         image: ${DOCKER_REGISTRY}email-microservice
         build: 
             context: .
-            dockerfile: ./src/Backend/Microservices/EmailSender/NetSpace.EmailSender.PublicApi/Dockerfile
-        ports:
-            - 2003:8080
+            dockerfile: ./src/Backend/Microservices/EmailSender/NetSpace.EmailSender.Api/Dockerfile
+        expose:
+            - "8080"
         networks:
             - rabbitmq-bridge
         depends_on:
@@ -147,9 +147,9 @@ services:
         image: ${DOCKER_REGISTRY}community-microservice
         build: 
             context: .
-            dockerfile: ./src/Backend/Microservices/Community/NetSpace.Community.PublicApi/Dockerfile
-        ports:
-            - 2004:8080
+            dockerfile: ./src/Backend/Microservices/Community/NetSpace.Community.Api/Dockerfile
+        expose:
+            - "8080"
         networks:
             - redis-bridge
             - postgresql-bridge

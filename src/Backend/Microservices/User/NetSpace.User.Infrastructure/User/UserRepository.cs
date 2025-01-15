@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetSpace.Common.Injector;
 using NetSpace.User.Domain.User;
 using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.User;
 
 namespace NetSpace.User.Infrastructure.User;
 
+[Inject(ImplementationsFor = [typeof(IUserRepository), typeof(IUserReadonlyRepository)])]
 public sealed class UserRepository(NetSpaceDbContext dbContext) : RepositoryBase<UserEntity, Guid>(dbContext), IUserRepository, IUserReadonlyRepository
 {
     public override Task UpdateAsync(UserEntity entity, CancellationToken cancellationToken = default)

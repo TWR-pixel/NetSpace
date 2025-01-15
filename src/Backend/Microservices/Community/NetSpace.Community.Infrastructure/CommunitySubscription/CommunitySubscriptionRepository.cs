@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetSpace.Common.Injector;
 using NetSpace.Community.Domain.CommunitySubscription;
 using NetSpace.Community.UseCases.Common;
 using NetSpace.Community.UseCases.CommunitySubscription;
 
 namespace NetSpace.Community.Infrastructure.CommunitySubscription;
 
+[Inject(ImplementationsFor = [typeof(ICommunitySubscriptionRepository), typeof(ICommunitySubscriptionReadonlyRepository)])]
 public sealed class CommunitySubscriptionRepository(NetSpaceDbContext dbContext) : RepositoryBase<CommunitySubscriptionEntity, int>(dbContext), ICommunitySubscriptionRepository
 {
     public async Task<IEnumerable<CommunitySubscriptionEntity>> Filter(CommunitySubscriptionFilterOptions filter,

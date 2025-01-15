@@ -51,7 +51,7 @@ services:
         image: postgres:latest
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: "123"
+          POSTGRES_PASSWORD: 123
         ports:
           - "5432:5432"
         networks:
@@ -69,11 +69,11 @@ services:
     user-microservice:
         container_name: user-microservice
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}user-microservice
         build: 
             context: .
-            dockerfile: ./src/Backend/Microservices/User/NetSpace.User.PublicApi/Dockerfile-dev
+            dockerfile: Backend/Microservices/User/NetSpace.User.PublicApi/Dockerfile
         ports:
             - 2000:8080
         networks:
@@ -88,11 +88,11 @@ services:
     
     identity-microservice:
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}identity-microservice
         build: 
             context: .
-            dockerfile: ./src/Backend/Microservices/Identity/NetSpace.Identity.Api/Dockerfile-dev
+            dockerfile: Backend/Microservices/Identity/NetSpace.Identity.Api/Dockerfile
         ports:
             - 2001:8080    
         networks:
@@ -108,11 +108,11 @@ services:
     friendship-microservice:
         container_name: friendship-microservice
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}friendship-microservice
         build: 
             context: .
-            dockerfile: ./src/Backend/Microservices/Friendship/NetSpace.Friendship.Api/Dockerfile-dev
+            dockerfile: Backend/Microservices/Friendship/NetSpace.Friendship.Api/Dockerfile
         ports:
             - 2002:8080
         networks:
@@ -120,7 +120,7 @@ services:
             - neo4j-bridge
             - rabbitmq-bridge
             - api-gateway-bridge
-        depends_on: 
+        depends_on:
             - rabbitmq
             - neo4j
             - redis
@@ -128,11 +128,11 @@ services:
     email-microservice:
         container_name: email-microservice
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}email-microservice
         build: 
             context: .
-            dockerfile: ./src/Backend/Microservices/EmailSender/NetSpace.EmailSender.Api/Dockerfile-dev
+            dockerfile: Backend/Microservices/EmailSender/NetSpace.EmailSender.Api/Dockerfile
         ports:
             - 2003:8080
         networks:
@@ -143,11 +143,11 @@ services:
     community-microservice:
         container_name: community-microservice
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}community-microservice
         build: 
             context: .
-            dockerfile: ./src/Backend/Microservices/Community/NetSpace.Community.Api/Dockerfile-dev
+            dockerfile: Backend/Microservices/Community/NetSpace.Community.Api/Dockerfile
         ports:
             - 2004:8080
         networks:
@@ -155,7 +155,7 @@ services:
             - postgresql-bridge
             - rabbitmq-bridge
             - api-gateway-bridge
-        depends_on:
+        depends_on: 
             - rabbitmq
             - postgresql
             - redis
@@ -163,11 +163,12 @@ services:
     api-gateway:
         container_name: api-gateway
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Development
+            - Test1=newetst1
+            - ASPNETCORE_ENVIRONMENT=Release
         image: ${DOCKER_REGISTRY}api-gateway-microservice
         build: 
             context: .
-            dockerfile: ./src/Backend/Microservices/NetSpace.ApiGateway/Dockerfile-dev
+            dockerfile: Backend/Microservices/NetSpace.ApiGateway/Dockerfile
         ports:
             - 2005:8080
         networks:

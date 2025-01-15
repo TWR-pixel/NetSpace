@@ -1,6 +1,5 @@
 ﻿using MassTransit;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,8 +7,6 @@ using NetSpace.Common.Injector.Extensions;
 using NetSpace.Common.Messages.User;
 using NetSpace.Identity.Application.User.Consumers;
 using NetSpace.Identity.Domain.User;
-using NetSpace.Identity.Infrastructure.Common.Email;
-using System.Reflection;
 
 namespace NetSpace.Identity.Infrastructure.Common.Extensions;
 

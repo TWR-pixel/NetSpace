@@ -1,10 +1,12 @@
-﻿using NetSpace.User.UseCases.Common;
+﻿using NetSpace.Common.Injector;
+using NetSpace.User.UseCases.Common;
 using NetSpace.User.UseCases.User;
 using NetSpace.User.UseCases.UserPost;
 using NetSpace.User.UseCases.UserPostUserComment;
 
 namespace NetSpace.User.Infrastructure;
 
+[Inject(ImplementationsFor = [typeof(IUnitOfWork)])]
 public sealed class UnitOfWork(IUserRepository users, IUserPostRepository userPosts, IUserPostUserCommentRepository userPostUserComments, NetSpaceDbContext dbContext) : IUnitOfWork
 {
     public IUserRepository Users => users;

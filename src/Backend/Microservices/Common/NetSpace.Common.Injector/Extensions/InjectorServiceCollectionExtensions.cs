@@ -15,26 +15,26 @@ public static class InjectorServiceCollectionExtensions
     {
         var types = assembly.GetTypes();
 
-        foreach (var type in types)
+        foreach (var serviceType in types)
         {
-            var attributeValue = type.GetCustomAttribute<InjectAttribute>();
+            var attributeValue = serviceType.GetCustomAttribute<InjectAttribute>();
 
-            if (attributeValue is null || attributeValue.ImplementationFor is null)
+            if (attributeValue is null || attributeValue.ImplementationsFor is null)
             {
                 continue;
             }
 
-            if (attributeValue.RegisterServiceType == RegisterServiceType.Transient)
-                services.AddTransient(type, attributeValue.ImplementationFor);
+            foreach (var serviceAbstraction in attributeValue.ImplementationsFor)
+            {
+                if (attributeValue.RegisterServiceType == RegisterServiceType.Transient)
+                    services.AddTransient(serviceAbstraction, serviceType);
 
+                else if (attributeValue.RegisterServiceType == RegisterServiceType.Scoped)
+                    services.AddScoped(serviceAbstraction, serviceType);
 
-            else if (attributeValue.RegisterServiceType == RegisterServiceType.Scoped)
-                services.AddScoped(attributeValue.ImplementationFor, type);
-
-
-            else if (attributeValue.RegisterServiceType == RegisterServiceType.Singleton)
-                services.AddSingleton(type, attributeValue.ImplementationFor);
-
+                else if (attributeValue.RegisterServiceType == RegisterServiceType.Singleton)
+                    services.AddSingleton(serviceAbstraction, serviceType);
+            }
         }
 
         return services;

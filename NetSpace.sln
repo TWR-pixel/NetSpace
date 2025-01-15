@@ -4,10 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D6EDE0C0-5A39-454F-8D06-082DF22D3C7A}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose-dev.yml = docker-compose-dev.yml
-		src\docker-compose.yml = src\docker-compose.yml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{CD796766-BE09-410E-AA3B-C4AA5B7592FD}"
 EndProject
@@ -105,6 +101,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D93293F5-F99C-4773-93CA-A5CA3307B7D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{877394AE-0CC7-4C00-B49F-B5E9D36097C9}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{87384BB1-3146-4634-9924-2D8396CC2D32}"
 EndProject
