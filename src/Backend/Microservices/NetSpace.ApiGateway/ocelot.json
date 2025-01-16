@@ -2,11 +2,11 @@
     "Routes": [
         { // user microservice start
             "DownstreamPathTemplate": "/api/users",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7502
+                    "Host": "user-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -15,14 +15,30 @@
             },
             "UpstreamPathTemplate": "/users",
             "UpstreamHttpMethod": [ "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/users/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "user-microservice",
+                    "Port": 8080
+                }
+            ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "dynamic",
+                "AllowedScopes": []
+            },
+            "UpstreamPathTemplate": "/users/{id}",
+            "UpstreamHttpMethod": [ "GET" ]
         }, // user microservice end
         { // identity microservice start
             "DownstreamPathTemplate": "/api/jwt-auth/register",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7003
+                    "Host": "identity-microservice",
+                    "Port": 8080
                 }
             ],
             "UpstreamPathTemplate": "/jwt-auth/register",
@@ -30,11 +46,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/jwt-auth/login",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7003
+                    "Host": "identity-microservice",
+                    "Port": 8080
                 }
             ],
             "UpstreamPathTemplate": "/jwt-auth/login",
@@ -42,11 +58,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/openId-login/google-login",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7003
+                    "Host": "identity-microservice",
+                    "Port": 8080
                 }
             ],
             "UpstreamPathTemplate": "/openId-login/google-login",
@@ -54,11 +70,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/identity/change-email",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7003
+                    "Host": "identity-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -70,11 +86,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/identity/change-password",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7003
+                    "Host": "identity-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -86,11 +102,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/openId-login/google-logout",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7003
+                    "Host": "identity-microservice",
+                    "Port": 8080
                 }
             ],
             "UpstreamPathTemplate": "/openId-login/google-logout",
@@ -98,11 +114,11 @@
         }, // identity microservice end
         { // community microservice start
             "DownstreamPathTemplate": "/api/communities",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7506
+                    "Host": "community-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -114,11 +130,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/community-posts",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7506
+                    "Host": "community-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -130,11 +146,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/community-post-user-comments",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7506
+                    "Host": "community-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -146,11 +162,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/community-subscriptions",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7506
+                    "Host": "community-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -162,11 +178,11 @@
         }, // community microservice end
         { // friendship microservice start
             "DownstreamPathTemplate": "/api/friendships",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7504
+                    "Host": "friendship-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -178,11 +194,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/friendships/followers",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7504
+                    "Host": "friendship-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -194,11 +210,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/friendships/possible-friends",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7504
+                    "Host": "friendship-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -210,11 +226,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/friendships/followers-count",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7504
+                    "Host": "friendship-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {
@@ -226,11 +242,11 @@
         },
         {
             "DownstreamPathTemplate": "/api/friendships/friends-count",
-            "DownstreamScheme": "https",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7504
+                    "Host": "friendship-microservice",
+                    "Port": 8080
                 }
             ],
             "AuthenticationOptions": {

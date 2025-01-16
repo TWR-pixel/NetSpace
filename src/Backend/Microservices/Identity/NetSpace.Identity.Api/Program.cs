@@ -1,3 +1,4 @@
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.HttpOverrides;
 using NetSpace.Identity.Api.Common;
 using NetSpace.Identity.Application.Common.Extensions;
@@ -18,6 +19,7 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddHealthCheck(builder.Configuration);
 builder.Services.AddOpenApi();
 builder.Services.ConfigureAuthenticationSwagger();
 builder.Services.AddApplicationLayer();
@@ -49,6 +51,12 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.MapControllers();
 
