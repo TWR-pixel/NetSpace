@@ -36,4 +36,6 @@
     <ProjectReference Include="..\NetSpace.Identity.Infrastructure\NetSpace.Identity.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/azure-containerapp-template.json" /></VisualStudio></ProjectExtensions>
+
 </Project>
